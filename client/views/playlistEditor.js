@@ -6,17 +6,16 @@ const playlistEditor = (state, actions) => {
 
   return (
     <Layout
-      onNewPlaylist={actions.onNewPlaylist}
-      currentPlaylist={state.currentPlaylist}
-      playlists={state.playlists}
-      onSelectPlaylist={actions.selectPlaylist}>
+      actions={actions}
+      state={state}>
+
+      <header>
+        <h3>{state.currentPlaylist.title}</h3>
+      </header>
 
       <YoutubeSearcher
         actions={actions}
-        suggestions={state.suggestions}
-        />
-
-      <h2>Currently editing {state.currentPlaylist.title}</h2>
+        suggestions={state.suggestions} />
 
       {state.currentPlaylist.tracks && (
         <table>
@@ -31,7 +30,10 @@ const playlistEditor = (state, actions) => {
               <tr>
                 <td>{i + 1}</td>
                 <td><img src={track.thumbnail} /></td>
-                <td>{track.title}</td>
+                <td>
+                  {track.title}<br/>
+                  <a href={track.url} target='_blank'>{track.url}</a>
+                </td>
                 <td>{track.dl}</td>
               </tr>
             ))}

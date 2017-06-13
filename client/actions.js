@@ -10,6 +10,7 @@ const actions = {
         const suggestText = document.getElementById("songname").value;
         console.log(suggestText);
         state.socket.emit('suggest', { suggestText }, suggestions => {
+          console.log('received ' + JSON.stringify(suggestions));
           actions.setVideoSuggestions(suggestions);
         });
       }, 1000)

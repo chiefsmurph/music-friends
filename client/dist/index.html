@@ -27,6 +27,12 @@
       font-size: 100px;
       margin-left: 10px;
     }
+    h1 span {
+      margin-right: 26px;
+      width: 100px;
+      display: inline-block;
+      text-align: center;
+    }
     #left {
       width: 200px;
       float: left;
@@ -53,7 +59,7 @@
     }
     #left li.selected {
       border-right: 4px solid white;
-      font-weight: bold;
+      font-weight: 900;
     }
     #left li:hover {
       background-color: silver;
@@ -64,20 +70,33 @@
       margin-left: 220px;
       /* Change this to whatever the width of your left column is*/
     }
+    #right header h3 {
+      text-align: center;
+    }
     #right table {
       width: 100%;
-      font-size: 170%;
+      /*font-size: 170%;*/
       border-spacing: 10px;
       border-collapse: separate;
     }
     #right table th {
       text-align: left;
     }
+    #right table td {
+      vertical-align: bottom;
+    }
     #right table th:nth-child(2) {
       width: 30px;
     }
     #right table th:nth-child(2) {
       width: 30px;
+    }
+    #right table td a, #right table td a:visited {
+      font-size: 60%;
+      color: blue;
+    }
+    #right table td a:hover {
+      color: cyan;
     }
     .clear {
       clear: both;

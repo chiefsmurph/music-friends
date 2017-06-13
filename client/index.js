@@ -1,18 +1,14 @@
 import { h, app, Router } from "hyperapp"
 import actions from './actions'
 import view from './views'
+import ChangingIcon from './plugins/changingIcon'
 
 app({
   state: {
     currentPlaylist: {},
-    playlists: [
-      {
-        playlistid: '34j2dj2',
-        title: 'Billy Joel - Sebastian'
-      }
-    ],
+    playlists: [],
     suggestRequest: null,
-    suggestions: []
+    suggestions: [],
   },
   view,
   actions,
@@ -29,7 +25,7 @@ app({
       }
     }
   },
-  plugins: [Router]
+  plugins: [Router, ChangingIcon]
 });
 
 console.log('here');

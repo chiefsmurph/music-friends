@@ -5,10 +5,8 @@ const home = (state, actions) => {
 
   return (
     <Layout
-      onNewPlaylist={actions.onNewPlaylist}
-      currentPlaylist={state.currentPlaylist}
-      playlists={state.playlists}
-      onSelectPlaylist={actions.selectPlaylist}>
+      actions={actions}
+      state={state}>
 
       Welcome to the homepage
 

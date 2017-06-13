@@ -1,14 +1,18 @@
 import { h } from 'hyperapp';
 import PlaylistButton from './PlaylistButton';
 
-const Layout = ({ currentPlaylist, playlists, onSelectPlaylist, onNewPlaylist }, children) => {
-
+const Layout = ({ state, actions }, children) => {
+  const { currentPlaylist, playlists, currentIcon, changeBalance } = state;
+  const { onNewPlaylist, selectPlaylist } = actions;
+  const onSelectPlaylist = (playlist) => {
+    selectPlaylist(playlist);
+  };
   return (
     <div class='container'>
       {JSON.stringify(currentPlaylist)}
-      <h1>music hacker</h1>
+      <h1><span>{currentIcon}</span>music hacker</h1>
       <div id='left'>
-        <button onclick={onNewPlaylist}>+ new playlist</button>
+        <button onclick={onNewPlaylist}>+ new playlist</button><br/>
         <ul>
           {playlists.map(pl => (
             <PlaylistButton selected={pl.playlistid === currentPlaylist.playlistid} onSelect={onSelectPlaylist} pl={pl} />
