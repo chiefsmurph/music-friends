@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+
+<title>music hacker</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" crossorigin="anonymous">
+
+<style>
+    html {
+      font-family: monospace;
+      background-color: black;
+      color: white;
+    }
+    h2 {
+      text-decoration: underline;
+    }
+    button {
+      cursor: pointer;
+    }
+    .container {
+        /*padding-top: 20px;*/
+    }
+    h1 {
+      font-size: 100px;
+      margin-left: 10px;
+    }
+    #left {
+      width: 200px;
+      float: left;
+      text-align: center;
+    }
+    #left button {
+      /*width: 40%;*/
+      font-size: 20px;
+      padding: 4px 20px;
+      margin: auto;
+      text-align: left;
+    }
+    #left li {
+      padding: 4px;
+      text-align: left;
+    }
+    #left li h3 {
+      font-size: 160%;
+    }
+    #left li i {
+      font-size: 80%;
+      color: grey;
+      font-style: italic;
+    }
+    #left li.selected {
+      border-right: 4px solid white;
+      font-weight: bold;
+    }
+    #left li:hover {
+      background-color: silver;
+      color: black;
+      cursor: pointer;
+    }
+    #right {
+      margin-left: 220px;
+      /* Change this to whatever the width of your left column is*/
+    }
+    #right table {
+      width: 100%;
+      font-size: 170%;
+      border-spacing: 10px;
+      border-collapse: separate;
+    }
+    #right table th {
+      text-align: left;
+    }
+    #right table th:nth-child(2) {
+      width: 30px;
+    }
+    #right table th:nth-child(2) {
+      width: 30px;
+    }
+    .clear {
+      clear: both;
+    }
+    input#songname {
+      border: 1px solid black;
+      font-size: 19px;
+      text-align: center;
+      width: 100%;
+      outline: 0;
+    }
+    #vidSuggestions {
+      display: flex;
+      overflow-x: scroll;
+    }
+    #vidSuggestions > a {
+      margin-right: 10px;
+    }
+</style>
+
+</head>
+<body>
+  <script src="/bundle.js"></script>
+</body>
+
+</html>
