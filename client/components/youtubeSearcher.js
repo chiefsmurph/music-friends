@@ -7,7 +7,7 @@ const YoutubeSearcher = ({ actions, suggestions }, children) => {
       <input
         type="text"
         id="songname"
-        placeholder="song name"
+        placeholder="type an artist and or song name here to add it to the playlist"
         oninput={actions.suggestVids} />
 
       {suggestions && (

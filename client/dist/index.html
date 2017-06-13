@@ -26,6 +26,7 @@
     h1 {
       font-size: 100px;
       margin-left: 10px;
+      margin-top: 0px;
     }
     h1 span {
       margin-right: 26px;
@@ -68,16 +69,27 @@
     }
     #right {
       margin-left: 220px;
+      margin-right: 10px;
       /* Change this to whatever the width of your left column is*/
+    }
+    #right header {
+      margin-top: 10px;
+      padding: 20px;
+      background-color: lightyellow;
+      color: black;
+      border-radius: 10px 10px 0 0;
     }
     #right header h3 {
       text-align: center;
+      font-size: 30px;
     }
     #right table {
       width: 100%;
       /*font-size: 170%;*/
       border-spacing: 10px;
       border-collapse: separate;
+      border-right: 2px solid lightyellow;
+      border-left: 2px solid lightyellow;
     }
     #right table th {
       text-align: left;
@@ -97,6 +109,13 @@
     }
     #right table td a:hover {
       color: cyan;
+    }
+    #right .notracks {
+      text-align: center;
+      padding: 20px;
+      background-color: white;
+      display: block;
+      color: black;
     }
     .clear {
       clear: both;

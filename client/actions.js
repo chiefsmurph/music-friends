@@ -13,7 +13,7 @@ const actions = {
           console.log('received ' + JSON.stringify(suggestions));
           actions.setVideoSuggestions(suggestions);
         });
-      }, 1000)
+      }, 300)
     };
   },
   initSocket: (state, actions) => {
@@ -44,7 +44,10 @@ const actions = {
   selectPlaylist: (state, actions, pl) => {
     console.log('/playlist/' + pl.playlistid);
     actions.router.go('/playlist/' + pl.playlistid);
-    return { currentPlaylist: pl };
+    actions.clearSearch();
+    return {
+      currentPlaylist: pl
+    };
   },
 
   updateLocalstorage: (state, actions, prop, val) => {

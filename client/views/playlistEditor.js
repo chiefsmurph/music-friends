@@ -9,13 +9,13 @@ const playlistEditor = (state, actions) => {
       actions={actions}
       state={state}>
 
-      <header>
-        <h3>{state.currentPlaylist.title}</h3>
-      </header>
-
       <YoutubeSearcher
         actions={actions}
         suggestions={state.suggestions} />
+
+      <header>
+        <h3>{state.currentPlaylist.title}</h3>
+      </header>
 
       {state.currentPlaylist.tracks && (
         <table>
@@ -39,6 +39,10 @@ const playlistEditor = (state, actions) => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {(!state.currentPlaylist.tracks || !state.currentPlaylist.tracks.length) && (
+        <b class='notracks'>playlist has no tracks yet. add some!</b>
       )}
 
     </Layout>
