@@ -4,9 +4,12 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var path = require('path');
 
+var dl = require('./routes/dl');
+
 var socketManager = require('./socketManager');
 
 var Playlists = require('./models/playlists');
+var Songs = require('./models/songs');
 
 Playlists.getAll((pls) => {
   console.log(pls);
@@ -23,4 +26,6 @@ app.get(['/', '/playlist/:id'], function(req, res) {
     res.sendFile( staticPath + 'index.html' );
 });
 
-io.on('connection', socketManager);
+app.use('/dl/', dl);
+
+io.on('connection', socketManager(io));

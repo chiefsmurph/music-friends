@@ -1,18 +1,18 @@
 import { h } from 'hyperapp';
 
-const YoutubeSearcher = ({ actions, suggestions }, children) => {
+const YoutubeSearcher = ({ actions, state }, children) => {
 
   return (
     <div>
       <input
         type="text"
         id="songname"
-        placeholder="type an artist and or song name here to add it to the playlist"
+        placeholder="artist and or song name"
         oninput={actions.suggestVids} />
 
-      {suggestions && (
+      {state.suggestions && (
         <div id="vidSuggestions">
-          {suggestions.map(vid => (
+          {state.suggestions.map(vid => (
             <div onclick={(e) => { e.preventDefault(); actions.vidClick(vid); }}>
               <img src={vid.thumbnail} />
               {vid.title}
@@ -20,6 +20,12 @@ const YoutubeSearcher = ({ actions, suggestions }, children) => {
           ))}
         </div>
       )}
+
+      {
+
+        state.step2
+
+      }
 
     </div>
   );

@@ -35,7 +35,8 @@ function queryYoutube (query) {
               allVids.push({
                 thumbnail,
                 title: $el.find('.yt-uix-tile-link').text(),
-                url
+                url,
+                id: url.split('http://youtube.com/watch?v=')[1]
               });
             }
           });

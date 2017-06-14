@@ -8,7 +8,8 @@
     "build": "$(npm bin)/webpack -p",
     "watch": "$(npm bin)/webpack -p -w",
     "serve": "http-server",
-    "server": "DATABASE_URL=$(heroku config:get DATABASE_URL -a thawing-cove-1839) node server/server.js"
+    "server": "DATABASE_URL=$(heroku config:get DATABASE_URL -a thawing-cove-1839) node server/server.js",
+    "start": "npm run server"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +22,8 @@
     "pg": "^6.2.4",
     "request": "^2.81.0",
     "shortid": "^2.2.8",
-    "socket.io": "^2.0.2"
+    "socket.io": "^2.0.2",
+    "youtube-dl": "^1.11.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

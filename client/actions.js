@@ -1,5 +1,6 @@
-import { Router } from "hyperapp"
-import socketclient from "socket.io-client"
+import { Router } from "hyperapp";
+import socketclient from "socket.io-client";
+import updatedTracksWithDl from './utils/updatedTracksWithDl';
 
 const actions = {
   setVideoSuggestions: (state, actions, suggestions) => ({ suggestions }),
@@ -22,6 +23,18 @@ const actions = {
     socket.on('connect', function(){
       console.log("connected")
     });
+
+    socket.on('downloadLink', (data) => {
+      actions.handleDlLink(data);
+      console.log('download link', data);
+    });
+
+    socket.on('tracksUpdate', (playlistid, tracks) => {
+      console.log('updating tracks for ' + playlistid, tracks);
+      actions.updateCacheTracksForPlaylist(playlistid, tracks);
+      actions.updateCurrentPlaylistIfNecessary({ playlistid, tracks });
+    });
+
     socket.on('event', function(data){});
     socket.on('disconnect', function(){});
     return { socket };
@@ -32,13 +45,45 @@ const actions = {
     actions.getLocalPlaylists();
   },
 
+  updateCurrentPlaylistIfNecessary: (state, actions, change) => {
+    var { playlistid, tracks } = change;
+    if (state.currentPlaylist.playlistid === playlistid) {
+      console.log('ref', playlistid, tracks);
+      console.log('setting tracks for active playlist', tracks);
+      actions.setTracks(tracks);
+    } else {
+      console.log('not current')
+    }
+  },
+
+  connectToPlaylistRooms: (state, actions, playlistIds) => {
+    console.log('playlist ids ', playlistIds);
+    state.socket.emit('initRooms', playlistIds);
+  },
+
   getLocalPlaylists: (state, actions) => {
     var localPlaylists = localStorage.getItem('playlists');
+    localPlaylists = JSON.parse(localPlaylists);
     if (localPlaylists) {
+      var playlistIds = localPlaylists.map(pl => pl.playlistid);
+      actions.connectToPlaylistRooms(playlistIds);
       return {
-        playlists: JSON.parse(localPlaylists)
+        playlists: localPlaylists
       };
     }
+  },
+
+  updateCurrentPlaylistWithDl: (state, actions, data) => {
+    var newTracks = updatedTracksWithDl(state.currentPlaylist.tracks, data);
+    actions.setTracks(newTracks);
+  },
+
+  handleDlLink: (state, actions, data) => {
+    if (state.currentPlaylist.playlistid === data.playlistid) {
+      // update currentplaylist tracks
+      actions.updateCurrentPlaylistWithDl(data);
+    }
+    actions.updateCacheWithDL(data);
   },
 
   selectPlaylist: (state, actions, pl) => {
@@ -63,9 +108,12 @@ const actions = {
       playlists: newPlaylists
     }
   },
-  onNewPlaylist: (state, actions) => {
+  openNewPlModal: (state, actions) => {
+    actions.showModal('newplaylist');
+    document.getElementById('newPlaylistName').focus();
+  },
+  onNewPlaylist: (state, actions, title) => {
     console.log('apples');
-    var title = prompt("Please enter a name for your playlist", "playlist");
     state.socket.emit('newPlaylist', { title }, (res) => {
       console.log('response' + JSON.stringify(res));
       actions.addPlaylist({
@@ -73,26 +121,53 @@ const actions = {
         title: res.title
       });
       actions.router.go('/playlist/' + res.playlistid);
+      actions.hideModals();
     });
   },
 
 
-  setCurrentPlaylist: (state, actions, playlist) => ({
-    currentPlaylist: playlist
-  }),
+  setCurrentPlaylist: (state, actions, playlist) => {
+    console.log('setting playlist', playlist)
+    actions.updateCache(playlist);
+    return {
+      currentPlaylist: playlist
+    };
+  },
+
+  possiblyUpdateCurrent: (state, actions, data) => {
+    if (JSON.stringify(state.currentPlaylist) !== JSON.stringify(data)) {
+      console.log('needs updated');
+      actions.setCurrentPlaylist(data);
+    } else {
+      console.log('no need for update');
+      console.log('because currentpl' + JSON.stringify(state.currentPlaylist));
+      console.log('and data' + JSON.stringify(data));
+    }
+  },
+
+  fetchPlaylist: (state, actions, id) => {
+    console.log('fetching');
+    state.socket.emit('getPlaylist', { id }, data => {
+      actions.possiblyUpdateCurrent(data);
+    });
+  },
 
   getPlaylist: (state, actions, id) => {
-    state.socket.emit('getPlaylist', { id }, (data) => {
-      actions.setCurrentPlaylist(data);
-    });
+    // load quick result from cache if Cachepages plugin
+    if (state.playlistCache[id]) {
+      console.log('found in cache ' + state.playlistCache[id])
+      actions.setCurrentPlaylist(state.playlistCache[id]);
+    } else {
+      console.log('nope not found', state.playlistCache);
+    }
+    actions.fetchPlaylist(id);
   },
 
   setTracks: (state, actions, tracks) => {
-    return {
-      currentPlaylist: Object.assign({}, state.currentPlaylist, {
-        tracks
-      })
-    };
+    console.log('setting tracks', tracks);
+    actions.setCurrentPlaylist(
+      Object.assign({}, state.currentPlaylist, { tracks })
+    );
   },
 
   error: (state, actions, error) => {
@@ -101,24 +176,41 @@ const actions = {
 
   clearSearch: (state, actions) => {
     document.getElementById("songname").value = '';
-    return {
-      suggestions: []
-    };
+    return { suggestions: [] };
   },
 
   vidClick: (state, actions, vid) => {
+
+    var updateServerTracks = (id, tracks, cb) => {
+      console.log('updating server tracks', id, tracks, cb);
+      state.socket.emit('setTracks', id, tracks, (err, updatedTracks) => {
+        if (err) return actions.error(err);
+        return cb(updatedTracks);
+      });
+    };
+
     actions.clearSearch();
     for (var key in vid) {
       vid[key] = vid[key].replace(/\'/g, '"');
     }
+
+    var currentPlaylistId = state.currentPlaylist.playlistid;
+    var generateNewTracks = (vid) => [vid].concat(state.currentPlaylist.tracks || []);
     console.log('currentTracks', state.currentPlaylist.tracks);
-    var newTracks = [vid].concat(state.currentPlaylist.tracks || []);
-    console.log('newTracks', newTracks);
-    state.socket.emit('setTracks', state.currentPlaylist.playlistid, newTracks, (err, updatedTracks) => {
-      console.log(err, updatedTracks);
-      if (err) return actions.error(err);
-      return actions.setTracks(updatedTracks);
-    });
+    var beforeDL = generateNewTracks(vid);
+    console.log('beforedl', beforeDL, currentPlaylistId);
+
+    actions.setTracks(beforeDL);
+
+    updateServerTracks(
+      currentPlaylistId,
+      beforeDL,
+      (res) => {
+
+        state.socket.emit('requestDownload', vid, currentPlaylistId);
+
+      });
+
   }
 };
 

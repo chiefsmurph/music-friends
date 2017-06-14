@@ -11,7 +11,7 @@ const playlistEditor = (state, actions) => {
 
       <YoutubeSearcher
         actions={actions}
-        suggestions={state.suggestions} />
+        state={state} />
 
       <header>
         <h3>{state.currentPlaylist.title}</h3>
@@ -26,7 +26,7 @@ const playlistEditor = (state, actions) => {
             <th>DL</th>
           </thead>
           <tbody>
-            {state.currentPlaylist.tracks.map((track, i) => (
+            {state.currentPlaylist.tracks && (state.currentPlaylist.tracks.map) && state.currentPlaylist.tracks.map((track, i) => (
               <tr>
                 <td>{i + 1}</td>
                 <td><img src={track.thumbnail} /></td>
@@ -34,7 +34,17 @@ const playlistEditor = (state, actions) => {
                   {track.title}<br/>
                   <a href={track.url} target='_blank'>{track.url}</a>
                 </td>
-                <td>{track.dl}</td>
+                <td>
+                  {
+                    (track.dl) ? (
+                      <a href={track.dl}>
+                        <img width='50px' src='/download.gif' />
+                      </a>
+                    ) : (
+                      <div class="loader"/>
+                    )
+                  }
+                </td>
               </tr>
             ))}
           </tbody>

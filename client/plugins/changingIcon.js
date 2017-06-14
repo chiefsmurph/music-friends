@@ -2,55 +2,57 @@ const ChangingIcon = () => ({
   state: {
     icon: ['🎧', '🎹', '📻', '🎵', '𝄢'],
     numActions: 0,
-    currentIcon: '',
-    throttleTO: null,
-    changeBalance: 0
+    currentIcon: '🎧',
+    changeTO: null
   },
   actions: {
-    throttleIconChange: (state, actions) => {
-      console.log('woahhhh there')
-      if (state.throttleTO) clearInterval(state.throttleTO);
-      console.log(state.changeBalance + 1 + ' is the new');
+    clearChangeTO: (state, actions) => ({ changeTO: null }),
+    changeIconWithAcceleration: (state, actions, newAcceleration) => {
+      if (!newAcceleration) {
+        newAcceleration = state.acceleration * 1.22;
+        if (newAcceleration > 700) newAcceleration = newAcceleration + 100;
+        if (newAcceleration > 1350) {
+          newAcceleration = null;
+        }
+      }
+      if (state.changeTO) clearTimeout(state.changeTO);
       return {
-        throttleTO: setTimeout(() => {
+        acceleration: newAcceleration,
+        changeTO: setTimeout(() => {
           actions.changeIcon();
-        }, 200),
-        changeBalance: state.changeBalance + 1
+          if (newAcceleration) {
+            actions.changeIconWithAcceleration();
+            actions.clearChangeTO();
+          }
+        }, newAcceleration)
       };
     },
-    changeBalance: (state, actions, inc) => {
-      console.log('hi')
-      console.log(state, actions, arguments);
-      console.log('changing ' + state.changeBalance + ' by ' + inc);
+    addAcceleration: (state, actions) => {
+      var newAcceleration = (state.acceleration) ? Math.max(state.acceleration * 0.4, 40) : 500;
+      actions.changeIconWithAcceleration(newAcceleration);
       return {
-        changeBalance: state.changeBalance + inc
+        acceleration: newAcceleration
       };
     },
     changeIcon: (state, actions, data) => {
-      console.log('currently' + state.currentIcon);
-      console.log('changing icon to ' + state.icon[state.numActions % state.icon.length]);
+      // console.log('currently' + state.currentIcon);
+      // console.log('changing icon to ' + state.icon[state.numActions % state.icon.length]);
       // actions.changeBalance(-1);
       return {
         currentIcon: state.icon[state.numActions % state.icon.length],
         numActions: state.numActions + 1,
-        changeBalance: state.changeBalance - 1,
         throttleTO: null
       };
-    }
+    },
+
   },
   events: {
     action: (state, actions, data) => {
         if (state.throttleTO) {
           clearInterval(state.throttleTO);
         }
-        console.log(state, actions, data, arguments)
-        if (['throttleIconChange', 'changeIcon'].indexOf(data.name) === -1) {
-
-          console.log('throttling TO' + state.changeBalance);
-          debugger;
-          actions.throttleIconChange();
-        } else {
-          console.log('hit it')
+        if (['changeIcon', 'addAcceleration', 'changeIconWithAcceleration', 'clearChangeTO'].indexOf(data.name) === -1) {
+          actions.addAcceleration();
         }
     }
   }
