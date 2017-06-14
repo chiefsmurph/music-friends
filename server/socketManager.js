@@ -104,6 +104,7 @@ var socketManager = (io) => (socket) => {
     Playlists.updateTracks(playlistid, tracks, (response) => {
       console.log('now response ' + JSON.stringify(response));
       io.to(playlistid).emit('tracksUpdate', playlistid, response);
+      console.log('here')
       if (!response) return cb('error updating database');
       return cb(null, response);
     });

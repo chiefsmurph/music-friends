@@ -23,9 +23,7 @@ function queryYoutube (query) {
 
           if (err) return reject(err);
 
-          console.log('done 2')
           var $ = cheerio.load(body);
-          console.log('loaded');
 
           $('.yt-uix-tile').each((i, el) => {
             var $el = $(el);
@@ -41,7 +39,6 @@ function queryYoutube (query) {
             }
           });
 
-          console.log(allVids);
           resolve(allVids);
 
       });

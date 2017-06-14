@@ -19,7 +19,7 @@ const actions = {
   },
   initSocket: (state, actions) => {
     console.log("initting socket connection")
-    var socket = socketclient('https://serene-castle-99055.herokuapp.com/');
+    var socket = socketclient(window.location.origin);
     socket.on('connect', function(){
       console.log("connected")
     });
