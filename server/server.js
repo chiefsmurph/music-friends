@@ -12,6 +12,7 @@ var Playlists = require('./models/playlists');
 var Songs = require('./models/songs');
 
 var port = process.env.PORT || 2222;
+console.log(process.env.DATABASE_URL);
 
 Playlists.getAll((pls) => {
   console.log(pls);
