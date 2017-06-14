@@ -191,7 +191,7 @@ const actions = {
 
     actions.clearSearch();
     for (var key in vid) {
-      vid[key] = vid[key].replace(/\'/g, '"');
+      vid[key] = vid[key].replace(/\'/g, "''");
     }
 
     var currentPlaylistId = state.currentPlaylist.playlistid;

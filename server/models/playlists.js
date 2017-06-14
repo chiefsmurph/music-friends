@@ -32,6 +32,9 @@ var Playlists = new TableInterface('playlists', {
     });
   };
   this.updateTracks = (playlistid, tracks, cb) => {
+    console.log('updating tracks for ' + playlistid);
+    console.log('tracks' + JSON.stringify(tracks));
+    console.log('');
     return this.update({
       data: {
         tracks: '\'' + JSON.stringify(tracks) + '\''

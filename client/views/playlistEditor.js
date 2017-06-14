@@ -37,7 +37,7 @@ const playlistEditor = (state, actions) => {
                 <td>
                   {
                     (track.dl) ? (
-                      <a href={track.dl}>
+                      <a href={track.dl.replace(/''/g, "'")}>
                         <img width='50px' src='/download.gif' />
                       </a>
                     ) : (
