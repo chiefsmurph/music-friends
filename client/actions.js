@@ -19,7 +19,7 @@ const actions = {
   },
   initSocket: (state, actions) => {
     console.log("initting socket connection")
-    var socket = socketclient('http://localhost:8320');
+    var socket = socketclient('https://serene-castle-99055.herokuapp.com/');
     socket.on('connect', function(){
       console.log("connected")
     });
