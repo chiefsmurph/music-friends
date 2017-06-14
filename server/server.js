@@ -11,11 +11,13 @@ var socketManager = require('./socketManager');
 var Playlists = require('./models/playlists');
 var Songs = require('./models/songs');
 
+var port = process.env.PORT || 2222;
+
 Playlists.getAll((pls) => {
   console.log(pls);
 });
 
-server.listen(8320);
+server.listen(port);
 
 var staticPath = path.join(__dirname + '/../client/dist/');
 console.log(staticPath);

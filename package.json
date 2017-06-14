@@ -9,7 +9,7 @@
     "watch": "$(npm bin)/webpack -p -w",
     "serve": "http-server",
     "server": "DATABASE_URL=$(heroku config:get DATABASE_URL -a thawing-cove-1839) node server/server.js",
-    "start": "npm run server"
+    "start": "node server/server.js"
   },
   "author": "",
   "license": "ISC",
