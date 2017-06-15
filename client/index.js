@@ -1,5 +1,5 @@
 import { h, app, Router } from "hyperapp"
-import actions from './actions'
+import actions from './actions/'
 import view from './views'
 
 // plugins
@@ -13,6 +13,7 @@ app({
     playlists: [],          // left side bar
     suggestRequest: null,
     suggestions: [],
+    debugCP: false
   },
   view,
   actions,

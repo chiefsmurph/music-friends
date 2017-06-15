@@ -3,14 +3,16 @@ import PlaylistButton from './PlaylistButton';
 import NewPlaylistModal from './newPlaylistModal';
 
 const Layout = ({ state, actions }, children) => {
-  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal } = state;
-  const { openNewPlModal, selectPlaylist, hideModals } = actions;
+  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP } = state;
+  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
   };
   return (
     <div class='container'>
-      {false && JSON.stringify(currentPlaylist)}
+      {debugCP && (
+        <code>{JSON.stringify(currentPlaylist)}</code>
+      )}
       <h1><span>{currentIcon}</span>music hacker</h1>
       <div id='left'>
         <button onclick={openNewPlModal}>+ new playlist</button><br/>
@@ -31,6 +33,16 @@ const Layout = ({ state, actions }, children) => {
       </div>
       <div class="clear"></div>
 
+      <div id="debugArea">
+        <label>
+            debug CurrentPlaylist
+            <input
+                type="checkbox"
+                onchange={toggleDebug}
+                checked={debugCP}
+                />
+        </label>
+      </div>
 
       <div id="gradient"></div>
       <div id="bluecircle"></div>
