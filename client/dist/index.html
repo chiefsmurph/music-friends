@@ -46,7 +46,7 @@
       /*background-color: ;*/
     }
     .container {
-        padding-bottom: 20px;
+        padding-bottom: 40px;
     }
     .container code {
       margin-right: 259px;
@@ -137,8 +137,21 @@
       border-collapse: separate;
       border-right: 4px solid lightyellow;
       border-left: 4px solid lightyellow;
+      border-bottom: 14px solid lightyellow;
       background-color: white;
       color: black;
+    }
+    #right table tr {
+      /*background-image:
+        linear-gradient(
+          to bottom,
+          white,
+          gold
+        );*/
+    }
+    #right table tr.nowplaying {
+      background-color: rgba(171, 238, 144, 0.57);
+      font-weight: bold;
     }
     #right table th:nth-child(1),
     #right table td:nth-child(1),
@@ -152,13 +165,24 @@
       width: 160px;
       vertical-align: middle;
     }
+    #right table td:nth-child(2) img {
+      border: 3px solid transparent;
+    }
+    #right table td:nth-child(2) img.justrequested {
+      border: 3px solid orange;
+    }
+    #right table tr.nowplaying td:nth-child(2) img {
+      border: 3px solid lime;
+    }
+
     #right table td:nth-child(4) img {
       padding: 10px;
       border-radius: 7px;
-      border: 2px solid transparent;
+      /*border: 2px solid transparent;*/
     }
     #right table td:nth-child(4) img:hover {
-      border: 2px solid gold;
+      /*border: 2px solid gold;*/
+      background-color: cyan;
     }
     #right table th {
       text-align: left;
@@ -183,7 +207,7 @@
       color: blue;
     }
     #right table td a:hover {
-      color: cyan;
+      color: orange;
     }
     #right .notracks {
       text-align: center;
@@ -324,6 +348,15 @@
       top: 6px;
       background-color: rgba(0, 0, 0, 0.4);
       padding: 10px;
+    }
+    audio {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: none;
+      border-top: 1px solid black;
     }
 </style>
 

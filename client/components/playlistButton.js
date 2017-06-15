@@ -6,7 +6,7 @@ const PlaylistButton = ({ onSelect, pl, selected }, children) => {
     onSelect(pl);
   };
   return (
-    <li onclick={onselectplaylist} class={(selected) ? 'selected' : ''}>
+    <li onmousedown={onselectplaylist} class={(selected) ? 'selected' : ''}>
       <h3>{pl.title}</h3>
       <i>{pl.playlistid}</i>
     </li>

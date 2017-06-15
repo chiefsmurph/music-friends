@@ -1,4 +1,5 @@
 import socketclient from "socket.io-client";
+import ss from "socket.io-stream";
 
 module.exports = {
   init: (state, actions) => {
@@ -22,6 +23,28 @@ module.exports = {
       console.log('updating tracks for ' + playlistid, tracks);
       actions.updateCacheTracksForPlaylist(playlistid, tracks);
       actions.updateCurrentPlaylistIfNecessary({ playlistid, tracks });
+    });
+
+    socket.on('downloadError', (data) => {
+      console.info(data);
+    });
+
+    var audio = document.getElementById('player');
+    ss(socket).on('audio-stream', function(stream, data) {
+        var parts = [];
+        stream.on('data', function(chunk){
+            parts.push(chunk);
+        });
+        stream.on('end', function () {
+            audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(parts));
+            audio.style.display = 'block';
+            console.log('set display block');
+            audio.onended = () => {
+              actions.stopStreaming();
+            };
+            actions.updateNowPlaying();
+            audio.play();
+        });
     });
 
     socket.on('event', function(data){});

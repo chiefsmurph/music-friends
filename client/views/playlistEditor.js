@@ -26,10 +26,17 @@ const playlistEditor = (state, actions) => {
             <th>DL</th>
           </thead>
           <tbody>
-            {state.currentPlaylist.tracks && (state.currentPlaylist.tracks.map) && state.currentPlaylist.tracks.map((track, i) => (
-              <tr>
+            { state.currentPlaylist.tracks &&
+              (state.currentPlaylist.tracks.map) &&
+              state.currentPlaylist.tracks.map((track, i) => (
+              <tr class={(state.nowPlaying === track.id) ? 'nowplaying' : ''}>
                 <td>{i + 1}</td>
-                <td><img src={track.thumbnail} /></td>
+                <td>
+                  <img
+                    src={track.thumbnail}
+                    onmousedown={() => { actions.requestStream(track); }}
+                    class={state.lastRequested === track.id ? 'justrequested' : ''}/>
+                </td>
                 <td>
                   {track.title}<br/>
                   <a href={track.url} target='_blank'>{track.url}</a>
@@ -37,7 +44,7 @@ const playlistEditor = (state, actions) => {
                 <td>
                   {
                     (track.dl) ? (
-                      <a href={track.dl.replace(/''/g, "'")}>
+                      <a href={'/dl/song/' + track.dl.replace(/''/g, "'")}>
                         <img width='50px' src='/download.gif' />
                       </a>
                     ) : (

@@ -36,7 +36,8 @@ module.exports = {
       console.log('found in cache ', state.playlistCache[id])
       actions.setCurrentPlaylist(state.playlistCache[id], true);  // dont resave to cache
     } else {
-      console.log('nope not found', state.playlistCache);
+      debugger;
+      console.log('nope not found', state.playlistCache, id, state.playlistCache[id], state.playlistCache['SynVC6k7Z']);
     }
     actions.fetchPlaylist(id);
   },

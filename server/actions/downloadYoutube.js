@@ -14,6 +14,7 @@ if (!fs.existsSync(assetFolder)){
 var getAudio = function(url, title) {
 
   var songFileName = null;
+  var error = [];
   var logspawn = function(spawn) {
 
     // Let's echo the output of the child to see what's going on
@@ -29,10 +30,15 @@ var getAudio = function(url, title) {
     // Incase something bad happens, we should write that out too.
     spawn.stderr.on('data', function(data) {
       console.error(data.toString());
+      error.push(data.toString());
     });
   }
 
   return new Promise((resolve, reject) => {
+
+      if (url.indexOf('&list=') !== -1) {
+        return reject('no playlists allowed');
+      }
 
       var pathToYtdl = path.join(__dirname + '/../../node_modules/youtube-dl/bin/youtube-dl');
       console.log('ytdl: ' + pathToYtdl);
@@ -62,7 +68,11 @@ var getAudio = function(url, title) {
       // });
 
       youtube_dl.on('exit', () => {
-        resolve('/dl/song/' + songFileName.replace(/'/g, "''"));
+        if (songFileName) {
+          resolve(songFileName.replace(/'/g, "''"));
+        } else {
+          reject(error.join(', '));
+        }
       });
 
   });

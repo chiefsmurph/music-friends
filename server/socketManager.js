@@ -2,6 +2,9 @@ var queryYoutube = require('./actions/queryYoutube');
 var getAudio = require('./actions/downloadYoutube').getAudio;
 var Playlists = require('./models/playlists');
 var updatedTracksWithDl = require('../client/utils/updatedTracksWithDl');
+var path = require('path');
+var ss = require('socket.io-stream');
+var fs = require('fs');
 
 var socketManager = (io) => (socket) => {
 
@@ -96,6 +99,10 @@ var socketManager = (io) => (socket) => {
       })
       .catch(err => {
         console.log(err);
+        io.sockets.to(playlistid).emit('downloadError', {
+          song,
+          err
+        });
       });
   });
 
@@ -114,6 +121,20 @@ var socketManager = (io) => (socket) => {
   };
 
   socket.on('setTracks', setTracks);
+
+
+  socket.on('client-stream-request', function (mp3File) {
+    var stream = ss.createStream();
+    var assetFolder = path.join(__dirname + '/../assets/');
+    var filename = assetFolder + mp3File;
+    console.log('stremaing ' + filename)
+    ss(socket).emit('audio-stream', stream, { name: filename });
+    if (fs.existsSync(filename)) {
+      fs.createReadStream(filename).pipe(stream);
+    } else {
+      console.log('does not exist');
+    }
+  });
 
 }
 

@@ -2,17 +2,9 @@ import updatedTracksWithDl from '../utils/updatedTracksWithDl';
 
 const CachePages = () => ({
   state: {
-    playlistCache: {},
+    playlistCache: JSON.parse(localStorage.getItem('plCache')),
   },
   actions: {
-    loadCache: (state, actions, data) => {
-      console.log('loading cache')
-      var cache = JSON.parse(localStorage.getItem('plCache'));
-      console.log(cache);
-      Object.keys(cache).forEach(playlistid => {
-        actions.updateCache(cache[playlistid]);
-      });
-    },
     updateCache: (state, actions, pl) => {
       var playlists = state.playlistCache;
       playlists[pl.playlistid] = pl;
@@ -55,7 +47,7 @@ const CachePages = () => ({
     },
     loaded: (state, actions, data) => {
       console.log('loading')
-      actions.loadCache();
+      // actions.loadCache();
     }
   }
 });

@@ -13,7 +13,7 @@ app({
     playlists: [],          // left side bar
     suggestRequest: null,
     suggestions: [],
-    debugCP: false
+    debugCP: localStorage.getItem('debugCP') === 'true'
   },
   view,
   actions,

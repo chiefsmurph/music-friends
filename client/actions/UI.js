@@ -12,7 +12,10 @@ module.exports = {
     document.getElementById("songname").value = '';
     return { suggestions: [] };
   },
-  toggleDebug: (state, actions) => ({
-    debugCP: !state.debugCP
-  })
+  toggleDebug: (state, actions) => {
+    localStorage.setItem('debugCP', !state.debugCP);
+    return {
+      debugCP: !state.debugCP
+    };
+  }
 };
