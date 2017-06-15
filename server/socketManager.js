@@ -48,9 +48,10 @@ var socketManager = (io) => (socket) => {
   socket.on('getPlaylist', (data, cb) => {
     console.log('getting ' + data.id);
     Playlists.getPlaylist(data.id, (pl) => {
-      cb(pl[0]);
-      activePlaylist = pl[0];
-      console.log('got playlist ' + JSON.stringify(pl[0]));
+      activePlaylist = pl;
+      // activePlaylist.
+      cb(activePlaylist);
+      console.log('got playlist ' + JSON.stringify(pl));
     });
   });
 
@@ -99,7 +100,9 @@ var socketManager = (io) => (socket) => {
   });
 
   var setTracks = (playlistid, tracks, cb) => {
-    activePlaylist.tracks = tracks;
+    if (activePlaylist.playlistid === playlistid) {
+      activePlaylist.tracks = tracks;
+    }
     console.log('setting tracks, playlistid' + playlistid, tracks);
     Playlists.updateTracks(playlistid, tracks, (response) => {
       console.log('now response ' + JSON.stringify(response));

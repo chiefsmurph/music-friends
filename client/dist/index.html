@@ -139,7 +139,21 @@
     #right table td:nth-child(1),
     #right table th:nth-child(4),
     #right table td:nth-child(4) {
+      width: 40px;
       text-align: center;
+    }
+    #right table th:nth-child(4),
+    #right table td:nth-child(4) {
+      width: 160px;
+      vertical-align: middle;
+    }
+    #right table td:nth-child(4) img {
+      padding: 10px;
+      border-radius: 7px;
+      border: 2px solid transparent;
+    }
+    #right table td:nth-child(4) img:hover {
+      border: 2px solid gold;
     }
     #right table th {
       text-align: left;
@@ -231,6 +245,7 @@
       left: 0;
       right: 0;
       background-color: white;
+      background-image: url("https://www.transparenttextures.com/patterns/assault.png")
     }
     .modal {
       position: absolute;

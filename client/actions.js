@@ -90,9 +90,6 @@ const actions = {
     console.log('/playlist/' + pl.playlistid);
     actions.router.go('/playlist/' + pl.playlistid);
     actions.clearSearch();
-    return {
-      currentPlaylist: pl
-    };
   },
 
   updateLocalstorage: (state, actions, prop, val) => {
@@ -126,9 +123,16 @@ const actions = {
   },
 
 
-  setCurrentPlaylist: (state, actions, playlist) => {
-    console.log('setting playlist', playlist)
-    actions.updateCache(playlist);
+  setCurrentPlaylist: (state, actions, playlist, dontUpdateCache) => {
+
+    dontUpdateCache = (typeof dontUpdateCache === "boolean" && dontUpdateCache);
+    if (!dontUpdateCache) {
+      console.log('updating cache');
+      actions.updateCache(playlist);
+    } else {
+      console.log('dont update cache because ', dontUpdateCache);
+    }
+    console.log('setting playlist', playlist);
     return {
       currentPlaylist: playlist
     };
@@ -155,8 +159,8 @@ const actions = {
   getPlaylist: (state, actions, id) => {
     // load quick result from cache if Cachepages plugin
     if (state.playlistCache[id]) {
-      console.log('found in cache ' + state.playlistCache[id])
-      actions.setCurrentPlaylist(state.playlistCache[id]);
+      console.log('found in cache ', state.playlistCache[id])
+      actions.setCurrentPlaylist(state.playlistCache[id], true);  // dont resave to cache
     } else {
       console.log('nope not found', state.playlistCache);
     }
@@ -190,9 +194,9 @@ const actions = {
     };
 
     actions.clearSearch();
-    for (var key in vid) {
-      vid[key] = vid[key].replace(/\'/g, "''");
-    }
+    // for (var key in vid) {
+    //   vid[key] = vid[key].replace(/'/, "''");
+    // }
 
     var currentPlaylistId = state.currentPlaylist.playlistid;
     var generateNewTracks = (vid) => [vid].concat(state.currentPlaylist.tracks || []);

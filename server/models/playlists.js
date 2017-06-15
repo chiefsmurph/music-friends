@@ -1,4 +1,5 @@
 var TableInterface = require('../johnsutils/TableInterface');
+var EscapeTicksInArrOfObjs = require('../johnsutils/EscapeTicksInArrOfObjs');
 var shortid = require('shortid');
 
 var Playlists = new TableInterface('playlists', {
@@ -18,7 +19,11 @@ var Playlists = new TableInterface('playlists', {
         playlistid: id,
       }
     }, (res) => {
+      res = res[0];
       console.log('found', res);
+      if (res.tracks) {
+        res.tracks = EscapeTicksInArrOfObjs.decode(res.tracks);
+      }
       cb(res);
     });
   };
@@ -32,6 +37,10 @@ var Playlists = new TableInterface('playlists', {
     });
   };
   this.updateTracks = (playlistid, tracks, cb) => {
+
+    console.log(JSON.stringify(tracks));
+    tracks = EscapeTicksInArrOfObjs.encode(tracks);
+
     console.log('updating tracks for ' + playlistid);
     console.log('tracks' + JSON.stringify(tracks));
     console.log('');

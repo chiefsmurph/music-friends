@@ -10,8 +10,8 @@ const ChangingIcon = () => ({
     changeIconWithAcceleration: (state, actions, newAcceleration) => {
       if (!newAcceleration) {
         newAcceleration = state.acceleration * 1.22;
-        if (newAcceleration > 700) newAcceleration = newAcceleration + 100;
-        if (newAcceleration > 1350) {
+        if (newAcceleration > 700) newAcceleration = newAcceleration + (Math.random() * 230);
+        if (newAcceleration > 1350 + (Math.random() * 1000)) {
           newAcceleration = null;
         }
       }
@@ -28,7 +28,7 @@ const ChangingIcon = () => ({
       };
     },
     addAcceleration: (state, actions) => {
-      var newAcceleration = (state.acceleration) ? Math.max(state.acceleration * 0.4, 40) : 500;
+      var newAcceleration = (state.acceleration) ? Math.max(state.acceleration * (Math.random() * 0.8), 40) : 500;
       actions.changeIconWithAcceleration(newAcceleration);
       return {
         acceleration: newAcceleration

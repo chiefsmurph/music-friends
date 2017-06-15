@@ -10,7 +10,7 @@ const Layout = ({ state, actions }, children) => {
   };
   return (
     <div class='container'>
-      {true && JSON.stringify(currentPlaylist)}
+      {false && JSON.stringify(currentPlaylist)}
       <h1><span>{currentIcon}</span>music hacker</h1>
       <div id='left'>
         <button onclick={openNewPlModal}>+ new playlist</button><br/>
