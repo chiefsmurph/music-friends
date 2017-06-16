@@ -1,10 +1,11 @@
 import { h } from 'hyperapp';
 import PlaylistButton from './PlaylistButton';
 import NewPlaylistModal from './newPlaylistModal';
+import ConfirmDeleteSavedPlaylist from './confirmDeleteSavedPlaylist';
 
 const Layout = ({ state, actions }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP } = state;
-  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug } = actions;
+  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
   };
@@ -21,7 +22,8 @@ const Layout = ({ state, actions }, children) => {
             {playlists.map(pl => (
               <PlaylistButton
                 selected={pl.playlistid === currentPlaylist.playlistid}
-                onSelect={onSelectPlaylist} pl={pl} />
+                onSelect={onSelectPlaylist} pl={pl}
+                confirmDeletePl={confirmDeletePl} />
             ))}
             {(!playlists || !playlists.length) && (
               <b>You have no playlists</b>
@@ -49,6 +51,12 @@ const Layout = ({ state, actions }, children) => {
 
         {(showingModal === 'newplaylist') && (
           <NewPlaylistModal
+            state={state}
+            actions={actions} />
+        )}
+
+        {(showingModal === 'confirmdelete') && (
+          <ConfirmDeleteSavedPlaylist
             state={state}
             actions={actions} />
         )}

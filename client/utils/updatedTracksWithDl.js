@@ -1,8 +1,8 @@
-const updatedTracksWithDl = (tracks, dl) => {
+const updatedTracksWithDl = (tracks, dl, addTransform) => {
   return tracks.map(track => {
     return (track.id === dl.song.id) ?
       Object.assign({}, track, {
-        dl: dl.dl
+        dl: (addTransform) ? addTransform(dl.dl) : dl.dl
       }) : track;
   });
 };

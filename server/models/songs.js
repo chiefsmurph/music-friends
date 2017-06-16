@@ -35,19 +35,6 @@ var Songs = new TableInterface('songs', {
       cb(playlist);
     });
   };
-  this.addDownloadLink = (id, dlLink, cb) => {
-    return this.update({
-      data: {
-        downloadLink: dlLink
-      },
-      where: {
-        songid: id
-      }
-    }, (response) => {
-      console.log(response[0].tracks);
-      cb(response[0].tracks)
-    });
-  };
 });
 
 module.exports = Songs;

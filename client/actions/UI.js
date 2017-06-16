@@ -8,6 +8,20 @@ module.exports = {
     actions.showModal('newplaylist');
     document.getElementById('newPlaylistName').focus();
   },
+  confirmDeletePl: (state, actions, pl) => {
+    console.log('cofnirm delete')
+    actions.setPlaylistToDelete(pl);
+    actions.showModal('confirmdelete');
+  },
+  confirmDelete: (state, actions) => {
+    actions.deleteSavedPlaylist(state.playlistToDelete);
+    actions.hideModals();
+  },
+  setPlaylistToDelete: (state, actions, pl) => {
+    return {
+      playlistToDelete: pl
+    };
+  },
   clearSearch: (state, actions) => {
     document.getElementById("songname").value = '';
     return { suggestions: [] };

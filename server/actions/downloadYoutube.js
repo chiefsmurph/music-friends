@@ -69,7 +69,7 @@ var getAudio = function(url, title) {
 
       youtube_dl.on('exit', () => {
         if (songFileName) {
-          resolve(songFileName.replace(/'/g, "''"));
+          resolve(songFileName);
         } else {
           reject(error.join(', '));
         }

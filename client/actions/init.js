@@ -36,14 +36,7 @@ module.exports = {
             parts.push(chunk);
         });
         stream.on('end', function () {
-            audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(parts));
-            audio.style.display = 'block';
-            console.log('set display block');
-            audio.onended = () => {
-              actions.stopStreaming();
-            };
-            actions.updateNowPlaying();
-            audio.play();
+            actions.streamEnded({ parts, audio });
         });
     });
 

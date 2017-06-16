@@ -34,8 +34,8 @@ const playlistEditor = (state, actions) => {
                 <td>
                   <img
                     src={track.thumbnail}
-                    onmousedown={() => { actions.requestStream(track); }}
-                    class={state.lastRequested === track.id ? 'justrequested' : ''}/>
+                    onmousedown={() => { if (track.dl) actions.requestStream(track); }}
+                    class={state.lastRequested === track.id && state.nowPlaying !== track.id ? 'justrequested' : ((!track.dl) ? 'waitingForDl' : '')}/>
                 </td>
                 <td>
                   {track.title}<br/>

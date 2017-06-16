@@ -91,9 +91,16 @@
       display: inline-block;
       padding: 4px;
     }
+    #left ul > div {
+      position: relative;
+    }
+    #left ul > div:hover .x {
+      display: block;
+    }
     #left li {
       padding: 4px;
       text-align: left;
+      position: relative;
     }
     #left li h3 {
       font-size: 160%;
@@ -167,9 +174,14 @@
     }
     #right table td:nth-child(2) img {
       border: 3px solid transparent;
+      cursor: pointer;
     }
     #right table td:nth-child(2) img.justrequested {
       border: 3px solid orange;
+      cursor: wait;
+    }
+    #right table tr td:nth-child(2) img.waitingForDl {
+      cursor: wait;
     }
     #right table tr.nowplaying td:nth-child(2) img {
       border: 3px solid lime;
@@ -286,7 +298,7 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
       min-width: 50%;
     }
-    .modal > form {
+    .modal > .body {
       padding: 20px;
     }
     .modal, .modal * {
@@ -307,6 +319,7 @@
       margin: 40px 10px 10px;
       padding-left: 170px;
     }
+    .modal
     .modal h2 {
       margin-bottom: 4px;
     }
@@ -316,7 +329,7 @@
     .modal button:nth-child(2) {
       font-weight: bold;
     }
-    .modal .x {
+    .x {
       position: absolute;
       right: -10px;
       top: -10px;
@@ -326,6 +339,18 @@
       width: 26px;
       height: 26px;
       text-align: center;
+      z-index: 1000;
+      cursor: pointer;
+    }
+    .x.small {
+      right: -10px;
+      top: -10px;
+      background-color: red;
+      border-radius: 50%;
+      font-size: 15px;
+      width: 18px;
+      height: 18px;
+      display: none;
     }
     .loader {
         border: 12px solid #f3f3f3; /* Light grey */

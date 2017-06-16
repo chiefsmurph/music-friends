@@ -12,7 +12,7 @@ const NewPlaylistModal = ({ state, actions }, children) => {
       <header>
         New Playlist
       </header>
-      <form onsubmit={submitNewPL}>
+      <form onsubmit={submitNewPL} class='body'>
         <h2>Name your playlist:</h2>
         <input
           type="text"

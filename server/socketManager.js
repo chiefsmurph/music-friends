@@ -95,7 +95,7 @@ var socketManager = (io) => (socket) => {
       console.log(dlObj);
       setTracks(
         forPlaylist.playlistid,
-        updatedTracksWithDl(forPlaylist.tracks, dlObj),
+        updatedTracksWithDl(forPlaylist.tracks, dlObj, (val) => val.replace(/'/g, "''")),
         (err, res) => {
           console.log('error: ' + err);
           console.log('downloaded' + dlLink + ' emitting to ' + playlistid);
@@ -105,7 +105,6 @@ var socketManager = (io) => (socket) => {
             activePlaylist
           };
           io.sockets.to(playlistid).emit('downloadLink', dlObj);
-
         }
       );
     };
@@ -121,7 +120,7 @@ var socketManager = (io) => (socket) => {
 
               console.log('after getting song now updating db')
               song.downloadLink = dlLink;
-              Songs.addSong(song, res=> {
+              Songs.addSong(song, res => {
                 console.log('updated song db now emit');
                 updateAndEmit(dlLink);
               });

@@ -53,6 +53,18 @@ module.exports = {
         playlists: localPlaylists
       };
     }
+  },
+
+
+  deleteSavedPlaylist: (state, actions, pl) => {
+    console.log('removing pl', pl);
+    var currentPlaylists = state.playlists;
+    var newPlaylists = state.playlists.filter(playlist => {
+      return playlist.playlistid !== pl.playlistid
+    });
+    return {
+      playlists: newPlaylists
+    };
   }
 
 
