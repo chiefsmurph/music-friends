@@ -4,7 +4,7 @@ import NewPlaylistModal from './newPlaylistModal';
 import ConfirmDeleteSavedPlaylist from './confirmDeleteSavedPlaylist';
 
 const Layout = ({ state, actions }, children) => {
-  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP } = state;
+  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying } = state;
   const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
@@ -68,11 +68,13 @@ const Layout = ({ state, actions }, children) => {
             display: !!showingModal ? "block" : "none"
           }} />
 
-        <audio id="player" controls>
-          <source src="" type="audio/mpeg">
-              Your browser does not support the audio element.
-          </source>
-        </audio>
+        {(lastRequested || nowPlaying) && (
+          <audio id="player" controls>
+            <source src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </source>
+          </audio>
+        )}
 
     </div>
   );

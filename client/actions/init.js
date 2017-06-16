@@ -29,14 +29,13 @@ module.exports = {
       console.info(data);
     });
 
-    var audio = document.getElementById('player');
     ss(socket).on('audio-stream', function(stream, data) {
         var parts = [];
         stream.on('data', function(chunk){
             parts.push(chunk);
         });
         stream.on('end', function () {
-            actions.streamEnded({ parts, audio });
+            actions.streamEnded(parts);
         });
     });
 

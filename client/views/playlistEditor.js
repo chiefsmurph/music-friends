@@ -4,6 +4,17 @@ import YoutubeSearcher from '../components/youtubeSearcher';
 
 const playlistEditor = (state, actions) => {
 
+  const isInSavedPlaylists = state.playlists.some(pl => {
+    return pl.playlistid === state.currentPlaylist.playlistid;
+  });
+
+  const addToSavedPls = () => {
+    actions.addPlaylist({
+      playlistid: state.currentPlaylist.playlistid,
+      title: state.currentPlaylist.title
+    });
+  };
+
   return (
     <Layout
       actions={actions}
@@ -15,6 +26,13 @@ const playlistEditor = (state, actions) => {
 
       <header>
         <h3>{state.currentPlaylist.title}</h3>
+        <input
+          type="button"
+          value="| Add to saved playlists"
+          class={(isInSavedPlaylists) ? 'disabled' : ''}
+          onclick={addToSavedPls}/>
+        <br/><br/>
+        <input type="button" value="| Download entire playlist as a zip" />
       </header>
 
       {state.currentPlaylist.tracks && (

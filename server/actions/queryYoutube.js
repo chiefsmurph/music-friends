@@ -29,7 +29,7 @@ function queryYoutube (query) {
             var $el = $(el);
             var thumbnail = getThumbnail($el.find('.yt-lockup-thumbnail img'));
             var url = parseURL($el.find('.yt-uix-tile-link').attr('href'));
-            if (thumbnail && url && url.indexOf('&list=') === -1) {
+            if (thumbnail && url && url.indexOf('&list=') === -1 && thumbnail.indexOf('hqdefault') !== -1) {
               allVids.push({
                 thumbnail,
                 title: $el.find('.yt-uix-tile-link').text(),

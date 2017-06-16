@@ -133,6 +133,15 @@
       color: black;
       border-radius: 10px 10px 0 0;
     }
+    #right header input[type='button'] {
+      cursor: pointer;
+    }
+    #right header input[type='button']:not(.disabled):hover {
+      background-color: silver;
+    }
+    #right header input[type='button'].disabled {
+      opacity: 0.3;
+    }
     #right header h3 {
       text-align: center;
       font-size: 30px;
@@ -227,6 +236,7 @@
       background-color: white;
       display: block;
       color: black;
+      border-top: 1px dashed saddlebrown;
     }
     .clear {
       clear: both;
