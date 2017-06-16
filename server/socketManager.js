@@ -1,10 +1,18 @@
+// actions
 var queryYoutube = require('./actions/queryYoutube');
 var getAudio = require('./actions/downloadYoutube').getAudio;
-var Playlists = require('./models/playlists');
+
+// helper
 var updatedTracksWithDl = require('../client/utils/updatedTracksWithDl');
+
+// npm
 var path = require('path');
 var ss = require('socket.io-stream');
 var fs = require('fs');
+
+// db
+var Playlists = require('./models/playlists');
+var Songs = require('./models/songs');
 
 var socketManager = (io) => (socket) => {
 
@@ -69,41 +77,66 @@ var socketManager = (io) => (socket) => {
 
   socket.on('requestDownload', (song, playlistid) => {
 
+    console.log('getting song')
+    console.log(JSON.stringify(song));
+    console.log();
+
     var forPlaylist = activePlaylist;
-    getAudio(song.url, song.title)
-      .then(dlLink => {
+    var updateAndEmit = (dlLink) => {
 
-        console.log('now updating database with download url');
-        console.log(JSON.stringify(forPlaylist));
-        var dlObj = {
-          playlistid,
-          song,
-          dl: dlLink
-        };
+      console.log('now updating database with download url');
+      console.log(JSON.stringify(forPlaylist));
 
-        console.log(dlObj);
-        setTracks(
-          forPlaylist.playlistid,
-          updatedTracksWithDl(forPlaylist.tracks, dlObj),
-          (err, res) => {
-            console.log('error: ' + err);
-            console.log('downloaded' + dlLink + ' emitting to ' + playlistid);
-            io.sockets.to(playlistid).emit('downloadLink', 'finished');
-            var obj = {
-              forPlaylist,
-              activePlaylist
-            };
-            io.sockets.to(playlistid).emit('downloadLink', dlObj);
+      var dlObj = {
+        playlistid,
+        song,
+        dl: dlLink
+      };
+      console.log(dlObj);
+      setTracks(
+        forPlaylist.playlistid,
+        updatedTracksWithDl(forPlaylist.tracks, dlObj),
+        (err, res) => {
+          console.log('error: ' + err);
+          console.log('downloaded' + dlLink + ' emitting to ' + playlistid);
+          io.sockets.to(playlistid).emit('downloadLink', 'finished');
+          var obj = {
+            forPlaylist,
+            activePlaylist
+          };
+          io.sockets.to(playlistid).emit('downloadLink', dlObj);
 
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        io.sockets.to(playlistid).emit('downloadError', {
-          song,
-          err
         });
-      });
+    };
+
+    Songs.getSong(song.id, (foundSong) => {
+      if (foundSong) {
+        console.log('already found ', foundSong, foundSong.downloadlink);
+        updateAndEmit(foundSong.downloadlink);
+      } else {
+
+        getAudio(song.url, song.title)
+          .then(dlLink => {
+
+              console.log('after getting song now updating db')
+              song.downloadLink = dlLink;
+              Songs.addSong(song, res=> {
+                console.log('updated song db now emit');
+                updateAndEmit(dlLink);
+              });
+
+          })
+          .catch(err => {
+            console.log(err);
+            io.sockets.to(playlistid).emit('downloadError', {
+              song,
+              err
+            });
+          });
+      }
+    });
+
+
   });
 
   var setTracks = (playlistid, tracks, cb) => {
