@@ -6,6 +6,7 @@ import view from './views'
 import ChangingIcon from './plugins/changingIcon'
 import CachePages from './plugins/cachePages'
 import ModalManager from './plugins/modalManager'
+import KeyManager from './plugins/keyManager'
 
 app({
   state: {
@@ -24,8 +25,7 @@ app({
     route: (state, actions, data) => {
       console.log('route', state, actions, data);
       if (data.params && data.params.id) {
-        // console.log('found params', data.params.id);
-        actions.getPlaylist(data.params.id);
+        actions.playlistRoute(data.params.id);
       }
     }
   },
@@ -33,7 +33,8 @@ app({
     Router,
     ChangingIcon,
     CachePages,
-    ModalManager
+    ModalManager,
+    KeyManager
   ]
 });
 

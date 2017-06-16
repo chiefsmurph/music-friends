@@ -133,11 +133,11 @@
       color: black;
       border-radius: 10px 10px 0 0;
     }
-    #right header input[type='button'] {
+    #right header input[type='button']:not(.disabled) {
       cursor: pointer;
     }
     #right header input[type='button']:not(.disabled):hover {
-      background-color: silver;
+      background-color: rgb(200, 200, 200);
     }
     #right header input[type='button'].disabled {
       opacity: 0.3;
@@ -148,6 +148,37 @@
     }
     #right table {
       width: 100%;
+    }
+    #right header table td:nth-child(1) {
+      width: 50%;
+    }
+    #right header table td:nth-child(2) {
+      text-align: right;
+    }
+    #right header table td:nth-child(2) label {
+      text-align: right;
+      padding: 4px 10px;
+      background-color: rgba(170, 170, 170, 0.4);
+      font-style: italic;
+    }
+    #right header table td {
+      vertical-align: top;
+    }
+    #right header table .box {
+      text-align: center;
+      border: 1px dashed black;
+      display: inline-block;
+      padding: 4px;
+    }
+    #right header table .box h2 {
+      font-variant: small-caps;
+      margin-bottom: 4px;
+    }
+    #right header table .box label {
+      display: inline-block;
+    }
+    #right > table {
+      width: 100%;
       /*font-size: 170%;*/
       border-spacing: 1px;
       border-collapse: separate;
@@ -157,7 +188,7 @@
       background-color: white;
       color: black;
     }
-    #right table tr {
+    #right > table tr {
       /*background-image:
         linear-gradient(
           to bottom,
@@ -165,69 +196,69 @@
           gold
         );*/
     }
-    #right table tr.nowplaying {
+    #right > table tr.nowplaying {
       background-color: rgba(171, 238, 144, 0.57);
       font-weight: bold;
     }
-    #right table th:nth-child(1),
-    #right table td:nth-child(1),
-    #right table th:nth-child(4),
-    #right table td:nth-child(4) {
+    #right > table th:nth-child(1),
+    #right > table td:nth-child(1),
+    #right > table th:nth-child(4),
+    #right > table td:nth-child(4) {
       width: 40px;
       text-align: center;
     }
-    #right table th:nth-child(4),
-    #right table td:nth-child(4) {
+    #right > table th:nth-child(4),
+    #right > table td:nth-child(4) {
       width: 160px;
       vertical-align: middle;
     }
-    #right table td:nth-child(2) img {
+    #right > table td:nth-child(2) img {
       border: 3px solid transparent;
       cursor: pointer;
     }
-    #right table td:nth-child(2) img.justrequested {
+    #right > table td:nth-child(2) img.justrequested {
       border: 3px solid orange;
       cursor: wait;
     }
-    #right table tr td:nth-child(2) img.waitingForDl {
+    #right > table tr td:nth-child(2) img.waitingForDl {
       cursor: wait;
     }
-    #right table tr.nowplaying td:nth-child(2) img {
+    #right > table tr.nowplaying td:nth-child(2) img {
       border: 3px solid lime;
     }
 
-    #right table td:nth-child(4) img {
+    #right > table td:nth-child(4) img {
       padding: 10px;
       border-radius: 7px;
       /*border: 2px solid transparent;*/
     }
-    #right table td:nth-child(4) img:hover {
+    #right > table td:nth-child(4) img:hover {
       /*border: 2px solid gold;*/
       background-color: rgba(0, 255, 255, 0.25);
     }
-    #right table th {
+    #right > table th {
       text-align: left;
       background-color: gold;
       padding: 5px;
     }
-    #right table td {
+    #right > table td {
       vertical-align: bottom;
       padding: 5px;
     }
-    #right table th:nth-child(2) {
+    #right > table th:nth-child(2) {
       width: 30px;
     }
-    #right table th:nth-child(2) {
+    #right > table th:nth-child(2) {
       width: 30px;
     }
-    #right table th:nth-child(2) {
+    #right > table th:nth-child(2) {
       width: 30px;
     }
-    #right table td a, #right table td a:visited {
+    #right > table td a, #right > table td a:visited {
       font-size: 60%;
       color: blue;
     }
-    #right table td a:hover {
+    #right > table td a:hover {
       color: orange;
     }
     #right .notracks {
@@ -302,11 +333,12 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -90%);
+      transform: translate(-50%, -60%);
       z-index: 100;
       background-color: black;
       box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
       min-width: 50%;
+      background-image: url("https://www.transparenttextures.com/patterns/black-linen-2.png");
     }
     .modal > .body {
       padding: 20px;
@@ -316,6 +348,9 @@
     }
     .modal input {
       margin-bottom: 10px;
+    }
+    .modal input, .modal button {
+      margin-top: 6px;
     }
     .modal header {
       width: 100%;
@@ -336,6 +371,9 @@
     .modal button {
       display: inline-block;
     }
+    .modal button.confirm {
+      font-weight: bold;
+    }
     .modal button:nth-child(2) {
       font-weight: bold;
     }
@@ -351,6 +389,10 @@
       text-align: center;
       z-index: 1000;
       cursor: pointer;
+      opacity: 0.7;
+    }
+    .x:hover {
+      opacity: 1;
     }
     .x.small {
       right: -10px;
@@ -392,12 +434,18 @@
       width: 100%;
       display: none;
       border-top: 1px solid black;
+      z-index: 2000;
     }
 </style>
 
 </head>
 <body>
-  <script src="/bundle.js"></script>
+  <script src="bundle.js"></script>
+  <audio id="player" controls>
+    <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </source>
+  </audio>
 </body>
 
 </html>

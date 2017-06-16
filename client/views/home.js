@@ -8,7 +8,7 @@ const home = (state, actions) => {
       actions={actions}
       state={state}>
 
-      Welcome to the homepage
+      Welcome to the homepagedeaf
 
     </Layout>
   )

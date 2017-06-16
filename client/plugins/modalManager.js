@@ -7,6 +7,9 @@ const ModalManager = () => ({
       console.log('hiding all');
       console.log('what')
       document.body.style.overflow = 'inherit';
+      ['.container > h1', '.container #left', '.container #right'].forEach((tag) => {
+        document.querySelector(tag).style.filter = "blur(0px)";
+      });
       return {
         showingModal: null
       };
@@ -15,6 +18,9 @@ const ModalManager = () => ({
       var _docHeight = (document.height !== undefined) ? document.height : document.body.offsetHeight;
       // document.getElementById('modalShade').style.height = '500px';
       document.body.style.overflow = 'hidden';
+      ['.container > h1', '.container #left', '.container #right'].forEach((tag) => {
+        document.querySelector(tag).style.filter = "blur(2px)";
+      });
       return {
         showingModal: modalName
       };

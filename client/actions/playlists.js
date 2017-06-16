@@ -8,6 +8,10 @@ module.exports = {
         playlistid: res.playlistid,
         title: res.title
       });
+      actions.addKey({
+        playlistid: res.playlistid,
+        key: res.key
+      });
       actions.router.go('/playlist/' + res.playlistid);
       actions.hideModals();
     });
@@ -26,18 +30,21 @@ module.exports = {
   fetchPlaylist: (state, actions, id) => {
     console.log('fetching');
     state.socket.emit('getPlaylist', { id }, data => {
+
+      console.log('fetched ' + id, data);
       actions.possiblyUpdateCurrent(data);
     });
   },
 
   getPlaylist: (state, actions, id) => {
     // load quick result from cache if Cachepages plugin
-    if (state.playlistCache[id]) {
+    if (state.playlistCache && state.playlistCache[id]) {
       console.log('found in cache ', state.playlistCache[id])
       actions.setCurrentPlaylist(state.playlistCache[id], true);  // dont resave to cache
     } else {
-      debugger;
+      // debugger;
       console.log('nope not found', state.playlistCache, id, state.playlistCache[id], state.playlistCache['SynVC6k7Z']);
+      console.log(Object.keys(state.playlistCache), Object.keys(state.playlistCache).indexOf(id));
     }
     actions.fetchPlaylist(id);
   },
@@ -62,10 +69,16 @@ module.exports = {
     var newPlaylists = state.playlists.filter(playlist => {
       return playlist.playlistid !== pl.playlistid
     });
+
+    localStorage.setItem('playlists', JSON.stringify(newPlaylists));
+
     if (state.currentPlaylist.playlistid === pl.playlistid) {
       actions.router.go('/');
+      return {
+        playlists: newPlaylists,
+        currentPlaylist: {}
+      };
     }
-    localStorage.setItem('playlists', JSON.stringify(newPlaylists));
     return {
       playlists: newPlaylists
     };

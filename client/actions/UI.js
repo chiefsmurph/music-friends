@@ -23,7 +23,8 @@ module.exports = {
     };
   },
   clearSearch: (state, actions) => {
-    document.getElementById("songname").value = '';
+    if (document.getElementById("songname"))
+      document.getElementById("songname").value = '';
     return { suggestions: [] };
   },
   toggleDebug: (state, actions) => {

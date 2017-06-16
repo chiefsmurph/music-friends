@@ -59,10 +59,15 @@ var socketManager = (io) => (socket) => {
   socket.on('getPlaylist', (data, cb) => {
     console.log('getting ' + data.id);
     Playlists.getPlaylist(data.id, (pl) => {
-      activePlaylist = pl;
-      // activePlaylist.
-      cb(activePlaylist);
-      console.log('got playlist ' + JSON.stringify(pl));
+      if (pl) {
+        delete pl.key;
+        activePlaylist = pl;
+        // activePlaylist.
+        cb(activePlaylist);
+        console.log('got playlist ' + JSON.stringify(pl));
+      } else {
+        cb({});
+      }
     });
   });
 
@@ -156,6 +161,7 @@ var socketManager = (io) => (socket) => {
   socket.on('setTracks', setTracks);
 
 
+  // streaming
   socket.on('client-stream-request', function (mp3File) {
     var stream = ss.createStream();
     var assetFolder = path.join(__dirname + '/../assets/');
@@ -169,6 +175,12 @@ var socketManager = (io) => (socket) => {
     }
   });
 
+  // keys
+  socket.on('authorizeKey', (id, key, cb) => {
+    Playlists.authKey(id, key, (authed) => {
+      cb(authed);
+    })
+  });
 }
 
 module.exports = socketManager;

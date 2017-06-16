@@ -2,6 +2,7 @@ import { h } from 'hyperapp';
 import PlaylistButton from './PlaylistButton';
 import NewPlaylistModal from './newPlaylistModal';
 import ConfirmDeleteSavedPlaylist from './confirmDeleteSavedPlaylist';
+import SubmitKeysModal from './submitKeysModal';
 
 const Layout = ({ state, actions }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying } = state;
@@ -12,7 +13,10 @@ const Layout = ({ state, actions }, children) => {
   return (
     <div class='container'>
         {debugCP && (
-          <code>{JSON.stringify(currentPlaylist)}</code>
+          <code>
+          {JSON.stringify(currentPlaylist)}
+          {JSON.stringify(state.authedKeys)}
+          </code>
         )}
         <h1><span>{currentIcon}</span>music hacker</h1>
         <div id='left'>
@@ -61,20 +65,18 @@ const Layout = ({ state, actions }, children) => {
             actions={actions} />
         )}
 
+        {(showingModal === 'submitkeys') && (
+          <SubmitKeysModal
+            state={state}
+            actions={actions} />
+        )}
+
         <div
           id="modalShade"
           onclick={hideModals}
           style={{
             display: !!showingModal ? "block" : "none"
           }} />
-
-        {(lastRequested || nowPlaying) && (
-          <audio id="player" controls>
-            <source src="" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </source>
-          </audio>
-        )}
 
     </div>
   );

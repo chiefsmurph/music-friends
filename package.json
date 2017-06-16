@@ -9,7 +9,8 @@
     "watch": "$(npm bin)/webpack -p -w",
     "serve": "http-server",
     "server": "DATABASE_URL=$(heroku config:get DATABASE_URL -a thawing-cove-1839) node server/server.js",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "electron": "electron client/electron"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "shortid": "^2.2.8",
     "socket.io": "^2.0.2",
     "socket.io-stream": "^0.9.1",
+    "uniqid": "^4.1.1",
     "youtube-dl": "^1.11.1"
   },
   "devDependencies": {

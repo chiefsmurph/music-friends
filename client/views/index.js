@@ -4,6 +4,12 @@ import playlistEditor from './playlistEditor';
 
 const views = module.exports = {
   '/': home,
+  'index.html': home,
+  '/Users/john/Development/my-stuff/musichacker/client/dist/index.html': home,
   '/playlist/:id': playlistEditor,
-  '*': (model, actions) => <div>404</div>
+  '*': (state, actions) => {
+    return (
+      <b>{location.pathname}</b>
+    );
+  }
 }

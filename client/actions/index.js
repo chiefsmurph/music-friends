@@ -22,6 +22,12 @@ module.exports = Object.assign(
       actions.updateCacheWithDL(data);
     },
 
+    playlistRoute: (state, actions, id) => {
+      // console.log('found params', data.params.id);
+      actions.connectToPlaylistRooms([id]);
+      actions.getPlaylist(id);
+    },
+
     error: (state, actions, error) => {
       console.error(error);
     }

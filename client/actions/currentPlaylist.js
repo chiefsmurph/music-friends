@@ -3,7 +3,7 @@ import updatedTracksWithDl from '../utils/updatedTracksWithDl';
 module.exports = {
 
   setCurrentPlaylist: (state, actions, playlist, dontUpdateCache) => {
-
+    console.log('setting current', playlist)
     dontUpdateCache = (typeof dontUpdateCache === "boolean" && dontUpdateCache);
     if (!dontUpdateCache) {
       console.log('updating cache');
@@ -30,11 +30,13 @@ module.exports = {
         (JSON.stringify(state.currentPlaylist) !== JSON.stringify(incomingPl))
     ) {
       console.log('needs updated');
+      console.log(state.playlistCache, incomingPl, 'ah');
       actions.setCurrentPlaylist(incomingPl);
     } else {
       console.log('no need for update');
       console.log('because currentpl' + JSON.stringify(state.currentPlaylist));
       console.log('and data' + JSON.stringify(incomingPl));
+      console.log(state.playlistCache, incomingPl, 'ah');
     }
   },
 

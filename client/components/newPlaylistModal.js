@@ -13,7 +13,7 @@ const NewPlaylistModal = ({ state, actions }, children) => {
         New Playlist
       </header>
       <form onsubmit={submitNewPL} class='body'>
-        <h2>Name your playlist:</h2>
+        <h3>Name your playlist:</h3>
         <input
           type="text"
           autofocus="true"
@@ -22,7 +22,7 @@ const NewPlaylistModal = ({ state, actions }, children) => {
       </form>
       <footer>
         <button onclick={actions.hideModals}>Cancel</button>
-        <button style="font-weight: bold" onclick={submitNewPL}>Create playlist</button>
+        <button class='confirm' onclick={submitNewPL}>Create playlist</button>
       </footer>
     </div>
   )

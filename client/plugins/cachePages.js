@@ -2,10 +2,11 @@ import updatedTracksWithDl from '../utils/updatedTracksWithDl';
 
 const CachePages = () => ({
   state: {
-    playlistCache: JSON.parse(localStorage.getItem('plCache')),
+    playlistCache: JSON.parse(localStorage.getItem('plCache')) || {},
   },
   actions: {
     updateCache: (state, actions, pl) => {
+      console.log('updating cache', pl);
       var playlists = state.playlistCache;
       playlists[pl.playlistid] = pl;
       console.log('updated cache with ', pl);

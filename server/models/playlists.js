@@ -1,11 +1,13 @@
 var TableInterface = require('../johnsutils/TableInterface');
 var EscapeTicksInArrOfObjs = require('../johnsutils/EscapeTicksInArrOfObjs');
 var shortid = require('shortid');
+var uniqid = require('uniqid');
 
 var Playlists = new TableInterface('playlists', {
   tableid: ['serial', 'primary key'],
   playlistid: ['varchar(20)', 'not null'],
   title: ['varchar(70)', 'not null'],
+  key: ['varchar(20)', 'not null'],
   tracks: ['json']
 }, function() {
   this.getAll = (cb) => {
@@ -21,20 +23,33 @@ var Playlists = new TableInterface('playlists', {
     }, (res) => {
       res = res[0];
       console.log('found', res);
-      if (res.tracks) {
+      if (res && res.tracks) {
         res.tracks = EscapeTicksInArrOfObjs.decode(res.tracks);
       }
-      cb(res);
+      return cb(res || {});
     });
   };
   this.createPlaylist = (title, cb) => {
+    var key = uniqid();
     return this.insert({
       title,
-      playlistid: shortid.generate()
+      playlistid: shortid.generate(),
+      key
     }, (playlist) => {
       console.log('created ', playlist);
       cb(playlist);
     });
+  };
+  this.authKey = (playlistid, key, cb) => {
+    return this.select({
+      where: {
+        playlistid,
+        key
+      }
+    }, res => {
+      var authed = res && res.length;
+      return cb(authed);
+    })
   };
   this.updateTracks = (playlistid, tracks, cb) => {
 

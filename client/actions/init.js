@@ -3,13 +3,14 @@ import ss from "socket.io-stream";
 
 module.exports = {
   init: (state, actions) => {
+    console.log('initting')
     actions.initSocket();
     actions.getLocalPlaylists();
   },
 
   initSocket: (state, actions) => {
     console.log("initting socket connection")
-    var socket = socketclient(window.location.origin);
+    var socket = socketclient('http://localhost:2222');
     socket.on('connect', function(){
       console.log("connected")
     });
@@ -41,6 +42,7 @@ module.exports = {
 
     socket.on('event', function(data){});
     socket.on('disconnect', function(){});
+    console.log('sestting socket');
     return { socket };
   },
 
