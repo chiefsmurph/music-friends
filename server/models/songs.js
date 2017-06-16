@@ -4,8 +4,8 @@ var shortid = require('shortid');
 var Songs = new TableInterface('songs', {
   tableid: ['serial', 'primary key'],
   songid: ['varchar(20)', 'not null'],
-  title: ['varchar(70)', 'not null'],
-  url: ['varchar(70)', 'not null'],
+  title: ['varchar(170)', 'not null'],
+  url: ['varchar(170)', 'not null'],
   thumbnail: ['varchar(370)', 'not null'],
   downloadLink: ['varchar(200)']
 }, function() {

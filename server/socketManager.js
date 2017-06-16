@@ -106,7 +106,8 @@ var socketManager = (io) => (socket) => {
           };
           io.sockets.to(playlistid).emit('downloadLink', dlObj);
 
-        });
+        }
+      );
     };
 
     Songs.getSong(song.id, (foundSong) => {

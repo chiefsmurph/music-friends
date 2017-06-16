@@ -8,7 +8,7 @@
 
 - zip entire playlist
 - loading bar for download
-- save songs downloaded to postgres and only dl videos that havent been prev dl'd
+- ~~save songs downloaded to postgres and only dl videos that havent been prev dl'd~~
 
 ## possibilities
 
