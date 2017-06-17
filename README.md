@@ -14,3 +14,5 @@
 
 - view mode | edit mode & playlists have auto generated passwords that you can share
 - soundcloud support?
+- suggested songs (last fm api?)
+- electronized app?
