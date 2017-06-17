@@ -13,11 +13,24 @@
     @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
     html, * {
       font-family: 'Ubuntu Mono';
+      -webkit-app-region: drag;
+      -webkit-user-select: none;
+    }
+    #left, #left *, #right, #right * {
+      -webkit-app-region: no-drag;
+    }
+    #right, #right * {
+      -webkit-user-select: text;
     }
     html {
       background-color: black;
       color: white;
+      /*-webkit-app-region: drag;*/
     }
+    /*body {
+      position:absolute;
+      top: 0;
+    }*/
     a {
       cursor: pointer;
     }
@@ -46,7 +59,7 @@
       /*background-color: ;*/
     }
     .container {
-        padding-bottom: 40px;
+      padding-bottom: 40px;
     }
     .container code {
       margin-right: 259px;
@@ -56,7 +69,7 @@
     h1 {
       font-size: 100px;
       margin-left: 20px;
-      margin-top: 30px;
+      margin-top: 55px;
       font-family: 'VT323'
     }
     h1 span {
@@ -436,10 +449,28 @@
       border-top: 1px solid black;
       z-index: 2000;
     }
+    h1 span {
+      font-family: serid;
+    }
+    h1 span img {
+      height: 80px;
+      margin-right: 2px;
+    }
 </style>
 
 </head>
 <body>
+  <script>
+  // const {ipcRenderer} = require('electron');
+  //
+  // ipcRenderer.on('assetsFolder', (event, folder) => {
+  //     console.log('what')
+  //     console.log(folder, 'haha')
+  //     window.assetsFolder = folder;
+  // });
+  </script>
+  <!-- <script src="../api/getAudio.js"></script>
+  <script src="../api/openItem.js"></script> -->
   <script src="bundle.js"></script>
   <audio id="player" controls>
     <source src="" type="audio/mpeg">

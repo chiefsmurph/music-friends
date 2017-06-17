@@ -1,8 +1,10 @@
+
+console.log(`dirname ${__dirname}`)
 const ChangingIcon = () => ({
   state: {
-    icon: ['🎧', '🎹', '📻', '🎵', '𝄢'],
+    icon: ['folder-music.png', 'record.png', 'tunes.png'],
     numActions: 0,
-    currentIcon: '🎧',
+    currentIcon: 'folder-music.png',
     changeTO: null
   },
   actions: {

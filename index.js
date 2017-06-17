@@ -3,6 +3,14 @@ const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 
+
+
+//const {app} = require('electron');
+console.log('asd')
+console.log('downloads', app.getPath('downloads'));
+
+
+
 // Report crashes to our server.
 // electron.crashReporter.start();
 
@@ -27,14 +35,21 @@ app.on('ready', function() {
     width: 800,
     height: 600,
     minHeight: 400,
-    minWidth: 700
+    minWidth: 700,
+    // titleBarStyle: 'hidden'
+    titleBarStyle: 'hiddenInset',
+    // frame: false
+    transparent: true,
   });
-
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/client/dist/index.html`);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  setTimeout(() => {
+    console.log('sending','assetsFolder', app.getPath('downloads'))
+    mainWindow.webContents.send('assetsFolder', app.getPath('downloads'));
+  }, 3000);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

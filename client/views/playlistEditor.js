@@ -18,7 +18,7 @@ const playlistEditor = (state, actions) => {
 
   const downloadAll = () => {
     actions.showModal('downloadingAll');
-    
+
   };
 
   const admin = state.authedKeys.indexOf(state.currentPlaylist.playlistid) !== -1;
@@ -78,7 +78,7 @@ const playlistEditor = (state, actions) => {
                   </div>
                 )}
                 <br/><br/>
-                share url: {window.location.href}
+                playlistid: {state.currentPlaylist.playlistid}
             </td>
           </tr>
         </table>
@@ -112,8 +112,11 @@ const playlistEditor = (state, actions) => {
                 <td>
                   {
                     (track.dl) ? (
-                      <a href={'/dl/song/' + track.dl.replace(/''/g, "'")}>
-                        <img width='50px' src='/download.gif' />
+                      <a
+                        // href={'/dl/song/' + track.dl.replace(/''/g, "'")}
+                        onclick={() => { window.openItem('/' + track.dl)}}
+                        >
+                        <img width='50px' src='/Users/john/Development/my-stuff/musichacker/client/dist/download.gif' />
                       </a>
                     ) : (
                       <div class="loader"/>

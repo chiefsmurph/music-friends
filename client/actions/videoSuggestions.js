@@ -1,3 +1,5 @@
+// import getAudio from '../api/getAudio'
+
 module.exports = {
   setVideoSuggestions: (state, actions, suggestions) => ({ suggestions }),
   suggestVids: (state, actions) => {
@@ -42,6 +44,17 @@ module.exports = {
       (res) => {
 
         state.socket.emit('requestDownload', vid, currentPlaylistId);
+        window.getAudio(vid.url)
+          .then(file => {
+            console.log('file', file);
+            actions.handleDlLink({
+              playlistid: currentPlaylistId,
+              song: {
+                id: vid.id
+              },
+              dl: file
+            });
+          });
 
       });
 

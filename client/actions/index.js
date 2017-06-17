@@ -22,10 +22,20 @@ module.exports = Object.assign(
       actions.updateCacheWithDL(data);
     },
 
+    handleLocalAudio: (state, actions, data) => {
+      if (state.currentPlaylist.playlistid === data.playlistid) {
+        // update currentplaylist tracks
+        actions.updateCurrentPlaylistWithDl(data);
+      }
+      actions.updateCacheWithDL(data);
+    },
+
+
     playlistRoute: (state, actions, id) => {
       // console.log('found params', data.params.id);
       actions.connectToPlaylistRooms([id]);
       actions.getPlaylist(id);
+
     },
 
     error: (state, actions, error) => {
