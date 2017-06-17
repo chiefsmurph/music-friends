@@ -25,7 +25,7 @@ const Layout = ({ state, actions }, children) => {
           {location.pathname}
           </code>
         )}
-        <h1><span><img src={'icons/' + state.currentIcon} /></span>music hacker</h1>
+        <h1><span><img src={'/icons/' + state.currentIcon} /></span>music hacker</h1>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button><br/>
           <h2>saved playlists</h2>

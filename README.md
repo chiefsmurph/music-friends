@@ -16,3 +16,6 @@
 - soundcloud support?
 - suggested songs (last fm api?)
 - electronized app?
+- support for adding multiple videos at a time
+    - you give it an artist name and album name and it gets all of them
+    - you give it a list of youtube video urls and bam
