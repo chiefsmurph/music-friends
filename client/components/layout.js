@@ -25,7 +25,7 @@ const Layout = ({ state, actions }, children) => {
           {location.pathname}
           </code>
         )}
-        <h1><span><img src={'/Users/john/Development/my-stuff/musichacker/client/dist/icons/' + state.currentIcon} /></span>music hacker</h1>
+        <h1><span><img src={'icons/' + state.currentIcon} /></span>music hacker</h1>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button><br/>
           <h2>saved playlists</h2>
@@ -40,8 +40,9 @@ const Layout = ({ state, actions }, children) => {
               <b>You have no playlists</b>
             )}
           </ul>
-          <a onclick={openGoToModal}>go to playlist</a>
+          <a onclick={openGoToModal} class="goto">go to playlist</a>
         </div>
+
         <div id='right'>
           {children}
         </div>

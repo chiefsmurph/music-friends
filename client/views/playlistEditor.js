@@ -113,10 +113,10 @@ const playlistEditor = (state, actions) => {
                   {
                     (track.dl) ? (
                       <a
-                        // href={'/dl/song/' + track.dl.replace(/''/g, "'")}
-                        onclick={() => { window.openItem('/' + track.dl)}}
+                        href={'/dl/song/' + track.dl.replace(/''/g, "'")}
+                        // onclick={() => { window.openItem('/' + track.dl)}}
                         >
-                        <img width='50px' src='/Users/john/Development/my-stuff/musichacker/client/dist/download.gif' />
+                        <img width='50px' src='/download.gif' />
                       </a>
                     ) : (
                       <div class="loader"/>

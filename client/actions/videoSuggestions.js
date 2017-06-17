@@ -43,18 +43,21 @@ module.exports = {
       beforeDL,
       (res) => {
 
+        // to server
         state.socket.emit('requestDownload', vid, currentPlaylistId);
-        window.getAudio(vid.url)
-          .then(file => {
-            console.log('file', file);
-            actions.handleDlLink({
-              playlistid: currentPlaylistId,
-              song: {
-                id: vid.id
-              },
-              dl: file
-            });
-          });
+
+        // for electron
+        // window.getAudio(vid.url)
+        //   .then(file => {
+        //     console.log('file', file);
+        //     actions.handleDlLink({
+        //       playlistid: currentPlaylistId,
+        //       song: {
+        //         id: vid.id
+        //       },
+        //       dl: file
+        //     });
+        //   });
 
       });
 
