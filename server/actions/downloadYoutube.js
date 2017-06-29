@@ -4,7 +4,6 @@ var ytdl = require('youtube-dl');
 var spawn = require('child_process').spawn
 var path = require('path');
 
-
 var assetFolder = path.join(__dirname + '/../assets');
 
 if (!fs.existsSync(assetFolder)){

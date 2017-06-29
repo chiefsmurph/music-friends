@@ -100,7 +100,10 @@ var socketManager = (io) => (socket) => {
       console.log(dlObj);
       setTracks(
         forPlaylist.playlistid,
-        updatedTracksWithDl(forPlaylist.tracks, dlObj, (val) => val.replace(/'/g, "''")),
+        updatedTracksWithDl(forPlaylist.tracks, dlObj, (val) => {
+          console.log('val: ', val);
+          return (val && val.replace) ? val.replace(/'/g, "''") : val;
+        }),
         (err, res) => {
           console.log('error: ' + err);
           console.log('downloaded' + dlLink + ' emitting to ' + playlistid);
@@ -116,18 +119,20 @@ var socketManager = (io) => (socket) => {
 
     Songs.getSong(song.id, (foundSong) => {
       if (foundSong) {
-        console.log('already found ', foundSong, foundSong.downloadlink);
-        updateAndEmit(foundSong.downloadlink);
+        console.log('already found ', foundSong, foundSong.downloadcode);
+        updateAndEmit(foundSong.downloadcode);
       } else {
 
         getAudio(song.url, song.title)
           .then(dlLink => {
 
               console.log('after getting song now updating db')
-              song.downloadLink = dlLink;
+              song.filename = dlLink;
               Songs.addSong(song, res => {
                 console.log('updated song db now emit');
-                updateAndEmit(dlLink);
+                console.log('added song:');
+                console.log(JSON.stringify(res));
+                updateAndEmit(res.downloadcode);
               });
 
           })
@@ -162,17 +167,21 @@ var socketManager = (io) => (socket) => {
 
 
   // streaming
-  socket.on('client-stream-request', function (mp3File) {
+  socket.on('client-stream-request', function (downloadCode) {
     var stream = ss.createStream();
-    var assetFolder = path.join(__dirname + '/../assets/');
-    var filename = assetFolder + mp3File;
-    console.log('stremaing ' + filename)
-    ss(socket).emit('audio-stream', stream, { name: filename });
-    if (fs.existsSync(filename)) {
-      fs.createReadStream(filename).pipe(stream);
-    } else {
-      console.log('does not exist');
-    }
+    Songs.getFilenameFromDownloadcode(downloadCode, mp3File => {
+      if (!mp3File) {
+        return console.log('HACKER someone trying to stream a song that doesnt exist.  downloadcode: ' + downloadCode);
+      }
+      var assetFolder = path.join(__dirname + '/../assets/');
+      var filename = assetFolder + mp3File;
+      ss(socket).emit('audio-stream', stream, { name: filename });
+      if (fs.existsSync(filename)) {
+        fs.createReadStream(filename).pipe(stream);
+      } else {
+        console.log('does not exist');
+      }
+    });
   });
 
   // keys

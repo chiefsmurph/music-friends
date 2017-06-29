@@ -21,6 +21,10 @@ const ModalManager = () => ({
       ['.container > h1', '.container #left', '.container #right'].forEach((tag) => {
         document.querySelector(tag).style.filter = "blur(2px)";
       });
+      setTimeout(() => {
+        console.log('focus');
+        document.getElementById(modalName).querySelector('input').focus();
+      }, 1);
       return {
         showingModal: modalName
       };

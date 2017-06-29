@@ -10,9 +10,10 @@ module.exports = {
 
   initSocket: (state, actions) => {
     console.log("initting socket connection")
-    var socket = socketclient('http://localhost:2222');
+    var socket = socketclient(location.origin);
     socket.on('connect', function(){
       console.log("connected")
+      socket.emit('getLeaderboard', actions.updateLeaderboard);
     });
 
     socket.on('downloadLink', (data) => {

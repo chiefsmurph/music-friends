@@ -2,7 +2,7 @@ import { h } from 'hyperapp';
 
 const ConfirmDeleteSavedPlaylist = ({ state, actions }, children) => {
   return (
-    <div class="modal" id="deleteplaylist">
+    <div class="modal" id="confirmdelete">
       <a class="x" onclick={actions.hideModals}>x</a>
       <header>
         Unsaving playlist

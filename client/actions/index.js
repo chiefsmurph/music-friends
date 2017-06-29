@@ -38,6 +38,13 @@ module.exports = Object.assign(
 
     },
 
+    goHome: (state, actions, id) => {
+      actions.router.go('/');
+      return {
+        currentPlaylist: {}
+      };
+    },
+
     error: (state, actions, error) => {
       console.error(error);
     }

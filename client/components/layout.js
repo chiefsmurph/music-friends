@@ -2,14 +2,14 @@ import { h } from 'hyperapp';
 import PlaylistButton from './PlaylistButton';
 
 // modals
-import NewPlaylistModal from './newPlaylistModal';
-import ConfirmDeleteSavedPlaylist from './confirmDeleteSavedPlaylist';
-import SubmitKeysModal from './submitKeysModal';
-import GoToPlaylist from './GoToPlaylist';
+import NewPlaylistModal from './modals/newPlaylist';
+import ConfirmDeleteSavedPlaylistModal from './modals/confirmDeleteSavedPlaylist';
+import SubmitKeysModal from './modals/submitKeys';
+import GoToPlaylistModal from './modals/GoToPlaylist';
 
 const Layout = ({ state, actions }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying } = state;
-  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl } = actions;
+  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goHome } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
   };
@@ -26,6 +26,14 @@ const Layout = ({ state, actions }, children) => {
           </code>
         )}
         <h1><span><img src={'/icons/' + state.currentIcon} /></span>music hacker</h1>
+        <div style={{
+          float: 'right',
+          position: 'absolute',
+          right: '77px',
+          top: '122px'
+        }}>
+            <a href='javascript:void(0)' onclick={goHome}>home</a>
+        </div>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button><br/>
           <h2>saved playlists</h2>
@@ -71,7 +79,7 @@ const Layout = ({ state, actions }, children) => {
         )}
 
         {(showingModal === 'confirmdelete') && (
-          <ConfirmDeleteSavedPlaylist
+          <ConfirmDeleteSavedPlaylistModal
             state={state}
             actions={actions} />
         )}
@@ -83,7 +91,7 @@ const Layout = ({ state, actions }, children) => {
         )}
 
         {(showingModal === 'gotoplaylist') && (
-          <GoToPlaylist
+          <GoToPlaylistModal
             state={state}
             actions={actions} />
         )}

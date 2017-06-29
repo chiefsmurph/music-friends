@@ -1,7 +1,11 @@
 const transformArrOfObjs = (arr, transform) => {
     return arr.map(obj => {
       return Object.keys(obj).reduce((acc, key) => {
-        acc[key] = transform(obj[key].toString());
+        if (obj[key]) {
+          acc[key] = transform(obj[key].toString());
+        } else {
+          console.log('woah watch here: ' + acc[key] + ' and ' + key);
+        }
         return acc;
       }, {});
     });

@@ -1,6 +1,7 @@
 import { h } from 'hyperapp';
 import Layout from '../components/layout';
 import YoutubeSearcher from '../components/youtubeSearcher';
+import Taggle from 'taggle';
 
 const playlistEditor = (state, actions) => {
 
@@ -82,7 +83,6 @@ const playlistEditor = (state, actions) => {
             </td>
           </tr>
         </table>
-
       </header>
 
       {state.currentPlaylist.tracks && (

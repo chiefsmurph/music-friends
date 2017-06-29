@@ -17,7 +17,7 @@ const SubmitKeysModal = ({ state, actions }, children) => {
       })
   };
   return (
-    <div class="modal" id="deleteplaylist">
+    <div class="modal" id="submitkeys">
       <a class="x" onclick={actions.hideModals}>x</a>
       <header>
         Submit the key for admin access
