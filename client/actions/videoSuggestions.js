@@ -47,17 +47,17 @@ module.exports = {
         state.socket.emit('requestDownload', vid, currentPlaylistId);
 
         // for electron
-        // window.getAudio(vid.url)
-        //   .then(file => {
-        //     console.log('file', file);
-        //     actions.handleDlLink({
-        //       playlistid: currentPlaylistId,
-        //       song: {
-        //         id: vid.id
-        //       },
-        //       dl: file
-        //     });
-        //   });
+        window.getAudio(vid.url)
+          .then(file => {
+            console.log('file', file);
+            actions.handleDlLink({
+              playlistid: currentPlaylistId,
+              song: {
+                id: vid.id
+              },
+              dl: file
+            });
+          });
 
       });
 

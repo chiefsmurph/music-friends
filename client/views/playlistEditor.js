@@ -60,7 +60,7 @@ const playlistEditor = (state, actions) => {
                 <br/><br/>
                 <input
                   type="button"
-                  value="| Download entire playlist as a zip"
+                  value="| Download all"
                   class={(!hasDl) ? 'disabled' : ''}
                   disabled={!hasDl}/>
             </td>

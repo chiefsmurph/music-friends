@@ -8,7 +8,7 @@
     "build": "$(npm bin)/webpack -p",
     "watch": "$(npm bin)/webpack -p -w",
     "serve": "http-server",
-    "server": "DATABASE_URL=$(heroku config:get DATABASE_URL -a thawing-cove-1839) node server/server.js",
+    "server": "DATABASE_URL=$(echo 'postgres://ujqdkdelgoaxhb:4Evyye4Js6eyHDGk4m5N58BaiA@ec2-54-225-165-132.compute-1.amazonaws.com:5432/d8qf06o1ivquqj') node server/server.js",
     "start": "node server/server.js",
     "electron": "electron client/electron"
   },
