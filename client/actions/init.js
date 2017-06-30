@@ -23,7 +23,7 @@ module.exports = {
 
     socket.on('tracksUpdate', (playlistid, tracks) => {
       console.log('updating tracks for ' + playlistid, tracks);
-      actions.updateCacheTracksForPlaylist(playlistid, tracks);
+      actions.updateCacheTracksForPlaylist({ playlistid, tracks });
       actions.updateCurrentPlaylistIfNecessary({ playlistid, tracks });
     });
 
