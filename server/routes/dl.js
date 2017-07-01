@@ -17,7 +17,9 @@ router.get('/song/:download_code', function(req, res, next) {
           return res.send("That file doesn't exist.  Stop yanking our chain.<br><a href='/'>Go Back</a>");
         }
         res.download(path);
-        Songs.incrementDownloadCount(downloadCode, res => {
+        Songs.incrementDownloadCount({
+          downloadcode: downloadCode
+        }, res => {
           if (res) {
             console.log('successfully incremented donwload count');
           } else {

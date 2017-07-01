@@ -50,6 +50,7 @@ function TableInterface(tableName, fieldObj, methods) {
   };
 
   this.update = function(options, callback) {
+    console.log('updating ', JSON.stringify(options));
     this.executeQuery(sql.update(options), function(response) {
       if (callback) callback(response);
     });

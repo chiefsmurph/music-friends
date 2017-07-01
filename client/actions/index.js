@@ -14,6 +14,7 @@ module.exports = Object.assign(
   videoSuggestions,
   streaming,
   {
+    setLeaderboard: (state, actions, leaderboard) => ({ leaderboard }),
     handleDlLink: (state, actions, data) => {
       if (state.currentPlaylist.playlistid === data.playlistid) {
         // update currentplaylist tracks

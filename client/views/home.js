@@ -1,6 +1,8 @@
 import { h } from 'hyperapp';
 import Layout from '../components/layout';
 
+import Leaderboard from '../components/leaderboard';
+
 const home = (state, actions) => {
 
   return (
@@ -8,7 +10,13 @@ const home = (state, actions) => {
       actions={actions}
       state={state}>
 
-      Welcome to the homepagedeaf
+      <h2>Welcome to the homepage</h2>
+
+      <br/>
+
+      <Leaderboard
+        leaderboard={state.leaderboard}
+        goToPlaylist={(playlistid) => actions.router.go('/playlist/' + playlistid) }/>
 
     </Layout>
   )
