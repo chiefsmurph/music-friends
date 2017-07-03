@@ -2,6 +2,7 @@
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+const path = require('path');
 
 // Report crashes to our server.
 // electron.crashReporter.start();
@@ -22,6 +23,17 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+
+  var protocol = electron.protocol;
+  protocol.interceptFileProtocol('file', function(req, callback) {
+    var url = req.url.substr(7);
+    console.log(path.normalize(__dirname + url));
+    callback({path: path.normalize(__dirname + url)})
+  },function (error) {
+    if (error)
+      console.error('Failed to register protocol')
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -31,7 +43,7 @@ app.on('ready', function() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+  mainWindow.loadURL(`file:///dist/index.html`);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

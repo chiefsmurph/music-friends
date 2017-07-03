@@ -25,7 +25,7 @@ const Layout = ({ state, actions }, children) => {
           {location.pathname}
           </code>
         )}
-        <h1><span><img src={state.currentIcon} /></span>music hacker</h1>
+        <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music hacker</h1>
         <div style={{
           float: 'right',
           position: 'absolute',
