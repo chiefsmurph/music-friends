@@ -5,9 +5,10 @@ function SQL(tableName, fieldObj) {
 
   var delimitedVals = function(mappings, del) {
     var stringVal = function(val) {
+      console.log('val', val);
       return JSON.stringify(val).replace(/"/g, "'")
     };
-    return Object.keys(mappings).map(function(field) {
+    return Object.keys(mappings).filter(key => mappings[key]).map(function(field) {
       var valFormatted = (fieldObj[field][0].indexOf('varchar') !== -1) ? stringVal(mappings[field]) : mappings[field];
       return field + ' = ' + valFormatted;
     }).join(del);
@@ -38,8 +39,9 @@ function SQL(tableName, fieldObj) {
   };
   this.update = function(options) {
     var parts = ['UPDATE', tableName, 'SET'];
-    if (!options || !options.data) {
-      return console.error('SQL.update needs options.data');
+    if (!options || !options.data || !options.where) {
+      console.log(options);
+      return console.log('SQL.update needs options.data');
     }
     parts.push(delimitedVals(options.data, ', '));
     if (options.where) {

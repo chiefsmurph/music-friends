@@ -8,12 +8,11 @@ var Playlists = new TableInterface('playlists', {
   playlistid: ['varchar(20)', 'not null'],
   title: ['varchar(70)', 'not null'],
   key: ['varchar(20)', 'not null'],
-  tracks: ['json']
+  tracks: ['json'],
+  requestcount: ['integer', 'DEFAULT 0']
 }, function() {
   this.getAll = (cb) => {
-    return this.select({}, (res) => {
-      cb(res);
-    });
+    return this.select({}, cb);
   };
   this.getPlaylist = (id, cb) => {
     return this.select({
@@ -21,6 +20,7 @@ var Playlists = new TableInterface('playlists', {
         playlistid: id,
       }
     }, (res) => {
+      if (!res) return cb(null);
       res = res[0];
       console.log('found', res);
       if (res && res.tracks) {
@@ -71,6 +71,31 @@ var Playlists = new TableInterface('playlists', {
       cb(response[0].tracks)
     });
   };
+  this.incrementRequestCount = (playlistid, cb) => {
+    console.log('incrementing ' + playlistid);
+    return this.update({
+      data: {
+        requestcount: 'requestcount + 1'
+      },
+      where: {
+        playlistid
+      }
+    }, res => {
+      console.log('res', JSON.stringify(res))
+      return cb(!!res);
+    });
+  };
+  this.getTopPlaylists = (cb) => {
+    return this.executeQuery('SELECT * FROM playlists ORDER BY requestcount desc LIMIT 3', res => {
+      return cb(res.map(pl => {
+        delete pl.key;
+        delete pl.tableid;
+        pl.trackcount = pl.tracks.length || 0;
+        delete pl.tracks;
+        return pl;
+      }));
+    });
+  }
 });
 
 module.exports = Playlists;

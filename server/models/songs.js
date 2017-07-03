@@ -9,7 +9,8 @@ var Songs = new TableInterface('songs', {
   thumbnail: ['varchar(370)', 'not null'],
   filename: ['varchar(200)'],
   downloadcode: ['varchar(200)'],
-  downloadcount: ['integer', 'DEFAULT 0']
+  downloadcount: ['integer', 'DEFAULT 0'],
+  addcount: ['integer', 'DEFAULT 1']
 }, function() {
   this.getSong = (id, cb) => {
     console.log('getting id', id);
@@ -48,19 +49,29 @@ var Songs = new TableInterface('songs', {
       return cb( (foundSong) ? res[0].filename : null )
     });
   };
-  this.incrementDownloadCount = (downloadCode, cb) => {
+  this.incrementDownloadCount = (where, cb) => {
     return this.update({
       data: {
         downloadcount: 'downloadcount + 1'
       },
-      where: {
-        downloadcode: downloadCode
-      }
+      where
     }, res => {
       console.log('res', JSON.stringify(res))
       return cb(!!res);
     });
   };
+  this.incrementAddCount = (where, cb) => {
+    return this.update({
+      data: {
+        addcount: 'addcount + 1'
+      },
+      where
+    }, res => {
+      console.log('res', JSON.stringify(res))
+      return cb(!!res);
+    });
+  };
+  this.getTopSongs = (cb) => this.executeQuery('SELECT * FROM songs ORDER BY addcount desc LIMIT 3', cb);
 });
 
 module.exports = Songs;

@@ -32,7 +32,7 @@ const Layout = ({ state, actions }, children) => {
           right: '77px',
           top: '122px'
         }}>
-            <a href='javascript:void(0)' onclick={goHome}>home</a>
+            <a href='javascript:void(0)' onclick={goHome} style={{color: 'cyan'}}>home</a>
         </div>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button><br/>

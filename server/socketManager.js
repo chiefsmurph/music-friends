@@ -14,15 +14,18 @@ var fs = require('fs');
 var Playlists = require('./models/playlists');
 var Songs = require('./models/songs');
 
+// module
+var leaderboard = require('./leaderboard');
+
 var socketManager = (io) => (socket) => {
 
   var activePlaylist = null;
   console.log('connectionnn');
 
   setTimeout(() => {
-    socket.emit('download Link', 'party time');
-    var py = 'r12cxSCGZ';
-    io.sockets.to(py).emit('downloadLink', 'psecond arty time');
+    leaderboard.getLeaderboard(leaderboard => {
+      socket.emit('leaderboard', leaderboard);
+    });
   }, 4000);
 
 
@@ -59,12 +62,19 @@ var socketManager = (io) => (socket) => {
   socket.on('getPlaylist', (data, cb) => {
     console.log('getting ' + data.id);
     Playlists.getPlaylist(data.id, (pl) => {
+      console.log('hellloooo');
+      console.log(pl, 'pl');
       if (pl) {
+        console.log('got playlist ' + JSON.stringify(pl));
         delete pl.key;
         activePlaylist = pl;
         // activePlaylist.
-        cb(activePlaylist);
-        console.log('got playlist ' + JSON.stringify(pl));
+        console.log('here');
+        console.log(pl);
+        Playlists.incrementRequestCount(pl.playlistid, function() {
+          console.log('... and incremented request count');
+          cb(activePlaylist);
+        });
       } else {
         cb({});
       }
@@ -120,7 +130,13 @@ var socketManager = (io) => (socket) => {
     Songs.getSong(song.id, (foundSong) => {
       if (foundSong) {
         console.log('already found ', foundSong, foundSong.downloadcode);
-        updateAndEmit(foundSong.downloadcode);
+        // increase addcount
+        Songs.incrementAddCount({
+          songid: foundSong.songid
+        }, function() {
+          updateAndEmit(foundSong.downloadcode);
+        });
+
       } else {
 
         getAudio(song.url, song.title)
@@ -185,11 +201,7 @@ var socketManager = (io) => (socket) => {
   });
 
   // keys
-  socket.on('authorizeKey', (id, key, cb) => {
-    Playlists.authKey(id, key, (authed) => {
-      cb(authed);
-    })
-  });
+  socket.on('authorizeKey', Playlists.authKey);
 }
 
 module.exports = socketManager;

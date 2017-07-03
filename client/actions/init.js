@@ -27,6 +27,11 @@ module.exports = {
       actions.updateCurrentPlaylistIfNecessary({ playlistid, tracks });
     });
 
+    socket.on('leaderboard', (leaderboard) => {
+      console.log('leaderboard', leaderboard);
+      actions.setLeaderboard(leaderboard);
+    });
+
     socket.on('downloadError', (data) => {
       console.info(data);
     });
