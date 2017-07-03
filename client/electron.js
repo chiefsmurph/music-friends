@@ -39,7 +39,8 @@ app.on('ready', function() {
     width: 800,
     height: 600,
     minHeight: 400,
-    minWidth: 800
+    minWidth: 800,
+    titleBarStyle: 'hidden'
   });
 
   // and load the index.html of the app.
