@@ -8,12 +8,9 @@ const home = (state, actions) => {
       actions={actions}
       state={state}>
 
-      <h2>Welcome to music hacker - the most awesome underground music application for creating a rich mp3 library in 2017!</h2>
+      <h2>Welcome to music hacker - the most awesome underground web application for building an mp3 collection in 2017!</h2>
       <br/>
-      <p>We recommend you download the music hacker app directly to your computer:</p>
-
-      <p>Then all you have to do is create a playlist and then start adding songs.</p>
-      <p>You can use music hacker directly in your browser, but then you are not using the full capabilities.</p>
+      <p>Go ahead and create a playlist and then start adding songs.</p>
 
     </Layout>
   )
