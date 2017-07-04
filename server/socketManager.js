@@ -122,7 +122,7 @@ var socketManager = (io) => (socket) => {
   });
 
   var setTracks = (playlistid, tracks, cb) => {
-    if (activePlaylist.playlistid === playlistid) {
+    if (activePlaylist && activePlaylist.playlistid === playlistid) {
       activePlaylist.tracks = tracks;
     }
     console.log('setting tracks, playlistid' + playlistid, tracks);

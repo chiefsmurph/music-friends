@@ -50,7 +50,7 @@ app.on('ready', function() {
   mainWindow.loadURL(`file:///dist/index.html`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   setTimeout(() => {
     console.log('sending assets folder');
