@@ -43,11 +43,12 @@ module.exports = {
       beforeDL,
       (res) => {
 
-        // to server
-        state.socket.emit('requestDownload', vid, currentPlaylistId);
-
-        // for electron
-        actions.downloadAudio(vid);
+        if (!state.fileDirectory[vid.id]) {
+          // to server
+          state.socket.emit('requestDownload', vid, currentPlaylistId);
+          // for electron
+          actions.downloadAudio(vid);
+        }
 
       });
 
