@@ -71,14 +71,6 @@ module.exports = {
     });
 
     localStorage.setItem('playlists', JSON.stringify(newPlaylists));
-
-    if (state.currentPlaylist.playlistid === pl.playlistid) {
-      actions.router.go('/');
-      return {
-        playlists: newPlaylists,
-        currentPlaylist: {}
-      };
-    }
     return {
       playlists: newPlaylists
     };

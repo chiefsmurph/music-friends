@@ -53,8 +53,8 @@ app.on('ready', function() {
   mainWindow.webContents.openDevTools();
   setTimeout(() => {
     console.log('sending assets folder');
-    mainWindow.webContents.send('assetsFolder', app.getPath('music'));
-  }, 3000);
+    mainWindow.webContents.send('assetsFolder', app.getPath('music') + '/musichacker');
+  }, 1000);
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows

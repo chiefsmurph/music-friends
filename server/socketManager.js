@@ -36,10 +36,6 @@ var socketManager = (io) => (socket) => {
       console.log('joining ', playlistid);
       socket.join(playlistid);
     });
-
-    setTimeout(() => {
-      io.sockets.to('r12cxSCGZ').emit('downloadLink', 'cats');
-    }, 1000);
   });
 
   socket.on('suggest', (data, cb) => {
@@ -47,7 +43,7 @@ var socketManager = (io) => (socket) => {
     var query = data.suggestText;
     console.log('suggest words ' + query);
 
-    if (query.length < 5) return;
+    if (query.length < 4) return;
 
     queryYoutube(query)
       .then(allVideos => {
@@ -97,7 +93,7 @@ var socketManager = (io) => (socket) => {
     console.log();
 
     var forPlaylist = activePlaylist;
-    
+
     Songs.getSong(song.id, (foundSong) => {
       if (foundSong) {
         console.log('already found ', foundSong);

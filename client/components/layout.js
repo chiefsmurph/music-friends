@@ -61,7 +61,7 @@ const Layout = ({ state, actions }, children) => {
         </div>
         <div class="clear"></div>
 
-        {true && (
+        {false && (
           <div id="debugArea">
             <label>
                 debug CurrentPlaylist

@@ -12,7 +12,7 @@ module.exports = {
           console.log('received ' + JSON.stringify(suggestions));
           actions.setVideoSuggestions(suggestions);
         });
-      }, 300)
+      }, 100)
     };
   },
   vidClick: (state, actions, vid) => {
