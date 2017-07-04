@@ -23,6 +23,7 @@ module.exports = Object.assign(
     },
 
 
+
     playlistRoute: (state, actions, id) => {
       // console.log('found params', data.params.id);
       actions.connectToPlaylistRooms([id]);

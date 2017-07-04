@@ -16,6 +16,17 @@ module.exports = {
         };
       }
     },
+    playMP3: (state, actions, data) => {
+      console.log('PLAYINGMP3', data);
+      var audio = document.getElementById('player');
+      audio.src = window.assetsFolder + '/' + data;
+      audio.onended = () => {
+        console.log('on end')
+        actions.stopStreaming();
+      };
+      audio.play();
+    },
+
     streamEnded: (state, actions, parts) => {
       var audio = document.getElementById('player');
       if (state.lastRequested && state.nowPlaying !== state.lastRequested) {
