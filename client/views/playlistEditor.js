@@ -111,12 +111,19 @@ const playlistEditor = (state, actions) => {
                 </td>
                 <td>
                   {
-                    (track.dl) ? (
+                    (state.fileDirectory[track.id]) ? (
                       <a
-                        href={'/dl/song/' + track.dl.replace(/''/g, "'")}
-                        // onclick={() => { window.openItem('/' + track.dl)}}
+                        // href={'/dl/song/' + track.dl.replace(/''/g, "'")}
+                        onclick={() => { window.openItem('/' + state.fileDirectory[track.id])}}
                         >
-                        <img width='50px' src='/download.gif' />
+                        <img width='50px' src='/dist/locateOnHdd.png' />
+                      </a>
+                    ) : (state.activeDownloads.indexOf(track.id) === -1) ? (
+                      <a
+                        // href={'/dl/song/' + track.dl.replace(/''/g, "'")}
+                        onclick={() => { actions.downloadAudio(track); }}
+                        >
+                        <img width='50px' src='/dist/download.gif' />
                       </a>
                     ) : (
                       <div class="loader"/>

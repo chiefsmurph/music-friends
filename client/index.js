@@ -7,6 +7,7 @@ import ChangingIcon from './plugins/changingIcon'
 import CachePages from './plugins/cachePages'
 import ModalManager from './plugins/modalManager'
 import KeyManager from './plugins/keyManager'
+import FileManager from './plugins/fileManager'
 
 app({
   state: {
@@ -14,6 +15,7 @@ app({
     playlists: [],          // left side bar
     suggestRequest: null,
     suggestions: [],
+    activeDownloads: [],
     debugCP: localStorage.getItem('debugCP') === 'true'
   },
   view,
@@ -27,6 +29,7 @@ app({
       if (data.params && data.params.id) {
         actions.playlistRoute(data.params.id);
       }
+      actions.setRouteMatch(data.match);
     }
   },
   plugins: [
@@ -34,7 +37,8 @@ app({
     ChangingIcon,
     CachePages,
     ModalManager,
-    KeyManager
+    KeyManager,
+    FileManager
   ]
 });
 

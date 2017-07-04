@@ -7,8 +7,6 @@ var Songs = new TableInterface('songs', {
   title: ['varchar(170)', 'not null'],
   url: ['varchar(170)', 'not null'],
   thumbnail: ['varchar(370)', 'not null'],
-  filename: ['varchar(200)'],
-  downloadcode: ['varchar(200)'],
   downloadcount: ['integer', 'DEFAULT 0'],
   addcount: ['integer', 'DEFAULT 1']
 }, function() {
@@ -24,16 +22,14 @@ var Songs = new TableInterface('songs', {
       cb(res[0] || null);
     });
   };
-  this.addSong = ({ id, url, title, thumbnail, filename }, cb) => {
+  this.addSong = ({ id, url, title, thumbnail }, cb) => {
     console.log('adding')
-    console.log(id, url, title, thumbnail, filename);
+    console.log(id, url, title, thumbnail);
     return this.insert({
       songid: id,
       url,
       title,
-      thumbnail,
-      filename,
-      downloadcode: shortid.generate()
+      thumbnail
     }, (playlist) => {
       console.log('created ', playlist);
       cb(playlist);

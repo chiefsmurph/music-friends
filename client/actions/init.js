@@ -16,11 +16,6 @@ module.exports = {
       socket.emit('getLeaderboard', actions.updateLeaderboard);
     });
 
-    socket.on('downloadLink', (data) => {
-      actions.handleDlLink(data);
-      console.log('download link', data);
-    });
-
     socket.on('tracksUpdate', (playlistid, tracks) => {
       console.log('updating tracks for ' + playlistid, tracks);
       actions.updateCacheTracksForPlaylist({ playlistid, tracks });

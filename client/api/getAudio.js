@@ -47,10 +47,13 @@ var getAudio = function(url, title) {
         return reject('no playlists allowed');
       }
 
+      // not in use
       var pathToYtdl = path.join(__dirname + '/../../node_modules/youtube-dl/bin/youtube-dl');
       console.log('ytdl: ' + pathToYtdl);
       console.log('title', title);
-      youtube_dl = spawn(pathToYtdl, [
+
+
+      youtube_dl = spawn('youtube-dl', [
         '--output',
         assetFolder + '/%(title)s.%(ext)s',
         '--extract-audio',
@@ -77,7 +80,7 @@ var getAudio = function(url, title) {
       youtube_dl.on('exit', () => {
         console.log('exit dl', songFileName);
         if (songFileName) {
-          resolve(assetFolder + songFileName);
+          resolve(songFileName);
         } else {
           reject(error.join(', '));
         }

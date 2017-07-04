@@ -90,75 +90,35 @@ var socketManager = (io) => (socket) => {
     });
   });
 
-  socket.on('requestDownload', (song, playlistid) => {
+  socket.on('downloadRequest', (song, playlistid) => {
 
     console.log('getting song')
     console.log(JSON.stringify(song));
     console.log();
 
     var forPlaylist = activePlaylist;
-    var updateAndEmit = (dlLink) => {
-
-      console.log('now updating database with download url');
-      console.log(JSON.stringify(forPlaylist));
-
-      var dlObj = {
-        playlistid,
-        song,
-        dl: dlLink
-      };
-      console.log(dlObj);
-      setTracks(
-        forPlaylist.playlistid,
-        updatedTracksWithDl(forPlaylist.tracks, dlObj, (val) => {
-          console.log('val: ', val);
-          return (val && val.replace) ? val.replace(/'/g, "''") : val;
-        }),
-        (err, res) => {
-          console.log('error: ' + err);
-          console.log('downloaded' + dlLink + ' emitting to ' + playlistid);
-          io.sockets.to(playlistid).emit('downloadLink', 'finished');
-          var obj = {
-            forPlaylist,
-            activePlaylist
-          };
-          io.sockets.to(playlistid).emit('downloadLink', dlObj);
-        }
-      );
-    };
-
+    
     Songs.getSong(song.id, (foundSong) => {
       if (foundSong) {
-        console.log('already found ', foundSong, foundSong.downloadcode);
+        console.log('already found ', foundSong);
         // increase addcount
         Songs.incrementAddCount({
           songid: foundSong.songid
         }, function() {
-          updateAndEmit(foundSong.downloadcode);
+          // updateAndEmit(foundSong.downloadcode);
+          console.log('updated database with new song')
         });
 
       } else {
 
-        getAudio(song.url, song.title)
-          .then(dlLink => {
+        Songs.addSong(song, res => {
+          console.log('updated song db now emit');
+          console.log('added song:');
+          console.log(JSON.stringify(res));
+          // updateAndEmit(res.downloadcode);
+          console.log('updated database with new song')
+        });
 
-              console.log('after getting song now updating db')
-              song.filename = dlLink;
-              Songs.addSong(song, res => {
-                console.log('updated song db now emit');
-                console.log('added song:');
-                console.log(JSON.stringify(res));
-                updateAndEmit(res.downloadcode);
-              });
-
-          })
-          .catch(err => {
-            console.log(err);
-            io.sockets.to(playlistid).emit('downloadError', {
-              song,
-              err
-            });
-          });
       }
     });
 

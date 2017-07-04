@@ -4,6 +4,10 @@ const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 const path = require('path');
 
+
+var mymusic = app.getPath('music');
+console.log('mymusic, ', mymusic);
+
 // Report crashes to our server.
 // electron.crashReporter.start();
 
@@ -27,7 +31,6 @@ app.on('ready', function() {
   var protocol = electron.protocol;
   protocol.interceptFileProtocol('file', function(req, callback) {
     var url = req.url.substr(7);
-    console.log(path.normalize(__dirname + url));
     callback({path: path.normalize(__dirname + url)})
   },function (error) {
     if (error)
@@ -48,7 +51,10 @@ app.on('ready', function() {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-
+  setTimeout(() => {
+    console.log('sending assets folder');
+    mainWindow.webContents.send('assetsFolder', app.getPath('music'));
+  }, 3000);
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows

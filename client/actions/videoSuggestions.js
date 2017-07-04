@@ -47,19 +47,28 @@ module.exports = {
         state.socket.emit('requestDownload', vid, currentPlaylistId);
 
         // for electron
-        window.getAudio(vid.url)
-          .then(file => {
-            console.log('file', file);
-            actions.handleDlLink({
-              playlistid: currentPlaylistId,
-              song: {
-                id: vid.id
-              },
-              dl: file
-            });
-          });
+        actions.downloadAudio(vid);
 
       });
 
+  },
+  addToActiveDls: (state, actions, vidId) => ({
+    activeDownloads: state.activeDownloads.concat([vidId])
+  }),
+  removeFromActiveDls: (state, actions, vidId) => ({
+    activeDownloads: state.activeDownloads.filter(dlId => dlId !== vidId)
+  }),
+  downloadAudio: (state, actions, vid) => {
+    const { url, id } = vid;
+    actions.addToActiveDls(vid.id);
+    window.getAudio(vid.url)
+      .then(file => {
+        console.log('file', file);
+        actions.removeFromActiveDls(vid.id);
+        actions.handleLocalAudio({
+          songid: vid.id,
+          file
+        });
+      });
   }
 };

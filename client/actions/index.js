@@ -15,20 +15,11 @@ module.exports = Object.assign(
   streaming,
   {
     setLeaderboard: (state, actions, leaderboard) => ({ leaderboard }),
-    handleDlLink: (state, actions, data) => {
-      if (state.currentPlaylist.playlistid === data.playlistid) {
-        // update currentplaylist tracks
-        actions.updateCurrentPlaylistWithDl(data);
-      }
-      actions.updateCacheWithDL(data);
-    },
+    setRouteMatch: (state, actions, match) => ({ routeMatch: match }),
 
     handleLocalAudio: (state, actions, data) => {
-      if (state.currentPlaylist.playlistid === data.playlistid) {
-        // update currentplaylist tracks
-        actions.updateCurrentPlaylistWithDl(data);
-      }
-      actions.updateCacheWithDL(data);
+      console.log('new file handle local', data);
+      actions.newFileDownloaded(data);
     },
 
 
@@ -39,8 +30,9 @@ module.exports = Object.assign(
 
     },
 
-    goHome: (state, actions, id) => {
-      actions.router.go('/');
+    goToRoute: (state, actions, route) => {
+      console.log('going to ' + route);
+      actions.router.go('/' + route);
       return {
         currentPlaylist: {}
       };

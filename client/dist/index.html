@@ -72,8 +72,7 @@
     }
     h1 {
       font-size: 100px;
-      margin-left: 20px;
-      margin-top: 55px;
+      margin: 20px 0 15px 15px;
       font-family: 'VT323';
       cursor: default;
     }
@@ -83,6 +82,8 @@
       display: inline-block;
       text-align: center;
       font-size: 70%;
+      position: relative;
+      top: 17px;
     }
     #left {
       margin-left: 10px;
@@ -155,8 +156,8 @@
       /* Change this to whatever the width of your left column is*/
     }
     #right header {
+      padding: 15px 20px;
       margin-top: 10px;
-      padding: 20px;
       background-color: lightyellow;
       color: black;
       border-radius: 10px 10px 0 0;
@@ -173,6 +174,7 @@
     #right header h3 {
       text-align: center;
       font-size: 30px;
+      margin-bottom: 8px;
     }
     #right table {
       width: 100%;
@@ -303,7 +305,7 @@
     input#songname {
       font-size: 19px;
       text-align: center;
-      width: 97%;
+      width: calc(100% - 16px);
     }
     #vidSuggestions {
       display: flex;
@@ -501,22 +503,42 @@
     #top-songs > div img {
       display: block;
       margin: auto;
+      width: 100%;
+      max-width: 300px;
+    }
+    #nav-menu {
+      position: absolute;
+      right: 6px;
+      top: 102px;
+    }
+    #nav-menu a {
+      color: cyan;
+      display: inline-block;
+      margin: 4px 2px;
+      border: 1px solid black;
+      padding: 6px 15px;
+      border-radius: 10px 10px 0 0;
+      border-bottom-width: 0px;
+      background-color: rgba(255,255,255,0.1);
+    }
+    #nav-menu a.currentRoute {
+      background-color: rgba(100,100,100,0.1);
     }
 </style>
 
 </head>
 <body>
   <script>
-  // const {ipcRenderer} = require('electron');
-  //
-  // ipcRenderer.on('assetsFolder', (event, folder) => {
-  //     console.log('what')
-  //     console.log(folder, 'haha')
-  //     window.assetsFolder = folder;
-  // });
+  const {ipcRenderer} = require('electron');
+
+  ipcRenderer.on('assetsFolder', (event, folder) => {
+      console.log('what')
+      console.log(folder, 'haha')
+      window.assetsFolder = folder;
+  });
   </script>
-  <!-- <script src="../api/getAudio.js"></script>
-  <script src="../api/openItem.js"></script> -->
+  <script src="../api/getAudio.js"></script>
+  <script src="../api/openItem.js"></script>
   <script src="bundle.js"></script>
   <audio id="player" controls>
     <source src="" type="audio/mpeg">

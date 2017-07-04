@@ -11,7 +11,7 @@ const CachePages = () => ({
       playlists[pl.playlistid] = pl;
       console.log('updated cache with ', pl);
       localStorage.setItem('plCache', JSON.stringify(playlists));
-      console.log('cache now ', JSON.stringify(playlists));
+      // console.log('cache now ', JSON.stringify(playlists));
       return {
         playlistCache: playlists
       }

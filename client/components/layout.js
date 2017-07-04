@@ -8,31 +8,36 @@ import SubmitKeysModal from './modals/submitKeys';
 import GoToPlaylistModal from './modals/GoToPlaylist';
 
 const Layout = ({ state, actions }, children) => {
-  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying } = state;
-  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goHome } = actions;
+  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying, routeMatch } = state;
+  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goToRoute } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
   };
   const openGoToModal = () => {
     actions.showModal('gotoplaylist');
   };
+  const isRoute = route => (routeMatch && routeMatch.indexOf(route) !== -1) || (routeMatch === '/dist/index.html' && route === 'home');
+  const pages = ['home', 'leaderboard'];
+  // {JSON.stringify(state.authedKeys)}
+  // {location.pathname}
   return (
     <div class='container'>
         {debugCP && (
           <code>
           {JSON.stringify(currentPlaylist)}
-          {JSON.stringify(state.authedKeys)}
-          {location.pathname}
+
           </code>
         )}
         <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music hacker</h1>
-        <div style={{
-          float: 'right',
-          position: 'absolute',
-          right: '77px',
-          top: '122px'
-        }}>
-            <a href='javascript:void(0)' onclick={goHome} style={{color: 'cyan'}}>home</a>
+        <div id="nav-menu">
+            {pages.map(page => (
+              <a
+                href='javascript:void(0)'
+                onclick={() => goToRoute(page)}
+                class={(isRoute(page)) ? 'currentRoute' : ''}>
+                  {page}
+              </a>
+            ))}
         </div>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button><br/>
@@ -56,7 +61,7 @@ const Layout = ({ state, actions }, children) => {
         </div>
         <div class="clear"></div>
 
-        {false && (
+        {true && (
           <div id="debugArea">
             <label>
                 debug CurrentPlaylist

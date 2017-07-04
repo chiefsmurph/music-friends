@@ -47,8 +47,8 @@ app.on('ready', function() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
   setTimeout(() => {
-    console.log('sending','assetsFolder', app.getPath('downloads'))
-    mainWindow.webContents.send('assetsFolder', app.getPath('downloads'));
+    console.log('sending assets folder');
+    mainWindow.webContents.send('assetsFolder', app.getPath('music'));
   }, 3000);
 
   // Emitted when the window is closed.
