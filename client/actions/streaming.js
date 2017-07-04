@@ -17,14 +17,18 @@ module.exports = {
       }
     },
     playMP3: (state, actions, data) => {
+      const { file, id } = data;
       console.log('PLAYINGMP3', data);
       var audio = document.getElementById('player');
-      audio.src = window.assetsFolder + '/' + data;
+      audio.src = window.assetsFolder + '/' + file;
       audio.onended = () => {
         console.log('on end')
         actions.stopStreaming();
       };
       audio.play();
+      return {
+        nowPlaying: id
+      };
     },
 
     streamEnded: (state, actions, parts) => {

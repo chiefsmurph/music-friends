@@ -29,6 +29,18 @@ const playlistEditor = (state, actions) => {
     document.getElementById('submittingKey').focus();
   };
 
+  const handleThumbnailClick = (track) => {
+    if (state.fileDirectory[track.id]) {
+      actions.playMP3({
+        id: track.id,
+        file: state.fileDirectory[track.id]
+      });
+    } else if (state.nowPlaying === track.id) {
+      actions.stopStreaming();
+    }
+    // for now ignore thumbnail clicks when the file has not been downloaded
+  };
+
   const hasDl = state.currentPlaylist.tracks && state.currentPlaylist.tracks.some(track => track.dl);
 
   return (
@@ -102,8 +114,8 @@ const playlistEditor = (state, actions) => {
                 <td>
                   <img
                     src={track.thumbnail}
-                    onmousedown={() => { if (state.fileDirectory[track.id]) actions.playMP3(state.fileDirectory[track.id]); }}
-                    class={state.lastRequested === track.id && state.nowPlaying !== track.id ? 'justrequested' : ((!track.dl) ? 'waitingForDl' : '')}/>
+                    onmousedown={() => handleThumbnailClick(track) }
+                    class={(!state.fileDirectory[track.id]) ? 'waitingForDl' : ''}/>
                 </td>
                 <td>
                   {track.title}<br/>

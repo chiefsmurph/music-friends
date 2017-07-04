@@ -8,7 +8,7 @@ import SubmitKeysModal from './modals/submitKeys';
 import GoToPlaylistModal from './modals/GoToPlaylist';
 
 const Layout = ({ state, actions }, children) => {
-  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, lastRequested, nowPlaying, routeMatch } = state;
+  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch } = state;
   const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goToRoute } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);

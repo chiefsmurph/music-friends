@@ -31,7 +31,13 @@ app.on('ready', function() {
   var protocol = electron.protocol;
   protocol.interceptFileProtocol('file', function(req, callback) {
     var url = req.url.substr(7);
-    callback({path: path.normalize(__dirname + url)})
+    console.log(url);
+    if (url.indexOf('/Music/musichacker') === -1) {
+      callback({path: path.normalize(__dirname + url)})
+    } else {
+      console.log('nahhhhhNAH')
+      callback({path: decodeURI(url) })
+    }
   },function (error) {
     if (error)
       console.error('Failed to register protocol')
