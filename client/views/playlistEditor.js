@@ -18,8 +18,7 @@ const playlistEditor = (state, actions) => {
   };
 
   const downloadAll = () => {
-    actions.showModal('downloadingAll');
-
+    actions.downloadAll();
   };
 
   const admin = state.authedKeys.indexOf(state.currentPlaylist.playlistid) !== -1;
@@ -41,7 +40,7 @@ const playlistEditor = (state, actions) => {
     // for now ignore thumbnail clicks when the file has not been downloaded
   };
 
-  const hasDl = state.currentPlaylist.tracks && state.currentPlaylist.tracks.some(track => track.dl);
+  const hasDl = state.currentPlaylist.tracks && state.currentPlaylist.tracks.some(track => !state.fileDirectory[track.id]);
 
   return (
     <Layout
@@ -74,6 +73,7 @@ const playlistEditor = (state, actions) => {
                   type="button"
                   value="| Download all"
                   class={(!hasDl) ? 'disabled' : ''}
+                  onclick={downloadAll}
                   disabled={!hasDl}/>
             </td>
             <td>

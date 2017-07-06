@@ -1,5 +1,7 @@
 // import getAudio from '../api/getAudio'
 
+import async from 'async';
+
 module.exports = {
   setVideoSuggestions: (state, actions, suggestions) => ({ suggestions }),
   suggestVids: (state, actions) => {
@@ -59,17 +61,25 @@ module.exports = {
   removeFromActiveDls: (state, actions, vidId) => ({
     activeDownloads: state.activeDownloads.filter(dlId => dlId !== vidId)
   }),
-  downloadAudio: (state, actions, vid) => {
+  downloadAudio: async (state, actions, vid) => {
     const { url, id } = vid;
     actions.addToActiveDls(vid.id);
-    window.getAudio(vid.url)
-      .then(file => {
-        console.log('file', file);
-        actions.removeFromActiveDls(vid.id);
-        actions.handleLocalAudio({
-          songid: vid.id,
-          file
+    const file = await window.getAudio(vid.url);
+    actions.removeFromActiveDls(vid.id);
+    actions.handleLocalAudio({
+      songid: vid.id,
+      file
+    });
+  },
+  downloadAll: (state, actions) => {
+    var needsToDownload = state.currentPlaylist.tracks.filter(track => !state.fileDirectory[track.id]);
+    console.log(needsToDownload);
+    async.forEachSeries(needsToDownload, (track, cb) => {
+      actions.downloadAudio(track)
+        .then(() => {
+          console.log('done');
+          cb();
         });
-      });
+    });
   }
 };
