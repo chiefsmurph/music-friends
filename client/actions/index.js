@@ -4,6 +4,7 @@ import currentPlaylist from './currentPlaylist'
 import UI from './UI'
 import videoSuggestions from './videoSuggestions'
 import streaming from './streaming'
+import fetchingAlbums from './fetchingAlbums'
 
 module.exports = Object.assign(
   {},
@@ -13,6 +14,7 @@ module.exports = Object.assign(
   UI,
   videoSuggestions,
   streaming,
+  fetchingAlbums,
   {
     setLeaderboard: (state, actions, leaderboard) => ({ leaderboard }),
     setRouteMatch: (state, actions, match) => ({ routeMatch: match }),

@@ -5,6 +5,9 @@ const BrowserWindow = electron.BrowserWindow;  // Module to create native browse
 const path = require('path');
 
 
+var fetchCheerioObject = require('fetch-cheerio-object');
+
+
 var mymusic = app.getPath('music');
 console.log('mymusic, ', mymusic);
 
@@ -47,7 +50,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    minHeight: 400,
+    minHeight: 500,
     minWidth: 800,
     titleBarStyle: 'hidden'
   });
@@ -62,6 +65,7 @@ app.on('ready', function() {
     console.log('sending assets folder');
     mainWindow.webContents.send('assetsFolder', app.getPath('music') + '/musichacker');
   }, 1000);
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
@@ -69,4 +73,5 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
 });

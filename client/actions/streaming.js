@@ -21,6 +21,7 @@ module.exports = {
       console.log('PLAYINGMP3', data);
       var audio = document.getElementById('player');
       audio.src = window.assetsFolder + '/' + file;
+      audio.style.display = 'block';
       audio.onended = () => {
         console.log('on end')
         actions.stopStreaming();
@@ -50,7 +51,7 @@ module.exports = {
       if (audio) {
         audio.style.display = 'none';
         audio.pause();
-        audio.src = null;
+        // audio.src = null;
       }
       return {
         lastRequested: null,

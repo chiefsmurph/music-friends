@@ -1,6 +1,6 @@
 import { h } from 'hyperapp';
 
-const GoToPlaylist = ({ state, actions }, children) => {
+const GoToPlaylistModal = ({ state, actions }, children) => {
   const goToPlaylist = (e) => {
     actions.router.go('/playlist/' + document.getElementById('gotoplaylistid').value);
     actions.hideModals();
@@ -28,4 +28,4 @@ const GoToPlaylist = ({ state, actions }, children) => {
   )
 };
 
-module.exports = GoToPlaylist;
+module.exports = GoToPlaylistModal;
