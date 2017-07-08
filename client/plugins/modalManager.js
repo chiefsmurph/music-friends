@@ -23,7 +23,8 @@ const ModalManager = () => ({
       });
       setTimeout(() => {
         console.log('focus');
-        document.getElementById(modalName).querySelector('input').focus();
+        var input = document.getElementById(modalName).querySelector('input');
+        if (input) input.focus();
       }, 1);
       return {
         showingModal: modalName

@@ -5,7 +5,12 @@ import PlaylistButton from './PlaylistButton';
 import NewPlaylistModal from './modals/newPlaylist';
 import ConfirmDeleteSavedPlaylistModal from './modals/confirmDeleteSavedPlaylist';
 import SubmitKeysModal from './modals/submitKeys';
-import GoToPlaylistModal from './modals/GoToPlaylist';
+import GoToPlaylistModal from './modals/goToPlaylist';
+
+// fetch album modals
+import FetchAlbumModal from './modals/fetchAlbum';
+import SelectAlbumModal from './modals/selectAlbum';
+import ConfirmAlbumFetch from './modals/confirmAlbumFetch';
 
 const Layout = ({ state, actions }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch } = state;
@@ -25,7 +30,6 @@ const Layout = ({ state, actions }, children) => {
         {debugCP && (
           <code>
           {JSON.stringify(currentPlaylist)}
-
           </code>
         )}
         <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music hacker</h1>
@@ -97,6 +101,24 @@ const Layout = ({ state, actions }, children) => {
 
         {(showingModal === 'gotoplaylist') && (
           <GoToPlaylistModal
+            state={state}
+            actions={actions} />
+        )}
+
+        {(showingModal === 'fetchalbum') && (
+          <FetchAlbumModal
+            state={state}
+            actions={actions} />
+        )}
+
+        {(showingModal === 'selectalbum') && (
+          <SelectAlbumModal
+            state={state}
+            actions={actions} />
+        )}
+
+        {(showingModal === 'confirmalbumfetch') && (
+          <ConfirmAlbumFetch
             state={state}
             actions={actions} />
         )}

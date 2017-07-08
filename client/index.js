@@ -32,7 +32,7 @@ app({
       actions.setRouteMatch(data.match);
     }
   },
-  plugins: [
+  mixins: [
     Router,
     ChangingIcon,
     CachePages,

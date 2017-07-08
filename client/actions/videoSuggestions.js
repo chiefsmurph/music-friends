@@ -33,7 +33,7 @@ module.exports = {
     // }
 
     var currentPlaylistId = state.currentPlaylist.playlistid;
-    var generateNewTracks = (vid) => [vid].concat(state.currentPlaylist.tracks || []);
+    var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
     console.log('currentTracks', state.currentPlaylist.tracks);
     var beforeDL = generateNewTracks(vid);
     console.log('beforedl', beforeDL, currentPlaylistId);
@@ -50,6 +50,10 @@ module.exports = {
           state.socket.emit('requestDownload', vid, currentPlaylistId);
           // for electron
           actions.downloadAudio(vid);
+        }
+
+        if (state.activeFetch) {
+          actions.nextTrackOfFetch();
         }
 
       });
