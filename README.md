@@ -1,9 +1,7 @@
 # music glossary
 
-- download all your favorite songs in mp3 format
+- hear all the hits!
 - organize and share your playlists with friends
-- coming soon: download entire playlists of mp3's with a single click
-
 
 ## done
 
