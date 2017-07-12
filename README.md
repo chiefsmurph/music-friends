@@ -1,7 +1,5 @@
 # music hacker
 
-![music hacker screenshot](https://user-images.githubusercontent.com/11671559/27816824-aa676c5a-6042-11e7-9928-f5890945c0b3.png "music hacker screenshot")
-
 - download all your favorite songs in mp3 format
 - organize and share your playlists with friends
 - coming soon: download entire playlists of mp3's with a single click
