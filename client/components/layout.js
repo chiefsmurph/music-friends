@@ -44,7 +44,8 @@ const Layout = ({ state, actions }, children) => {
             ))}
         </div>
         <div id='left'>
-          <button onclick={openNewPlModal}>+ new playlist</button><br/>
+          <button onclick={openNewPlModal}>+ new playlist</button>
+          <button onclick={() => actions.showModal('fetchalbum')}>+ new album-fetch</button>
           <h2>saved playlists</h2>
           <ul>
             {playlists.map(pl => (

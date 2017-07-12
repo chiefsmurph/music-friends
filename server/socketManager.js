@@ -19,6 +19,8 @@ var leaderboard = require('./leaderboard');
 
 var socketManager = (io) => (socket) => {
 
+  var playlistsAuthed = [];
+
   var activePlaylist = null;
   console.log('connectionnn');
 
@@ -121,7 +123,10 @@ var socketManager = (io) => (socket) => {
 
   });
 
-  var setTracks = (playlistid, tracks, cb) => {
+  socket.on('setTracks', (playlistid, tracks, cb) => {
+    if (playlistsAuthed.indexOf(playlistid) === -1) {
+      return cb('You\'ve been denied') && console.log('NON AUTHORIZED REQUEST TO CHANGE ' + playlistid);
+    }
     if (activePlaylist && activePlaylist.playlistid === playlistid) {
       activePlaylist.tracks = tracks;
     }
@@ -133,9 +138,7 @@ var socketManager = (io) => (socket) => {
       if (!response) return cb('error updating database');
       return cb(null, response);
     });
-  };
-
-  socket.on('setTracks', setTracks);
+  });
 
 
   // streaming
@@ -157,7 +160,14 @@ var socketManager = (io) => (socket) => {
   });
 
   // keys
-  socket.on('authorizeKey', Playlists.authKey);
+  socket.on('authorizeKey', (playlistid, key, cb) => {
+    Playlists.authKey(playlistid, key, isValid => {
+      if (isValid) {
+        playlistsAuthed.push(playlistid);
+      }
+      cb(isValid);
+    });
+  });
 }
 
 module.exports = socketManager;

@@ -21,7 +21,9 @@ module.exports = {
     actions.hideModals();
     actions.startTyping();
   },
-  incrementFetchTrack: (state, actions) => ({ activeFetchTrackNum: state.activeFetchTrackNum + 1 }),
+  incrementFetchTrack: (state, actions) => ({
+    activeFetchTrackNum: state.activeFetchTrackNum + 1
+  }),
   nextTrackOfFetch: (state, actions, num) => {
     if (state.activeFetchTrackNum < state.activeFetch.tracks.length - 1) {
       actions.incrementFetchTrack();
