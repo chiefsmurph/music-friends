@@ -29,12 +29,16 @@ const playlistEditor = (state, actions) => {
 
   const handleThumbnailClick = (track) => {
     if (state.nowPlaying === track.id) {
-      actions.stopStreaming();
+      actions.songDone();
     } else if (state.fileDirectory[track.id]) {
-      actions.playMP3({
+      // actions.playMP3({
+      //   id: track.id,
+      //   file: state.fileDirectory[track.id]
+      // });
+      actions.playYoutube({
         id: track.id,
         file: state.fileDirectory[track.id]
-      });
+      })
     }
     // for now ignore thumbnail clicks when the file has not been downloaded
   };

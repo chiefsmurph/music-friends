@@ -90,6 +90,7 @@
       width: 200px;
       float: left;
       text-align: center;
+      padding-bottom: 160px;
     }
     #left button {
       text-align: left;
@@ -561,6 +562,14 @@
       background-color: rgba(255,255,0,0.8);
       color: black;
     }
+    #ytPlayer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 220px;
+      height: 167px;
+      z-index: 99;
+    }
 </style>
 
 </head>
@@ -583,6 +592,10 @@
         Your browser does not support the audio element.
     </source>
   </audio>
+  <!-- <iframe width="420" height="315" id='youtubePlayer'></iframe> -->
+  <script src="http://www.youtube.com/player_api"></script>
+  <div id="ytPlayer"></div>
+
 </body>
 
 </html>

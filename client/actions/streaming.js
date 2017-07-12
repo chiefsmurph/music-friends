@@ -24,12 +24,66 @@ module.exports = {
       audio.style.display = 'block';
       audio.onended = () => {
         console.log('on end')
-        actions.stopStreaming();
+        actions.songDone();
       };
       audio.play();
+      return { nowPlaying: id };
+    },
+
+    songDone: (state, actions) => {
+      // stop for local mp3
+      // actions.stopStreaming();
+      // stop for youtube
+      var player = document.getElementById('ytPlayer');
+      state.youtubePlayer.stopVideo();
+      player.style.display = 'none';
+
       return {
-        nowPlaying: id
+        lastRequested: null,
+        nowPlaying: null
       };
+    },
+
+    playYoutube: (state, actions, data) => {
+      const { file, id } = data;
+      var player = document.getElementById('ytPlayer');
+      // if (player && player.src) player.src = null;
+
+      // player.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      player.style.display = 'block';
+      console.log('playing ', id);
+
+      const returnObj = {};
+
+      if (!state.youtubePlayer) {
+        returnObj.youtubePlayer = new YT.Player('ytPlayer', {
+          width: '220',
+          height: '167',
+          videoId: id,
+          playerVars: {
+             'autoplay': 0,
+             'controls': 1,
+             'rel' : 0
+          },
+          events: {
+            onReady: (event) => {
+              event.target.playVideo();
+            },
+            onStateChange: (event) => {
+              if(event.data === 0) {
+                  actions.songDone();
+              }
+            }
+          }
+        });
+      } else {
+        console.log('loading by id');
+        state.youtubePlayer.loadVideoById(id);
+      }
+
+      returnObj.nowPlaying = id;
+
+      return returnObj;
     },
 
     streamEnded: (state, actions, parts) => {
@@ -53,9 +107,5 @@ module.exports = {
         audio.pause();
         // audio.src = null;
       }
-      return {
-        lastRequested: null,
-        nowPlaying: null
-      };
     }
 };
