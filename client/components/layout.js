@@ -32,7 +32,7 @@ const Layout = ({ state, actions }, children) => {
           {JSON.stringify(currentPlaylist)}
           </code>
         )}
-        <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music hacker</h1>
+        <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music glossary</h1>
         <div id="nav-menu">
             {pages.map(page => (
               <a

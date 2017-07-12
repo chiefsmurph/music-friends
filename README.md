@@ -1,4 +1,4 @@
-# music hacker
+# music glossary
 
 - download all your favorite songs in mp3 format
 - organize and share your playlists with friends

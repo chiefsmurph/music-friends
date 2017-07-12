@@ -8,7 +8,7 @@ const home = (state, actions) => {
       actions={actions}
       state={state}>
 
-      <h2>Welcome to music hacker - the most awesome underground web application for building an mp3 collection in 2017!</h2>
+      <h2>Welcome to music glossary - something pretty cool!</h2>
       <br/>
       <p>Go ahead and create a playlist and then start adding songs.</p>
 
