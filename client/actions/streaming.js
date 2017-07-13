@@ -37,9 +37,9 @@ module.exports = {
 
       // stop for youtube
       var player = document.getElementById('ytPlayer');
-      state.youtubePlayer.stopVideo();
+      if (state.youtubePlayer) state.youtubePlayer.stopVideo();
       player.style.display = 'none';
-      
+
       return {
         lastRequested: null,
         nowPlaying: null

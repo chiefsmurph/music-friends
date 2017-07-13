@@ -26,7 +26,7 @@ const Layout = ({ state, actions }, children) => {
   // {JSON.stringify(state.authedKeys)}
   // {location.pathname}
   return (
-    <div class={'container' + (settings.enableMP3s ? 'mp3enabled' : '')}>
+    <div class={'container ' + (settings.enableMP3s ? 'mp3enabled' : '')}>
         {debugCP && (
           <code>
           {JSON.stringify(currentPlaylist)}
