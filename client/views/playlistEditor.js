@@ -134,7 +134,7 @@ const playlistEditor = (state, actions) => {
                   <img
                     src={track.thumbnail}
                     onmousedown={() => handleThumbnailClick(track) }
-                    class={(!state.fileDirectory[track.id]) ? 'waitingForDl' : ''}/>
+                    class={(state.activeDownloads.indexOf(track.id) !== -1) ? 'waitingForDl' : ''}/>
                 </td>
                 <td>
                   {track.title}<br/>

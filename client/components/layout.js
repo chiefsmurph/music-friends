@@ -46,7 +46,7 @@ const Layout = ({ state, actions }, children) => {
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button>
           {
-            state.settings.enableMP3s && (
+            state.settings.enableAlbumFetchs && (
               <button onclick={() => actions.showModal('fetchalbum')}>+ new album-fetch</button>
             )
           }

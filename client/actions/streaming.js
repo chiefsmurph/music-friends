@@ -32,16 +32,14 @@ module.exports = {
 
     songDone: (state, actions) => {
 
-      if (state.settings.enableMP3s) {
-        // stop for local mp3
-        actions.stopStreaming();
-      } else {
-        // stop for youtube
-        var player = document.getElementById('ytPlayer');
-        state.youtubePlayer.stopVideo();
-        player.style.display = 'none';
-      }
+      // stop for local mp3
+      actions.stopStreaming();
 
+      // stop for youtube
+      var player = document.getElementById('ytPlayer');
+      state.youtubePlayer.stopVideo();
+      player.style.display = 'none';
+      
       return {
         lastRequested: null,
         nowPlaying: null
