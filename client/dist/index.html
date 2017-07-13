@@ -295,6 +295,10 @@
     #right > table td a:hover {
       color: orange;
     }
+    .container:not(.mp3enabled) #right > table td:nth-child(4),
+    .container:not(.mp3enabled) #right > table th:nth-child(4) {
+      display: none;
+    }
     #right .notracks {
       text-align: center;
       padding: 20px;
@@ -565,7 +569,7 @@
     #ytPlayer {
       position: fixed;
       bottom: 0;
-      left: 0;
+      right: 0;
       width: 220px;
       height: 167px;
       z-index: 99;

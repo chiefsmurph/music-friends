@@ -2,12 +2,13 @@ import { h, app, Router } from "hyperapp"
 import actions from './actions/'
 import view from './views'
 
-// plugins
-import ChangingIcon from './plugins/changingIcon'
-import CachePages from './plugins/cachePages'
-import ModalManager from './plugins/modalManager'
-import KeyManager from './plugins/keyManager'
-import FileManager from './plugins/fileManager'
+// mixins
+import ChangingIcon from './mixins/changingIcon'
+import CachePages from './mixins/cachePages'
+import ModalManager from './mixins/modalManager'
+import KeyManager from './mixins/keyManager'
+import FileManager from './mixins/fileManager'
+import SettingsManager from './mixins/settingsManager'
 
 app({
   state: {
@@ -38,7 +39,8 @@ app({
     CachePages,
     ModalManager,
     KeyManager,
-    FileManager
+    FileManager,
+    SettingsManager
   ]
 });
 

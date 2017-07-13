@@ -13,7 +13,7 @@ import SelectAlbumModal from './modals/selectAlbum';
 import ConfirmAlbumFetch from './modals/confirmAlbumFetch';
 
 const Layout = ({ state, actions }, children) => {
-  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch } = state;
+  const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch, settings } = state;
   const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goToRoute } = actions;
   const onSelectPlaylist = (playlist) => {
     selectPlaylist(playlist);
@@ -22,11 +22,11 @@ const Layout = ({ state, actions }, children) => {
     actions.showModal('gotoplaylist');
   };
   const isRoute = route => (routeMatch && routeMatch.indexOf(route) !== -1) || (routeMatch === '/dist/index.html' && route === 'home');
-  const pages = ['home', 'leaderboard'];
+  const pages = ['home', 'leaderboard', 'settings'];
   // {JSON.stringify(state.authedKeys)}
   // {location.pathname}
   return (
-    <div class='container'>
+    <div class={'container' + (settings.enableMP3s ? 'mp3enabled' : '')}>
         {debugCP && (
           <code>
           {JSON.stringify(currentPlaylist)}
@@ -45,7 +45,11 @@ const Layout = ({ state, actions }, children) => {
         </div>
         <div id='left'>
           <button onclick={openNewPlModal}>+ new playlist</button>
-          <button onclick={() => actions.showModal('fetchalbum')}>+ new album-fetch</button>
+          {
+            state.settings.enableMP3s && (
+              <button onclick={() => actions.showModal('fetchalbum')}>+ new album-fetch</button>
+            )
+          }
           <h2>saved playlists</h2>
           <ul>
             {playlists.map(pl => (

@@ -29,18 +29,24 @@ const playlistEditor = (state, actions) => {
 
   const handleThumbnailClick = (track) => {
     if (state.nowPlaying === track.id) {
-      actions.songDone();
-    } else if (state.fileDirectory[track.id]) {
-      // actions.playMP3({
-      //   id: track.id,
-      //   file: state.fileDirectory[track.id]
-      // });
+      return actions.songDone();
+    } else if (state.settings.enableMP3s && state.fileDirectory[track.id]) {
+
+      return actions.playMP3({
+        id: track.id,
+        file: state.fileDirectory[track.id]
+      });
+
+    } else {
+
       actions.playYoutube({
         id: track.id,
         file: state.fileDirectory[track.id]
-      })
+      });
+
     }
-    // for now ignore thumbnail clicks when the file has not been downloaded
+
+
   };
 
   const hasDl = state.currentPlaylist.tracks && state.currentPlaylist.tracks.some(track => !state.fileDirectory[track.id] && state.activeDownloads.indexOf(track.id) === -1);
@@ -79,19 +85,15 @@ const playlistEditor = (state, actions) => {
                   disabled={isInSavedPlaylists}
                   onclick={addToSavedPls}/>
                 <br/><br/>
-                <input
-                  type="button"
-                  value="| Fetch album"
-                  disabled={!admin || state.activeFetch}
-                  class={(!admin || state.activeFetch) ? 'disabled' : ''}
-                  onclick={() => actions.showModal('fetchalbum')}/>
-                <br/><br/>
-                <input
-                  type="button"
-                  value="| Download all"
-                  class={(!hasDl || state.activeFetch) ? 'disabled' : ''}
-                  onclick={downloadAll}
-                  disabled={!hasDl || state.activeFetch}/>
+                {state.settings.enableMP3s && (
+                  <input
+                    type="button"
+                    value="| Download all"
+                    class={(!hasDl || state.activeFetch) ? 'disabled' : ''}
+                    onclick={downloadAll}
+                    disabled={!hasDl || state.activeFetch}/>
+                )}
+
             </td>
             <td>
                 {(admin) ? (

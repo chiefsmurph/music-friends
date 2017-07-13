@@ -45,7 +45,7 @@ module.exports = {
       beforeDL,
       (res) => {
 
-        if (!state.fileDirectory[vid.id]) {
+        if (!state.fileDirectory[vid.id] && state.settings.enableMP3s) {
           // to server
           state.socket.emit('requestDownload', vid, currentPlaylistId);
           // for electron
