@@ -26,6 +26,7 @@ var Fetches = new TableInterface('fetches', {
     });
   };
   this.createFetch = (artist, release, cb) => {
+    console.log('creating fetch');
     return this.insert({
       artist,
       release,
@@ -36,7 +37,7 @@ var Fetches = new TableInterface('fetches', {
     });
   };
   this.incrementFetchCount = (fetchid, cb) => {
-    console.log('incrementing ' + playlistid);
+    console.log('incrementing ' + fetchid);
     return this.update({
       data: {
         fetchcount: 'fetchcount + 1'
