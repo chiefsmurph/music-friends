@@ -45,7 +45,7 @@ var getFirstAlbumUrl = (query) => {
 
 }
 
-var getAllTracksFromLastFm = (url) => {
+var getAllTracksFromLastFmAlbum = (url) => {
 
   return new Promise((resolve, reject) => {
       console.log('reqing ', url);
@@ -68,7 +68,7 @@ var getAllTracksFromLastFm = (url) => {
 
 
 function getAlbumTracks(album) {
-  return getAllTracksFromLastFm(album.url);
+  return getAllTracksFromLastFmAlbum(album.url);
 }
 
 window.getAlbumTracks = getAlbumTracks;
@@ -77,8 +77,8 @@ window.getAlbumTracks = getAlbumTracks;
 window.getAlbumsByArtist = function(artist) {
 
     return new Promise((resolve, reject) => {
-        console.log('reqing ', `https://www.last.fm/music/${artist}/+albums`);
-        makeRequestWithCheerio(`https://www.last.fm/music/${artist}/+albums`)
+        console.log('reqing ', `https://www.last.fm/music/${artist.trim()}/+albums`);
+        makeRequestWithCheerio(`https://www.last.fm/music/${artist.trim()}/+albums`)
           .then($ => {
             const results = [];
             $('.album-grid-item').each((i, el) => {
@@ -90,7 +90,10 @@ window.getAlbumsByArtist = function(artist) {
                 auxtext: $el.find('.album-grid-item-aux-text').text().trim().replace(/\W/g, ' ')
               });
             });
-            resolve(results);
+            resolve({
+              albums: results,
+              artist: $('.header-title a').text()
+            });
           });
 
     });

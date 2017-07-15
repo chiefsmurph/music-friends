@@ -5,11 +5,13 @@ const FetchAlbumModal = ({ state, actions }, children) => {
     const artist = document.getElementById('artistquery').value;
     window.getAlbumsByArtist(artist)
       .then(results => {
+        const { albums, artist } = results;
         console.log('results', results);
         actions.setFoundAlbums({
           artist,
-          results
+          albums
         });
+        console.log(state.foundAlbums);
         actions.showModal('selectalbum');
       });
     e.preventDefault();

@@ -17,46 +17,55 @@ module.exports = {
       }, 100)
     };
   },
+  vidClickForPlaylists: (state, actions, vid) => {
+
+      var updateServerTracks = (id, tracks, cb) => {
+        console.log('updating server tracks', id, tracks, cb);
+        state.socket.emit('setTracks', id, tracks, (err, updatedTracks) => {
+          if (err) return actions.error(err);
+          return cb(updatedTracks);
+        });
+      };
+
+      var currentPlaylistId = state.currentPlaylist.playlistid;
+      var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
+      console.log('currentTracks', state.currentPlaylist.tracks);
+      var beforeDL = generateNewTracks(vid);
+      console.log('beforedl', beforeDL, currentPlaylistId);
+
+      actions.setTracks(beforeDL);
+
+      updateServerTracks(
+        currentPlaylistId,
+        beforeDL,
+        (res) => {
+
+          actions.afterVidClickAll(vid);
+
+        });
+
+  },
+  afterVidClickAll: (state, actions, vid) => {
+      if (!state.fileDirectory[vid.id] && state.settings.enableMP3s) {
+        // to server
+        state.socket.emit('requestDownload', vid, currentPlaylistId);
+        // for electron
+        actions.downloadAudio(vid);
+      }
+
+      if (state.activeFetch) {
+        actions.nextTrackOfFetch();
+      }
+  },
   vidClick: (state, actions, vid) => {
 
-    var updateServerTracks = (id, tracks, cb) => {
-      console.log('updating server tracks', id, tracks, cb);
-      state.socket.emit('setTracks', id, tracks, (err, updatedTracks) => {
-        if (err) return actions.error(err);
-        return cb(updatedTracks);
-      });
-    };
-
     actions.clearSearch();
-    // for (var key in vid) {
-    //   vid[key] = vid[key].replace(/'/, "''");
-    // }
 
-    var currentPlaylistId = state.currentPlaylist.playlistid;
-    var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
-    console.log('currentTracks', state.currentPlaylist.tracks);
-    var beforeDL = generateNewTracks(vid);
-    console.log('beforedl', beforeDL, currentPlaylistId);
-
-    actions.setTracks(beforeDL);
-
-    updateServerTracks(
-      currentPlaylistId,
-      beforeDL,
-      (res) => {
-
-        if (!state.fileDirectory[vid.id] && state.settings.enableMP3s) {
-          // to server
-          state.socket.emit('requestDownload', vid, currentPlaylistId);
-          // for electron
-          actions.downloadAudio(vid);
-        }
-
-        if (state.activeFetch) {
-          actions.nextTrackOfFetch();
-        }
-
-      });
+    if (state.currentPlaylist.type === 'fetch') {
+      actions.afterVidClickAll(vid);
+    } else {
+      actions.vidClickForPlaylists(vid);
+    }
 
   },
   addToActiveDls: (state, actions, vidId) => ({
@@ -84,6 +93,8 @@ module.exports = {
           console.log('done');
           cb();
         });
+    }, () => {
+      actions.endDownloadAll();
     });
   }
 };

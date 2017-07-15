@@ -17,7 +17,7 @@ const SelectAlbumModal = ({ state, actions }, children) => {
         Select an album by {state.foundAlbums.artist}
       </header>
       <div id='albumchooser'>
-        {state.foundAlbums.results.map(album => (
+        {state.foundAlbums.albums.map(album => (
           <div onclick={() => selectAlbum(album)}>
             <img src={album.thumbnail}/>
             {album.title}<br/>

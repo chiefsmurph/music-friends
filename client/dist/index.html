@@ -159,6 +159,9 @@
       margin-right: 10px;
       /* Change this to whatever the width of your left column is*/
     }
+    #right {
+      padding-bottom: 165px;
+    }
     #right header {
       padding: 15px 20px;
       margin-top: 10px;
@@ -211,7 +214,7 @@
     #right header table .box label {
       display: inline-block;
     }
-    #right > table {
+    #right > div > table {
       width: 100%;
       /*font-size: 170%;*/
       border-spacing: 1px;
@@ -222,7 +225,7 @@
       background-color: white;
       color: black;
     }
-    #right > table tr {
+    #right > div > table tr {
       /*background-image:
         linear-gradient(
           to bottom,
@@ -230,73 +233,73 @@
           gold
         );*/
     }
-    #right > table tr.nowplaying {
+    #right > div > table tr.nowplaying {
       background-color: rgba(171, 238, 144, 0.57);
       font-weight: bold;
     }
-    #right > table th:nth-child(1),
-    #right > table td:nth-child(1),
-    #right > table th:nth-child(4),
-    #right > table td:nth-child(4) {
+    #right > div > table th:nth-child(1),
+    #right > div > table td:nth-child(1),
+    #right > div > table th:nth-child(4),
+    #right > div > table td:nth-child(4) {
       width: 40px;
       text-align: center;
     }
-    #right > table th:nth-child(4),
-    #right > table td:nth-child(4) {
+    #right > div > table th:nth-child(4),
+    #right > div > table td:nth-child(4) {
       width: 160px;
       vertical-align: middle;
     }
-    #right > table td:nth-child(2) img {
+    #right > div > table td:nth-child(2) img {
       border: 3px solid transparent;
       cursor: pointer;
     }
-    #right > table td:nth-child(2) img.justrequested {
+    #right > div > table td:nth-child(2) img.justrequested {
       border: 3px solid orange;
       cursor: wait;
     }
-    #right > table tr td:nth-child(2) img.waitingForDl {
+    #right > div > table tr td:nth-child(2) img.waitingForDl {
       cursor: wait;
     }
-    #right > table tr.nowplaying td:nth-child(2) img {
+    #right > div > table tr.nowplaying td:nth-child(2) img {
       border: 3px solid lime;
     }
 
-    #right > table td:nth-child(4) img {
+    #right > div > table td:nth-child(4) img {
       padding: 10px;
       border-radius: 7px;
       /*border: 2px solid transparent;*/
     }
-    #right > table td:nth-child(4) img:hover {
+    #right > div > table td:nth-child(4) img:hover {
       /*border: 2px solid gold;*/
       background-color: rgba(0, 255, 255, 0.25);
     }
-    #right > table th {
+    #right > div > table th {
       text-align: left;
       background-color: gold;
       padding: 5px;
     }
-    #right > table td {
+    #right > div > table td {
       vertical-align: bottom;
       padding: 5px;
     }
-    #right > table th:nth-child(2) {
+    #right > div > table th:nth-child(2) {
       width: 30px;
     }
-    #right > table th:nth-child(2) {
+    #right > div > table th:nth-child(2) {
       width: 30px;
     }
-    #right > table th:nth-child(2) {
+    #right > div > table th:nth-child(2) {
       width: 30px;
     }
-    #right > table td a, #right > table td a:visited {
+    #right > div > table td a, #right > div > table td a:visited {
       font-size: 60%;
       color: blue;
     }
-    #right > table td a:hover {
+    #right > div > table td a:hover {
       color: orange;
     }
-    .container:not(.mp3enabled) #right > table td:nth-child(4),
-    .container:not(.mp3enabled) #right > table th:nth-child(4) {
+    .container:not(.mp3enabled) #right > div > table td:nth-child(4),
+    .container:not(.mp3enabled) #right > div > table th:nth-child(4) {
       display: none;
     }
     #right .notracks {
@@ -573,6 +576,7 @@
       width: 220px;
       height: 167px;
       z-index: 99;
+      display: none;
     }
 </style>
 
@@ -589,7 +593,7 @@
   </script>
   <script src="../api/getAudio.js"></script>
   <script src="../api/openItem.js"></script>
-  <script src="../api/getAlbumTracks.js"></script>
+  <script src="../api/last.js"></script>
   <script src="bundle.js"></script>
   <audio id="player" controls>
     <source src="" type="audio/mpeg">

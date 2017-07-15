@@ -13,6 +13,7 @@ var fs = require('fs');
 // db
 var Playlists = require('./models/playlists');
 var Songs = require('./models/songs');
+var Fetches = require('./models/fetches');
 
 // module
 var leaderboard = require('./leaderboard');
@@ -85,6 +86,17 @@ var socketManager = (io) => (socket) => {
       console.log('created ', pl, pl.playlistid);
       socket.join(pl.playlistid);
       cb(pl);
+    });
+  });
+
+  socket.on('newFetch', ({ artist, release }, cb) => {
+    console.log('new fetch: ', artist, ' ', release);
+    Fetches.checkIfExists(artist, release, res => {
+      if (res) {
+        Fetches.incrementFetchCount(res.trackid, cb);
+      } else {
+        Fetches.createFetch(artist, release, cb);
+      }
     });
   });
 

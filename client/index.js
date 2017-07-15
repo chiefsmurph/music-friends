@@ -27,8 +27,11 @@ app({
     },
     route: (state, actions, data) => {
       console.log('route', state, actions, data);
-      if (data.params && data.params.id) {
+      const isRoute = route => data.match.indexOf(route) !== -1 && data.params && data.params.id;
+      if (isRoute('playlist')) {
         actions.playlistRoute(data.params.id);
+      } else if (isRoute('fetch')) {
+        actions.setCurrentPlaylist(state.fetches[data.params.id], true);  // dont update cache bro
       }
       actions.setRouteMatch(data.match);
     }

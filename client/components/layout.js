@@ -12,7 +12,7 @@ import FetchAlbumModal from './modals/fetchAlbum';
 import SelectAlbumModal from './modals/selectAlbum';
 import ConfirmAlbumFetch from './modals/confirmAlbumFetch';
 
-const Layout = ({ state, actions }, children) => {
+const Layout = ({ state, actions, addition }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch, settings } = state;
   const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goToRoute } = actions;
   const onSelectPlaylist = (playlist) => {
@@ -27,6 +27,7 @@ const Layout = ({ state, actions }, children) => {
   // {location.pathname}
   return (
     <div class={'container ' + (settings.enableMP3s ? 'mp3enabled' : '')}>
+        {addition}
         {debugCP && (
           <code>
           {JSON.stringify(currentPlaylist)}
@@ -70,7 +71,7 @@ const Layout = ({ state, actions }, children) => {
         </div>
         <div class="clear"></div>
 
-        {false && (
+        {true && (
           <div id="debugArea">
             <label>
                 debug CurrentPlaylist

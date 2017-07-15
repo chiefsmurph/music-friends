@@ -12,7 +12,8 @@ const home = (state, actions) => {
 
       <Leaderboard
         leaderboard={state.leaderboard}
-        goToPlaylist={(playlistid) => actions.router.go('/playlist/' + playlistid) }/>
+        goToPlaylist={(playlistid) => actions.router.go('/playlist/' + playlistid) }
+        thumbnailClick={actions.thumbnailClick} />
 
     </Layout>
   )

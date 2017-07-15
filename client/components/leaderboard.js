@@ -1,6 +1,6 @@
 import { h } from 'hyperapp';
 
-const Leaderboard = ({ leaderboard, goToPlaylist }) => {
+const Leaderboard = ({ leaderboard, goToPlaylist, thumbnailClick }) => {
   if (!(leaderboard && leaderboard.topSongs && leaderboard.topPlaylists)) {
     return <b>Loading leaderboard</b>;
   }
@@ -10,7 +10,7 @@ const Leaderboard = ({ leaderboard, goToPlaylist }) => {
       <div id="top-songs">
         {
           leaderboard.topSongs.map(song => (
-            <div>
+            <div onclick={() => thumbnailClick(song.songid)}>
               <img src={song.thumbnail}/>
               song title: {song.title}
             </div>

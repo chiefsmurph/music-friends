@@ -17,10 +17,22 @@ module.exports = {
     activeFetchTrackNum: -1
   }),
   beginFetch: (state, actions) => {
-    actions.initActiveFetch();
-    actions.hideModals();
-    actions.startTyping();
+
+    state.socket.emit('newFetch', {
+      artist: state.albumOfInterest.artist,
+      release: state.albumOfInterest.title
+    }, res => {
+      console.log('fetch good to go.');
+
+      res.isFetch = true;
+      actions.newFetch(res);
+
+      actions.initActiveFetch();
+      actions.hideModals();
+      actions.startTyping();
+    });
   },
+
   incrementFetchTrack: (state, actions) => ({
     activeFetchTrackNum: state.activeFetchTrackNum + 1
   }),
@@ -44,5 +56,5 @@ module.exports = {
     foundAlbums: null,
     albumOfInterest: null,
     activeFetchTrackNum: null,
-  })
+  }),
 };

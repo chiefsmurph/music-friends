@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import YoutubeSearcher from '../components/youtubeSearcher';
 import PlaylistViewer from '../components/playlistViewer';
 
-const playlistEditor = (state, actions) => {
+const fetches = (state, actions) => {
 
   const isInSavedPlaylists = state.playlists.some(pl => {
     return pl.playlistid === state.currentPlaylist.playlistid;
@@ -53,17 +53,10 @@ const playlistEditor = (state, actions) => {
 
 
       <header>
-        <h3>{state.currentPlaylist.title}</h3>
+        <h3>album fetch{state.currentPlaylist.artist}</h3>
         <table>
           <tr>
             <td>
-                <input
-                  type="button"
-                  value="| Add to saved playlists"
-                  class={(isInSavedPlaylists) ? 'disabled' : ''}
-                  disabled={isInSavedPlaylists}
-                  onclick={addToSavedPls}/>
-                <br/><br/>
                 {state.settings.enableMP3s && (
                   <input
                     type="button"
@@ -75,20 +68,6 @@ const playlistEditor = (state, actions) => {
 
             </td>
             <td>
-                {(admin) ? (
-                  <div class='box'>
-                    <h2>Admin</h2>
-                    <label>
-                      key: {state.keys[state.currentPlaylist.playlistid]}
-                    </label>
-                  </div>
-                ) : (
-                  <div class='box'>
-                    <h2>View mode</h2>
-                    <input type="button" value="| Submit admin keys" onclick={showSubmitKeysModal} />
-                  </div>
-                )}
-                <br/><br/>
                 playlistid: {state.currentPlaylist.playlistid}
             </td>
           </tr>
@@ -102,4 +81,4 @@ const playlistEditor = (state, actions) => {
 
 };
 
-module.exports = playlistEditor;
+module.exports = fetches;

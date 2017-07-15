@@ -32,5 +32,27 @@ module.exports = {
     return {
       debugCP: !state.debugCP
     };
+  },
+  thumbnailClick: (state, actions, trackid) => {
+      actions.songDone();
+      if (state.nowPlaying === trackid) {
+        return;
+      }
+      if (state.settings.enableMP3s && state.fileDirectory[trackid]) {
+
+        return actions.playMP3({
+          id: trackid,
+          file: state.fileDirectory[trackid]
+        });
+
+      } else {
+
+        actions.playYoutube({
+          id: trackid,
+          file: state.fileDirectory[trackid]
+        });
+
+      }
   }
+
 };
