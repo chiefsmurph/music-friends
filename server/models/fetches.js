@@ -59,4 +59,4 @@ var Fetches = new TableInterface('fetches', {
   }
 });
 
-module.exports = Playlists;
+module.exports = Fetches;
