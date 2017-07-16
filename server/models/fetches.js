@@ -15,7 +15,7 @@ var Fetches = new TableInterface('fetches', {
   };
   this.checkIfExists = (artist, release, cb) => {
     return this.select({
-      where: EscapeTicksInArrOfObjs({
+      where: EscapeTicksInArrOfObjs.encodeObj({
         artist,
         release
       })
@@ -24,18 +24,18 @@ var Fetches = new TableInterface('fetches', {
       if (!res || !res.length) return cb(false);
       res = res[0];
       console.log('if exists: ', JSON.stringify(res));
-      return cb(res || {});
+      return cb(EscapeTicksInArrOfObjs.decodeObj(res) || {});
     });
   };
   this.createFetch = (artist, release, cb) => {
     console.log('creating fetch');
-    return this.insert(EscapeTicksInArrOfObjs({
+    return this.insert(EscapeTicksInArrOfObjs.encodeObj({
       artist,
       release,
       fetchid: shortid.generate()
     }), (fetch) => {
       console.log('created ', fetch);
-      cb(fetch);
+      cb(EscapeTicksInArrOfObjs.decodeObj(fetch));
     });
   };
   this.incrementFetchCount = (fetchid, cb) => {
@@ -59,7 +59,7 @@ var Fetches = new TableInterface('fetches', {
         return fetch;
       }));
     });
-  }
+  };
 });
 
 module.exports = Fetches;

@@ -1,31 +1,34 @@
-const transformArrOfObjs = (arr, transform) => {
-    return arr.map(obj => {
-      return Object.keys(obj).reduce((acc, key) => {
-        if (obj[key]) {
-          acc[key] = transform(obj[key].toString());
-        } else {
-          console.log('woah watch here: ' + acc[key] + ' and ' + key);
-        }
-        return acc;
-      }, {});
-    });
+const encodeVal = (val) => val.replace(/'/g, "''");
+const decodeVal = (val) => val.replace(/''/g, "'");
+
+const transformObj = (obj, transform) => {
+  return Object.keys(obj).reduce((acc, key) => {
+    if (obj[key]) {
+      acc[key] = transform(obj[key].toString());
+    } else {
+      console.log('woah watch here: ' + acc[key] + ' and ' + key);
+    }
+    return acc;
+  }, {});
 };
 
-const encode = (arr) => {
-  return transformArrOfObjs(
-    arr,
-    (val) => val.replace(/'/g, "''")
+const encodeObj = (obj) => {
+  return transformObj(
+    obj,
+    encodeVal
   );
 };
 
-const decode = (arr) => {
-  return transformArrOfObjs(
-    arr,
-    (val) => val.replace(/''/g, "'")
+const decodeObj = (obj) => {
+  return transformObj(
+    obj,
+    decodeVal
   );
 };
 
 module.exports = {
-  encode,
-  decode
-}
+  encodeVal,
+  decodeVal,
+  encodeObj,
+  decodeObj
+};

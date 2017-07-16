@@ -24,7 +24,7 @@ var Playlists = new TableInterface('playlists', {
       res = res[0];
       console.log('found', res);
       if (res && res.tracks) {
-        res.tracks = EscapeTicksInArrOfObjs.decode(res.tracks);
+        res.tracks = res.tracks.map(EscapeTicksInArrOfObjs.decodeObj);
       }
       return cb(res || {});
     });
@@ -54,7 +54,7 @@ var Playlists = new TableInterface('playlists', {
   this.updateTracks = (playlistid, tracks, cb) => {
 
     console.log(JSON.stringify(tracks));
-    tracks = EscapeTicksInArrOfObjs.encode(tracks);
+    tracks = tracks.map(EscapeTicksInArrOfObjs.encodeObj);
 
     console.log('updating tracks for ' + playlistid);
     console.log('tracks' + JSON.stringify(tracks));

@@ -7,6 +7,14 @@ const Settings = () => ({
       const mergeObj = {};
       mergeObj[setting] = !state.settings[setting];
       const newSettings = Object.assign({}, state.settings, mergeObj);
+
+
+      if (newSettings.showSuggestedSongs && !state.settings.showSuggestedSongs) {
+        // show suggested songs checkbox just turned to true
+        actions.refreshSuggestedSongs();
+      }
+
+
       localStorage.setItem('settings', JSON.stringify(newSettings));
       console.log('new settings', newSettings);
       return { settings: newSettings };

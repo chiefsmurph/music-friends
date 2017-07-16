@@ -147,7 +147,7 @@
     #left li b {
       color: purple;
       position: absolute;
-      bottom: 0;
+      bottom: -2px;
       right: 2px;
     }
     #left li:hover b {
@@ -206,6 +206,22 @@
       padding: 4px 10px;
       background-color: rgba(170, 170, 170, 0.4);
       font-style: italic;
+    }
+    #right header table tr:nth-child(2) td {
+      position: relative;
+    }
+    #right header table tr:nth-child(2).showingSuggested td {
+      padding-bottom: 200px;
+    }
+    #right header table tr:nth-child(2) td > div {
+      position: absolute;
+      left: -12px;
+      right: 0;
+    }
+    #right header table tr:nth-child(2) td h4 {
+      writing-mode: tb-rl;
+      float: left;
+      height: 200px;
     }
     #right header table td {
       vertical-align: top;
@@ -327,20 +343,20 @@
       text-align: center;
       width: calc(100% - 16px);
     }
-    #vidSuggestions {
+    .videoChooser {
       display: flex;
       overflow-x: scroll;
     }
-    #vidSuggestions > div {
+    .videoChooser > div {
       /*border: 1px solid transparent;*/
       border-top-width: 0;
     }
-    #vidSuggestions > div:hover {
+    .videoChooser > div:hover {
       background-color: yellow;
       color: black;
       cursor: pointer;
     }
-    #vidSuggestions > a {
+    .videoChooser > a {
       margin-right: 10px;
     }
     #gradient {
@@ -601,8 +617,11 @@
   });
   </script>
   <script src="../api/getAudio.js"></script>
+  <script src="../api/makeRequestWithCheerio.js"></script>
+  <script src="../api/queryYoutube.js"></script>
   <script src="../api/openItem.js"></script>
   <script src="../api/last.js"></script>
+  <script src="../api/getSuggested.js"></script>
   <script src="bundle.js"></script>
   <audio id="player" controls>
     <source src="" type="audio/mpeg">

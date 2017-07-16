@@ -17,13 +17,16 @@ var Fetches = require('./models/fetches');
 
 // module
 var leaderboard = require('./leaderboard');
-
+leaderboard.getLeaderboard(leaderboard => {
+  console.log('current leaderboard');
+  console.log(leaderboard);
+});
 var socketManager = (io) => (socket) => {
 
   var playlistsAuthed = [];
 
   var activePlaylist = null;
-  console.log('connectionnn');
+  console.log('new connection');
 
   setTimeout(() => {
     leaderboard.getLeaderboard(leaderboard => {

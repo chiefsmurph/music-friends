@@ -1,11 +1,12 @@
 var Playlists = require('./models/playlists');
 var Songs = require('./models/songs');
+var Fetches = require('./models/fetches');
 var async = require('async');
 
 module.exports = {
   getLeaderboard: (mainCb) => {
 
-    let topSongs, topPlaylists;
+    let topSongs, topPlaylists, topFetches;
     async.waterfall([
       function(cb) {
         Songs.getTopSongs(res => {
@@ -20,9 +21,16 @@ module.exports = {
         });
       },
       function(cb) {
+        Fetches.getTopFetches(res => {
+          topFetches = res;
+          cb();
+        })
+      },
+      function(cb) {
         mainCb({
           topSongs,
-          topPlaylists
+          topPlaylists,
+          topFetches
         });
       }
     ]);

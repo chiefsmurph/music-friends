@@ -10,6 +10,7 @@ import KeyManager from './mixins/keyManager'
 import FileManager from './mixins/fileManager'
 import SettingsManager from './mixins/settingsManager'
 import FetchManager from './mixins/fetchManager'
+import SuggestedSongs from './mixins/suggestedSongs'
 
 app({
   state: {
@@ -45,7 +46,8 @@ app({
     KeyManager,
     FileManager,
     SettingsManager,
-    FetchManager
+    FetchManager,
+    SuggestedSongs
   ]
 });
 

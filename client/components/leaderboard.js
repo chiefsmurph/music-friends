@@ -1,6 +1,6 @@
 import { h } from 'hyperapp';
 
-const Leaderboard = ({ leaderboard, goToPlaylist, thumbnailClick }) => {
+const Leaderboard = ({ leaderboard, goToPlaylist, thumbnailClick, enableAlbumFetchs }) => {
   if (!(leaderboard && leaderboard.topSongs && leaderboard.topPlaylists)) {
     return <b>Loading leaderboard</b>;
   }
@@ -30,6 +30,24 @@ const Leaderboard = ({ leaderboard, goToPlaylist, thumbnailClick }) => {
           ))
         }
       </div>
+      {
+        enableAlbumFetchs && (
+          <div>
+            <br/><br/>
+            <h2>Top Fetches</h2>
+            <div id="top-playlists">
+              {
+                leaderboard.topFetches.map(fetch => (
+                  <div>
+                    artist: {fetch.artist}<br/>
+                    release: {fetch.release}
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };

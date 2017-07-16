@@ -15,9 +15,6 @@ var Fetches = require('./models/fetches');
 var port = process.env.PORT || 2222;
 console.log(process.env.DATABASE_URL);
 
-Playlists.getAll((pls) => {
-  console.log(pls);
-});
 
 server.listen(port);
 

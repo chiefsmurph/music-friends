@@ -19,7 +19,6 @@
     "child_process": "^1.0.2",
     "electron": "^1.6.11",
     "express": "^4.15.3",
-    "fetch-cheerio-object": "^1.2.0",
     "ffmpeg": "0.0.4",
     "ffprobe": "^1.1.0",
     "fs": "0.0.1-security",

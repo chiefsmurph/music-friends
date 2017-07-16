@@ -12,7 +12,6 @@ function TableInterface(tableName, fieldObj, methods) {
     var args = Array.prototype.slice.call(arguments);
     var callback = (typeof args[args.length - 1] === 'function') ? args.pop() : function() {};
     var sql = args[0];
-    console.log(sql);
     pg.connect(databaseUrl, function(err, client, done) {
       console.log(err);
       if (!client) {
@@ -25,7 +24,6 @@ function TableInterface(tableName, fieldObj, methods) {
           return console.log(err);
         }
         console.log('executed query ' + args[0]);
-        console.log(result);
         return callback((result && result.rows) ? result.rows : null);
       }]));
     });

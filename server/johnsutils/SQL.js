@@ -5,7 +5,6 @@ function SQL(tableName, fieldObj) {
 
   var delimitedVals = function(mappings, del) {
     var stringVal = function(val) {
-      console.log('val', val);
       return JSON.stringify(val).replace(/"/g, "'")
     };
     return Object.keys(mappings).filter(key => mappings[key]).map(function(field) {
@@ -40,7 +39,6 @@ function SQL(tableName, fieldObj) {
   this.update = function(options) {
     var parts = ['UPDATE', tableName, 'SET'];
     if (!options || !options.data || !options.where) {
-      console.log(options);
       return console.log('SQL.update needs options.data');
     }
     parts.push(delimitedVals(options.data, ', '));

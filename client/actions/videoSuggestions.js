@@ -8,12 +8,19 @@ module.exports = {
     clearTimeout(state.suggestRequest);
     return {
       suggestRequest: setTimeout(() => {
+
         const suggestText = document.getElementById("songname").value;
         console.log(suggestText);
-        state.socket.emit('suggest', { suggestText }, suggestions => {
+
+        if (suggestText.length < 4) return;
+
+        window.queryYoutube(suggestText, suggestions=> {
           console.log('received ' + JSON.stringify(suggestions));
+          console.log(suggestions);
+          console.log('no really')
           actions.setVideoSuggestions(suggestions);
         });
+
       }, 100)
     };
   },
@@ -31,6 +38,9 @@ module.exports = {
 
       var currentPlaylistId = state.currentPlaylist.playlistid;
 
+      if (state.settings.showSuggestedSongs) {
+        actions.refreshSuggestedSongs();
+      }
 
       updateServerTracks(
         currentPlaylistId,

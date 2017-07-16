@@ -2,6 +2,7 @@ import { h } from 'hyperapp';
 import Layout from '../components/layout';
 import YoutubeSearcher from '../components/youtubeSearcher';
 import PlaylistViewer from '../components/playlistViewer';
+import VideoChooser from '../components/videoChooser';
 
 const playlistEditor = (state, actions) => {
 
@@ -104,6 +105,27 @@ const playlistEditor = (state, actions) => {
                 )}
                 <br/><br/>
                 playlistid: {state.currentPlaylist.playlistid}
+            </td>
+          </tr>
+          <tr class={state.settings['showSuggestedSongs'] ? 'showingSuggested' : ''}>
+            <td colspan="2">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={state.settings['showSuggestedSongs']}
+                  onchange={() => actions.toggleSetting('showSuggestedSongs')}/>
+                  show suggested songs
+              </label>
+              {
+                state.settings.showSuggestedSongs && (
+                  <div>
+                    <h4>Suggested Songs</h4>
+                    <VideoChooser
+                      videos={state.suggestedSongs[state.currentPlaylist.playlistid]}
+                      vidClick={actions.vidClick} />
+                  </div>
+                )
+              }
             </td>
           </tr>
         </table>
