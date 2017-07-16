@@ -14,9 +14,13 @@ import ConfirmAlbumFetch from './modals/confirmAlbumFetch';
 
 const Layout = ({ state, actions, addition }, children) => {
   const { currentPlaylist, playlists, currentIcon, changeBalance, showingModal, debugCP, nowPlaying, routeMatch, settings } = state;
-  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, confirmDeletePl, goToRoute } = actions;
+  const { openNewPlModal, selectPlaylist, hideModals, toggleDebug, deleteSavedPlaylist, goToRoute } = actions;
   const onSelectPlaylist = (playlist) => {
-    selectPlaylist(playlist);
+    if (playlist.fetchid) {
+      actions.router.go('/fetch/' + playlist.fetchid);
+    } else {
+      selectPlaylist(playlist);
+    }
   };
   const openGoToModal = () => {
     actions.showModal('gotoplaylist');
@@ -55,9 +59,8 @@ const Layout = ({ state, actions, addition }, children) => {
           <ul>
             {playlists.map(pl => (
               <PlaylistButton
-                selected={pl.playlistid === currentPlaylist.playlistid}
-                onSelect={onSelectPlaylist} pl={pl}
-                confirmDeletePl={confirmDeletePl} />
+                currentPlaylist={currentPlaylist}
+                onSelect={onSelectPlaylist} pl={pl} />
             ))}
             {(!playlists || !playlists.length) && (
               <b>You have no playlists</b>

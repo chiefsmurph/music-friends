@@ -6,14 +6,22 @@ import PlaylistViewer from '../components/playlistViewer';
 const fetches = (state, actions) => {
 
   const isInSavedPlaylists = state.playlists.some(pl => {
-    return pl.playlistid === state.currentPlaylist.playlistid;
+    return pl.fetchid === state.currentPlaylist.fetchid;
   });
+
+  console.log('isInSavedPlaylists', isInSavedPlaylists);
 
   const addToSavedPls = () => {
     if (isInSavedPlaylists) return;
     actions.addPlaylist({
-      playlistid: state.currentPlaylist.playlistid,
-      title: state.currentPlaylist.title
+      fetchid: state.currentPlaylist.fetchid,
+      title: state.currentPlaylist.artist + ' - ' + state.currentPlaylist.release
+    });
+  };
+
+  const confirmDeletePl = (pl) => {
+    actions.confirmDeletePl({
+      fetchid: pl.fetchid
     });
   };
 
@@ -38,12 +46,12 @@ const fetches = (state, actions) => {
       {state.activeFetch && (
         <div id='activeFetchInfo'>
           fetching "{state.activeFetch.title}" by {state.activeFetch.artist}<br/>
-          currently on track #{state.activeFetchTrackNum + 1}: "{state.activeFetch.tracks[state.activeFetchTrackNum]}"
+          currently on track #{state.activeFetchTrackNum + 1} / {state.activeFetch.tracks.length}: "{state.activeFetch.tracks[state.activeFetchTrackNum]}"
         </div>
       )}
 
       {
-        admin
+        state.activeFetch
         && (
           <YoutubeSearcher
             actions={actions}
@@ -53,10 +61,25 @@ const fetches = (state, actions) => {
 
 
       <header>
-        <h3>album fetch{state.currentPlaylist.artist}</h3>
+        <h3>{state.currentPlaylist.artist} - {state.currentPlaylist.release}</h3>
         <table>
           <tr>
             <td>
+                {
+                  (isInSavedPlaylists) ? (
+                    <input
+                      type="button"
+                      value="| Remove from saved playlists"
+                      onclick={() => confirmDeletePl(state.currentPlaylist)}/>
+                  ) : (
+                    <input
+                      type="button"
+                      value="| Add to saved playlists"
+                      onclick={addToSavedPls}/>
+                  )
+                }
+
+                <br/><br/>
                 {state.settings.enableMP3s && (
                   <input
                     type="button"
@@ -68,7 +91,9 @@ const fetches = (state, actions) => {
 
             </td>
             <td>
-                playlistid: {state.currentPlaylist.playlistid}
+                fetchid: {state.currentPlaylist.fetchid}<br/><br/>
+                artist: {state.currentPlaylist.artist}<br/>
+                release: {state.currentPlaylist.release}
             </td>
           </tr>
         </table>

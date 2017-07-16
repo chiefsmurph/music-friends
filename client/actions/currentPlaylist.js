@@ -7,7 +7,15 @@ module.exports = {
     dontUpdateCache = (typeof dontUpdateCache === "boolean" && dontUpdateCache);
     if (!dontUpdateCache) {
       console.log('updating cache');
-      actions.updateCache(playlist);
+      if (playlist.playlistid) {
+        actions.updateCache(playlist);
+      } else {
+        //fetch
+        actions.updateTracks({
+          fetchid: playlist.fetchid,
+          tracks: playlist.tracks
+        });
+      }
     } else {
       console.log('dont update cache because ', dontUpdateCache);
     }

@@ -9,6 +9,7 @@ import ModalManager from './mixins/modalManager'
 import KeyManager from './mixins/keyManager'
 import FileManager from './mixins/fileManager'
 import SettingsManager from './mixins/settingsManager'
+import FetchManager from './mixins/fetchManager'
 
 app({
   state: {
@@ -31,7 +32,7 @@ app({
       if (isRoute('playlist')) {
         actions.playlistRoute(data.params.id);
       } else if (isRoute('fetch')) {
-        actions.setCurrentPlaylist(state.fetches[data.params.id], true);  // dont update cache bro
+        actions.setCurrentPlaylist(state.fetches[data.params.id]);  // dont update cache bro
       }
       actions.setRouteMatch(data.match);
     }
@@ -43,7 +44,8 @@ app({
     ModalManager,
     KeyManager,
     FileManager,
-    SettingsManager
+    SettingsManager,
+    FetchManager
   ]
 });
 

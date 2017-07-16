@@ -1,16 +1,14 @@
 import { h } from 'hyperapp';
 
-const PlaylistButton = ({ onSelect, pl, selected, confirmDeletePl }, children) => {
-  const onselectplaylist = () => {
-    console.log('selected', pl);
-    onSelect(pl);
-  };
+const PlaylistButton = ({ onSelect, pl, currentPlaylist }, children) => {
+  const selected = (pl.playlistid && pl.playlistid === currentPlaylist.playlistid) ||
+                    (pl.fetchid && pl.fetchid === currentPlaylist.fetchid);
   return (
     <div>
-      <div class='x small' onclick={() => confirmDeletePl(pl)}>x</div>
-      <li onmousedown={onselectplaylist} class={(selected) ? 'selected' : ''}>
+      <li onmousedown={() => onSelect(pl) } class={(selected) ? 'selected' : ''}>
         <h3>{pl.title}</h3>
-        <i>{pl.playlistid}</i>
+        <i>{pl.playlistid || pl.fetchid}</i>
+        {pl.fetchid && (<b>album-fetch</b>)}
       </li>
     </div>
   );

@@ -10,9 +10,9 @@ const ConfirmAlbumFetch = ({ state, actions }, children) => {
       <header>
         Confirm this is the album you want to fetch
       </header>
+      <h2>{state.albumOfInterest.title} by {state.albumOfInterest.artist}</h2>
       <div style={{float: 'left', margin: '10px'}}>
         <img src={state.albumOfInterest.thumbnail}/>
-        <h2>{state.albumOfInterest.title} by {state.albumOfInterest.artist}</h2>
       </div>
       <ul id='tracklist'>
         {state.albumOfInterest.tracks.map((track, i) => (

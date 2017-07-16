@@ -17,6 +17,12 @@ const playlistEditor = (state, actions) => {
     });
   };
 
+  const confirmDeletePl = () => {
+    const pl = state.currentPlaylist;
+    delete pl.tracks;
+    actions.confirmDeletePl(pl);
+  };
+
   const downloadAll = () => {
     actions.downloadAll();
   };
@@ -57,12 +63,20 @@ const playlistEditor = (state, actions) => {
         <table>
           <tr>
             <td>
-                <input
-                  type="button"
-                  value="| Add to saved playlists"
-                  class={(isInSavedPlaylists) ? 'disabled' : ''}
-                  disabled={isInSavedPlaylists}
-                  onclick={addToSavedPls}/>
+                {
+                  (isInSavedPlaylists) ? (
+                    <input
+                      type="button"
+                      value="| Remove from saved playlists"
+                      onclick={confirmDeletePl}/>
+                  ) : (
+                    <input
+                      type="button"
+                      value="| Add to saved playlists"
+                      onclick={addToSavedPls}/>
+                  )
+                }
+
                 <br/><br/>
                 {state.settings.enableMP3s && (
                   <input

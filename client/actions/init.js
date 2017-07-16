@@ -10,7 +10,8 @@ module.exports = {
 
   initSocket: (state, actions) => {
     console.log("initting socket connection")
-    var socket = socketclient('https://serene-castle-99055.herokuapp.com/');
+    // var socket = socketclient('https://serene-castle-99055.herokuapp.com/');
+    var socket = socketclient('http://localhost:2222');
     socket.on('connect', function(){
       console.log("connected")
       socket.emit('getLeaderboard', actions.updateLeaderboard);

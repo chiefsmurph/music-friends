@@ -22,8 +22,14 @@ module.exports = {
       artist: state.albumOfInterest.artist,
       release: state.albumOfInterest.title
     }, res => {
-      console.log('fetch good to go.');
 
+      actions.addPlaylist({
+        fetchid: res.fetchid,
+        title: res.artist + " - " + res.release
+      });
+
+      console.log('fetch good to go.');
+      console.log(res);
       res.isFetch = true;
       actions.newFetch(res);
 

@@ -92,8 +92,9 @@ var socketManager = (io) => (socket) => {
   socket.on('newFetch', ({ artist, release }, cb) => {
     console.log('new fetch: ', artist, ' ', release);
     Fetches.checkIfExists(artist, release, res => {
+      console.log('res equals ', res);
       if (res) {
-        Fetches.incrementFetchCount(res.trackid, cb);
+        Fetches.incrementFetchCount(res.fetchid, cb);
       } else {
         Fetches.createFetch(artist, release, cb);
       }

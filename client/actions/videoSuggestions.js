@@ -17,7 +17,9 @@ module.exports = {
       }, 100)
     };
   },
-  vidClickForPlaylists: (state, actions, vid) => {
+  vidClickForPlaylists: (state, actions, data) => {
+
+      const { vid, beforeDL } = data;
 
       var updateServerTracks = (id, tracks, cb) => {
         console.log('updating server tracks', id, tracks, cb);
@@ -28,27 +30,27 @@ module.exports = {
       };
 
       var currentPlaylistId = state.currentPlaylist.playlistid;
-      var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
-      console.log('currentTracks', state.currentPlaylist.tracks);
-      var beforeDL = generateNewTracks(vid);
-      console.log('beforedl', beforeDL, currentPlaylistId);
 
-      actions.setTracks(beforeDL);
 
       updateServerTracks(
         currentPlaylistId,
         beforeDL,
         (res) => {
 
-          actions.afterVidClickAll(vid);
+          actions.afterVidClickAll({
+            vid,
+            playlistid: currentPlaylistId
+          });
 
         });
 
   },
-  afterVidClickAll: (state, actions, vid) => {
+  afterVidClickAll: (state, actions, data) => {
+      let { vid, playlistid } = data;
+      playlistid = playlistid || state.currentPlaylist.playlistid;
       if (!state.fileDirectory[vid.id] && state.settings.enableMP3s) {
         // to server
-        state.socket.emit('requestDownload', vid, currentPlaylistId);
+        state.socket.emit('requestDownload', vid, playlistid);
         // for electron
         actions.downloadAudio(vid);
       }
@@ -61,10 +63,23 @@ module.exports = {
 
     actions.clearSearch();
 
-    if (state.currentPlaylist.type === 'fetch') {
-      actions.afterVidClickAll(vid);
+    var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
+    console.log('currentTracks', state.currentPlaylist.tracks);
+    var beforeDL = generateNewTracks(vid);
+    console.log('beforedl', beforeDL, state.currentPlaylist.playlistid);
+
+    actions.setTracks(beforeDL);
+
+    if (state.currentPlaylist.isFetch) {
+      console.log('its a fetch')
+      actions.afterVidClickAll({
+        vid
+      });
     } else {
-      actions.vidClickForPlaylists(vid);
+      actions.vidClickForPlaylists({
+        vid,
+        beforeDL
+      });
     }
 
   },

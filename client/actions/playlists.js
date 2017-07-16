@@ -30,7 +30,6 @@ module.exports = {
   fetchPlaylist: (state, actions, id) => {
     console.log('fetching');
     state.socket.emit('getPlaylist', { id }, data => {
-
       console.log('fetched ' + id, data);
       actions.possiblyUpdateCurrent(data);
     });
@@ -66,11 +65,19 @@ module.exports = {
   deleteSavedPlaylist: (state, actions, pl) => {
     console.log('removing pl', pl);
     var currentPlaylists = state.playlists;
-    var newPlaylists = state.playlists.filter(playlist => {
+
+    var newPlaylists = (pl.playlistid) ? state.playlists.filter(playlist => {
       return playlist.playlistid !== pl.playlistid
+    }) : state.playlists.filter(playlist => {
+      return playlist.fetchid !== pl.fetchid
     });
 
     localStorage.setItem('playlists', JSON.stringify(newPlaylists));
+
+    if (pl.fetchid) {
+      // actions.router.go('/home');
+      actions.fetchComplete();
+    }
     return {
       playlists: newPlaylists
     };
