@@ -8,12 +8,16 @@ var path = require('path');
 
 
 
-var getAudio = function(url, title) {
+var getAudio = function(url, folder) {
 
   var assetFolder = window.assetsFolder;
   console.log('here now ', assetFolder);
   if (!fs.existsSync(assetFolder)){
     fs.mkdirSync(assetFolder);
+  }
+
+  if (folder && !fs.existsSync(assetFolder + '/' + folder)) {
+    fs.mkdirSync(assetFolder + '/' + folder);
   }
 
   console.log('getting audio', url);
@@ -50,12 +54,10 @@ var getAudio = function(url, title) {
       // not in use
       var pathToYtdl = path.join(__dirname + '/../../node_modules/youtube-dl/bin/youtube-dl');
       console.log('ytdl: ' + pathToYtdl);
-      console.log('title', title);
-
 
       youtube_dl = spawn('youtube-dl', [
         '--output',
-        assetFolder + '/%(title)s.%(ext)s',
+        assetFolder + (folder ? '/' + folder : '') + '/%(title)s.%(ext)s',
         '--extract-audio',
         '--audio-format',
         'mp3',
@@ -80,7 +82,7 @@ var getAudio = function(url, title) {
       youtube_dl.on('exit', () => {
         console.log('exit dl', songFileName);
         if (songFileName) {
-          resolve(songFileName);
+          resolve((folder ? folder + '/' : '') + songFileName);
         } else {
           reject(error.join(', '));
         }

@@ -5,6 +5,10 @@ const Settings = (state, actions) => {
 
   const settings = [
     {
+      setting: 'previewVideosOnHover',
+      label: 'Preview videos on mouse hover'
+    },
+    {
       setting: 'enableMP3s',
       label: 'Enable MP3s'
     },
@@ -13,7 +17,7 @@ const Settings = (state, actions) => {
       label: 'Enable album-fetch\'s'
     }
   ];
-
+  
   return (
     <Layout
       actions={actions}

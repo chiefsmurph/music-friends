@@ -88,6 +88,7 @@ var socketManager = (io) => (socket) => {
     Playlists.createPlaylist(title, (pl) => {
       console.log('created ', pl, pl.playlistid);
       socket.join(pl.playlistid);
+      playlistsAuthed.push(pl.playlistid);
       cb(pl);
     });
   });

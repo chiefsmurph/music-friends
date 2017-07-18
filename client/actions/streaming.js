@@ -31,7 +31,7 @@ module.exports = {
     },
 
     songDone: (state, actions) => {
-
+      console.log('stopping done');
       // stop for local mp3
       actions.stopStreaming();
 

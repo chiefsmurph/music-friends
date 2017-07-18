@@ -102,7 +102,8 @@ module.exports = {
   downloadAudio: async (state, actions, vid) => {
     const { url, id } = vid;
     actions.addToActiveDls(vid.id);
-    const file = await window.getAudio(vid.url);
+    const folder = state.currentPlaylist.title || state.currentPlaylist.artist + ' - ' + state.currentPlaylist.release;
+    const file = await window.getAudio(vid.url, folder);
     actions.removeFromActiveDls(vid.id);
     actions.handleLocalAudio({
       songid: vid.id,
@@ -119,7 +120,7 @@ module.exports = {
           cb();
         });
     }, () => {
-      actions.endDownloadAll();
+      // actions.endDownloadAll();
     });
   }
 };

@@ -120,9 +120,17 @@ const playlistEditor = (state, actions) => {
                 state.settings.showSuggestedSongs && (
                   <div>
                     <h4>Suggested Songs</h4>
+                    {
+                      (state.suggestSongActiveCount > 0) && (
+                        <div class='loader' />
+                      )
+                    }
                     <VideoChooser
                       videos={state.suggestedSongs[state.currentPlaylist.playlistid]}
-                      vidClick={actions.vidClick} />
+                      vidClick={actions.vidClick}
+                      playYoutube={actions.playYoutube}
+                      songDone={actions.songDone}
+                      playOnHover={state.settings.previewVideosOnHover} />
                   </div>
                 )
               }

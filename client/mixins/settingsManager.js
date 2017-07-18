@@ -1,6 +1,8 @@
 const Settings = () => ({
   state: {
-    settings: JSON.parse(localStorage.getItem('settings')) || {},
+    settings: JSON.parse(localStorage.getItem('settings')) || {
+      previewVideosOnHover: true
+    },
   },
   actions: {
     toggleSetting: (state, actions, setting) => {

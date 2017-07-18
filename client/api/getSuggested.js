@@ -89,10 +89,10 @@ Array.prototype.getRandom = function(num, cut) {
     return A.splice(0, num);
 };
 
-window.getOnlyTracksFromSearch = (search) => {
-  console.log('searching for ', search);
+window.getOnlyTracksFromArtist = (artist) => {
+  console.log('searching for ', artist);
   return new Promise((resolve, reject) => {
-    window.queryYoutube(search, videos => {
+    window.queryYoutube(artist, videos => {
 
         var vids = videos.splice(0);
 
@@ -102,7 +102,7 @@ window.getOnlyTracksFromSearch = (search) => {
         var i = 0;
         while (vids[i]) {
           var vid = vids[i];
-          if (vid.title.indexOf(' - ') !== -1 && !vid.title.match(/album/i) && !vid.title.match(/live/i)) {
+          if (vid.title.indexOf(artist + ' - ') !== -1 && !vid.title.match(/album/i) && !vid.title.match(/live/i)) {
             // include " - " but not "album stream" or "full album" or "live"
             vidsThatAreSongs.push(vid);
           }

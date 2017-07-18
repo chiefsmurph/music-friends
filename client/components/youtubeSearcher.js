@@ -2,7 +2,7 @@ import { h } from 'hyperapp';
 import VideoChooser from './videoChooser';
 
 const YoutubeSearcher = ({ actions, state }, children) => {
-
+  // console.log(actions.songDone, 'youtubesearcher');
   return (
     <div>
       <input
@@ -13,7 +13,10 @@ const YoutubeSearcher = ({ actions, state }, children) => {
 
       <VideoChooser
         videos={state.suggestions}
-        vidClick={actions.vidClick} />
+        vidClick={actions.vidClick}
+        playYoutube={actions.playYoutube}
+        songDone={actions.songDone}
+        playOnHover={state.settings.previewVideosOnHover}/>
 
     </div>
   );
