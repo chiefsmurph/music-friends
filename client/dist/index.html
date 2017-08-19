@@ -618,9 +618,11 @@
   const {ipcRenderer} = require('electron');
 
   ipcRenderer.on('assetsFolder', (event, folder) => {
-      console.log('what')
-      console.log(folder, 'haha')
       window.assetsFolder = folder;
+  });
+  ipcRenderer.on('appPath', (event, path) => {
+      console.log('apppath', path);
+      window.appPath = path;
   });
   </script>
   <script src="../api/getAudio.js"></script>

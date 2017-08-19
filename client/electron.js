@@ -5,9 +5,10 @@ const BrowserWindow = electron.BrowserWindow;  // Module to create native browse
 const path = require('path');
 
 
-var fetchCheerioObject = require('fetch-cheerio-object');
+// var fetchCheerioObject = require('fetch-cheerio-object');
 
 
+console.log('updated');
 var mymusic = app.getPath('music');
 console.log('mymusic, ', mymusic);
 
@@ -64,6 +65,7 @@ app.on('ready', function() {
   setTimeout(() => {
     console.log('sending assets folder');
     mainWindow.webContents.send('assetsFolder', app.getPath('music') + '/musichacker');
+    mainWindow.webContents.send('appPath', app.getAppPath());
   }, 1000);
 
   // Emitted when the window is closed.

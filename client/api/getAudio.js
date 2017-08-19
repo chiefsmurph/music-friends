@@ -6,6 +6,7 @@ var spawn = require('child_process').spawn
 
 var path = require('path');
 
+// const {app} = require('electron')
 
 
 var getAudio = function(url, folder) {
@@ -52,32 +53,32 @@ var getAudio = function(url, folder) {
       }
 
       // not in use
-      var pathToYtdl = path.join(__dirname + '/../../node_modules/youtube-dl/bin/youtube-dl');
-      console.log('ytdl: ' + pathToYtdl);
+      var pathToYtdl = path.join(window.appPath, '../app.asar.unpacked/node_modules/youtube-dl/bin/youtube-dl');
+      var pathToFFmpegDir = path.join(window.appPath, '../node_modules/ffmpeg-binaries/bin');
+      console.log('ytdl: ' + pathToYtdl, __dirname);
+      console.log('ffmpeg: ', pathToFFmpegDir);
 
-      youtube_dl = spawn('youtube-dl', [
+      youtube_dl = spawn(pathToYtdl, [
         '--output',
         assetFolder + (folder ? '/' + folder : '') + '/%(title)s.%(ext)s',
         '--extract-audio',
         '--audio-format',
         'mp3',
         '--audio-quality=320k',
+        '--ffmpeg-location',
+        pathToFFmpegDir,
         url
       ]);
+      // logspawn(spawn("pwd"));
+      // logspawn(spawn("ls"));
+      // console.log('dirname', __dirname);
+      // console.log(window.appPath);
 
+      // var nodeModulesPath = path.join(window.appPath, '../app.asar.unpacked/node_modules/youtube-dl');
+      // console.log(nodeModulesPath, 'nodeModulesPath');
+      // logspawn(spawn("ls", [nodeModulesPath]));
       logspawn(youtube_dl);
 
-      // Let's echo the output of the child to see what's going on
-      // youtube_dl.stdout.on('data', function(data) {
-      //   console.log(data.toString());
-        // outputServer.broadcast(data.toString());
-      // });
-
-      // Incase something bad happens, we should write that out too.
-      // youtube_dl.stderr.on('data', function(data) {
-      //   console.error(data.toString());
-        // outputServer.broadcast(data.toString());
-      // });
 
       youtube_dl.on('exit', () => {
         console.log('exit dl', songFileName);

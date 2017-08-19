@@ -5,7 +5,8 @@ import playlistEditor from './playlistEditor';
 import fetches from './fetches';
 import settings from './settings';
 
-// const prependRoutes = location.pathname.substring(0, location.pathname.indexOf('/dist/') + 6);
+const prependRoutes = location.pathname.substring(0, location.pathname.indexOf('/dist/') + 6);
+console.log('prependRoutes', prependRoutes);
 const views = module.exports = [
     ['/', home],
     ['/home', home],
