@@ -30,6 +30,7 @@ var socketManager = (io) => (socket) => {
 
   setTimeout(() => {
     leaderboard.getLeaderboard(leaderboard => {
+      console.log('sending leaderboard', leaderboard);
       socket.emit('leaderboard', leaderboard);
     });
   }, 4000);
