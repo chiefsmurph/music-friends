@@ -54,7 +54,7 @@ var Fetches = new TableInterface('fetches', {
   };
   this.getTopFetches = (cb) => {
     return this.executeQuery('SELECT * FROM fetches ORDER BY fetchcount desc LIMIT 3', res => {
-      return cb(res.map(fetch => {
+      return cb(!res.length ? [] : res.map(fetch => {
         delete fetch.tableid;
         return fetch;
       }));
