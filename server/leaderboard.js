@@ -11,18 +11,21 @@ module.exports = {
       function(cb) {
         Songs.getTopSongs(res => {
           topSongs = res;
+          console.log('top songs', topSongs);
           cb();
         });
       },
       function(cb) {
         Playlists.getTopPlaylists(res => {
           topPlaylists = res;
+          console.log('top pls', topPlaylists);
           cb();
         });
       },
       function(cb) {
         Fetches.getTopFetches(res => {
           topFetches = res;
+          console.log('top fetches', topFetches);
           cb();
         })
       },
