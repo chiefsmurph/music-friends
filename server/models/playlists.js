@@ -86,7 +86,7 @@ var Playlists = new TableInterface('playlists', {
     });
   };
   this.getTopPlaylists = (cb) => {
-    return this.executeQuery('SELECT * FROM playlists ORDER BY requestcount,  desc LIMIT 3', res => {
+    return this.executeQuery('SELECT * FROM playlists ORDER BY requestcount, tableid desc LIMIT 3', res => {
       return cb(!res.length ? [] : res.map(pl => {
         delete pl.key;
         delete pl.tableid;
