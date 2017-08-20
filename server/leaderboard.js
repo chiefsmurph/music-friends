@@ -4,6 +4,12 @@ var Fetches = require('./models/fetches');
 var async = require('async');
 
 module.exports = {
+  broadcast: (emit) => {
+    this.getLeaderboard(leaderboard => {
+      console.log('broadcasting leaderboard');
+      emit('leaderboard', leaderboard);
+    });
+  },
   getLeaderboard: (mainCb) => {
 
     let topSongs, topPlaylists, topFetches;
