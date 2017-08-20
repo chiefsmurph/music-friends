@@ -90,7 +90,7 @@ var Playlists = new TableInterface('playlists', {
       return cb(!res.length ? [] : res.map(pl => {
         delete pl.key;
         delete pl.tableid;
-        pl.trackcount = pl.tracks.length || 0;
+        pl.trackcount = (pl.tracks && pl.tracks.length) ? pl.tracks.length : 0;
         delete pl.tracks;
         return pl;
       }));
