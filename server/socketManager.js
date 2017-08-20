@@ -105,7 +105,7 @@ var socketManager = (io) => (socket) => {
     });
   });
 
-  socket.on('downloadRequest', (song, playlistid) => {
+  socket.on('requestDownload', (song, playlistid) => {
 
     console.log('getting song')
     console.log(JSON.stringify(song));
