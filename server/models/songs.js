@@ -68,8 +68,7 @@ var Songs = new TableInterface('songs', {
     });
   };
   this.getTopSongs = (cb) => this.executeQuery('SELECT * FROM songs ORDER BY addcount desc LIMIT 3', res => {
-    console.log('REStopsongs', res);
-    return res && res.length ? res : [];
+    return cb(res && res.length ? res : []);
   });
 });
 
