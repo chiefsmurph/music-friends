@@ -29,11 +29,11 @@ var socketManager = (io) => (socket) => {
   console.log('new connection');
 
   setTimeout(() => {
-    leaderboard.broadcast(io.sockets.emit);
-    // leaderboard.getLeaderboard(leaderboard => {
-    //   console.log('sending leaderboard', leaderboard);
-    //   io.sockets.emit('leaderboard', leaderboard);
-    // });
+    // leaderboard.broadcast(io.sockets.emit);
+    leaderboard.getLeaderboard(leaderboard => {
+      console.log('sending leaderboard', leaderboard);
+      io.sockets.emit('leaderboard', leaderboard);
+    });
   }, 4000);
 
 
@@ -140,11 +140,11 @@ var socketManager = (io) => (socket) => {
     });
 
     setTimeout(() => {
-      leaderboard.broadcast(io.sockets.emit);
-      // leaderboard.getLeaderboard(leaderboard => {
-      //   console.log('sending leaderboard', leaderboard);
-      //   io.sockets.emit('leaderboard', leaderboard);
-      // });
+      // leaderboard.broadcast(io.sockets.emit);
+      leaderboard.getLeaderboard(leaderboard => {
+        console.log('sending leaderboard', leaderboard);
+        io.sockets.emit('leaderboard', leaderboard);
+      });
     }, 4000);
 
   });
