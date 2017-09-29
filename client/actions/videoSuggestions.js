@@ -73,6 +73,11 @@ module.exports = {
 
     actions.clearSearch();
 
+    // stop preview if previewing
+    if (state.settings.previewVideosOnHover) {
+      actions.songDone();
+    }
+
     var generateNewTracks = (vid) => (state.currentPlaylist.tracks || []).concat([vid]);
     console.log('currentTracks', state.currentPlaylist.tracks);
     var beforeDL = generateNewTracks(vid);

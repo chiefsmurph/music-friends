@@ -1,7 +1,7 @@
-# music glossary
+# music-friends
 
 - hear all the hits!
-- organize and share your playlists with friends
+- organize and share your playlists with friendss
 
 ## done
 

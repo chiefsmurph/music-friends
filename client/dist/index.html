@@ -13,16 +13,19 @@
     @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
     html, * {
       font-family: 'Ubuntu Mono';
+    }
+    body, body > * {
       -webkit-app-region: drag;
       -webkit-user-select: none;
     }
-    #left, #left *, #right, #right * {
+    #left, #right {
       -webkit-app-region: no-drag;
     }
-    #right, #right * {
+    #right {
       -webkit-user-select: text;
     }
     input {
+      -webkit-app-region: no-drag;
       -webkit-user-select: text;
     }
     html {
@@ -618,6 +621,7 @@
   const {ipcRenderer} = require('electron');
 
   ipcRenderer.on('assetsFolder', (event, folder) => {
+      console.log('assetsfOLDER', folder);
       window.assetsFolder = folder;
   });
   ipcRenderer.on('appPath', (event, path) => {
@@ -625,12 +629,13 @@
       window.appPath = path;
   });
   </script>
-  <script src="../api/getAudio.js"></script>
-  <script src="../api/makeRequestWithCheerio.js"></script>
-  <script src="../api/queryYoutube.js"></script>
-  <script src="../api/openItem.js"></script>
-  <script src="../api/last.js"></script>
-  <script src="../api/getSuggested.js"></script>
+  <script src="../electron-actions/getAudio.js"></script>
+  <script src="../electron-actions/makeRequestWithCheerio.js"></script>
+  <script src="../electron-actions/queryYoutube.js"></script>
+  <script src="../electron-actions/openItem.js"></script>
+  <script src="../electron-actions/last.js"></script>
+  <script src="../electron-actions/getSuggested.js"></script>
+  <script src="../electron-actions/clearLSAndRestart.js"></script>
   <script src="bundle.js"></script>
   <audio id="player" controls>
     <source src="" type="audio/mpeg">

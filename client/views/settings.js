@@ -17,7 +17,7 @@ const Settings = (state, actions) => {
       label: 'Enable album-fetch\'s'
     }
   ];
-  
+
   return (
     <Layout
       actions={actions}
@@ -37,6 +37,10 @@ const Settings = (state, actions) => {
           </p>
         ))
       }
+
+      <hr/>
+
+      <a onclick={window.clearLSAndRestart}>Click here to clear all data and restart</a>
 
     </Layout>
   )

@@ -37,7 +37,7 @@ const Layout = ({ state, actions, addition }, children) => {
           {JSON.stringify(currentPlaylist)}
           </code>
         )}
-        <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music glossary</h1>
+        <h1><span><img src={'/dist/icons/' + state.currentIcon} /></span>music-friends</h1>
         <div id="nav-menu">
             {pages.map(page => (
               <a
@@ -74,7 +74,7 @@ const Layout = ({ state, actions, addition }, children) => {
         </div>
         <div class="clear"></div>
 
-        {true && (
+        {false && (
           <div id="debugArea">
             <label>
                 debug CurrentPlaylist

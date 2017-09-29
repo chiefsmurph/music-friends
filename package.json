@@ -1,5 +1,5 @@
 {
-  "name": "music-hacker",
+  "name": "music-friends",
   "version": "0.5.0",
   "description": "",
   "main": "./client/electron.js",
@@ -14,7 +14,8 @@
     "nahpostinstall": "install-app-deps",
     "nahstart": "npm install && electron ./app",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build",
+    "win": "electron-builder --win"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "child_process": "^1.0.2",
     "express": "^4.15.3",
     "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^3.2.2-3",
     "ffprobe": "^1.1.0",
     "fs": "0.0.1-security",
     "google": "^2.1.0",
@@ -56,9 +58,13 @@
     "webpack": "^2.6.1"
   },
   "build": {
-    "appId": "musicglossary",
+    "appId": "music-friends",
     "mac": {
       "category": "public.app-category.music"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
     },
     "extraResources": [
       "**/node_modules/ffmpeg-binaries/**/*"
