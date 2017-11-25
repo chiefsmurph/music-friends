@@ -27,3 +27,5 @@
 - support for adding multiple videos at a time
     - you give it an artist name and album name and it gets all of them
     - you give it a list of youtube video urls and bam
+
+![screencast](https://user-images.githubusercontent.com/11671559/33232663-ddcbff6e-d1be-11e7-83b2-6ee79c0fdd78.gif)
