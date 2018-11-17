@@ -64,7 +64,7 @@ app.on('ready', function() {
 
   setTimeout(() => {
     console.log('sending assets folder');
-    mainWindow.webContents.send('assetsFolder', app.getPath('music') + '/musichacker');
+    mainWindow.webContents.send('assetsFolder', app.getPath('music') + '/music-friends');
     mainWindow.webContents.send('appPath', app.getAppPath());
   }, 1000);
 

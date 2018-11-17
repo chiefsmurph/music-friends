@@ -58,17 +58,25 @@ var getAudio = function(url, folder) {
       console.log('ytdl: ' + pathToYtdl, __dirname);
       console.log('ffmpeg: ', pathToFFmpegDir);
 
-      youtube_dl = spawn(pathToYtdl, [
+      const options = [
         '--output',
         assetFolder + (folder ? '/' + folder : '') + '/%(title)s.%(ext)s',
         '--extract-audio',
         '--audio-format',
         'mp3',
         '--audio-quality=320k',
-        '--ffmpeg-location',
-        pathToFFmpegDir,
+        // '--ffmpeg-location',
+        // pathToFFmpegDir,
         url
-      ]);
+      ];
+
+      console.log(pathToYtdl, options.join(' '));
+
+      youtube_dl = spawn(pathToYtdl, options, 
+        // {
+        //   cwd: pathToYtdl
+        // }
+      );
       // logspawn(spawn("pwd"));
       // logspawn(spawn("ls"));
       // console.log('dirname', __dirname);

@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+appId: musicglossary
+mac:
+  category: public.app-category.music
+extraResources:
+  - '**/node_modules/ffmpeg-binaries/**/*'
+asarUnpack:
+  - '**/node_modules/ffmpeg-binaries/'
+electronVersion: 1.8.8
