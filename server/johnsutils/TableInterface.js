@@ -12,13 +12,12 @@ function TableInterface(tableName, fieldObj, methods) {
 
   var sql = new SQL(tableName, fieldObj);
 
-  this.executeQuery = function(sql, cb) {
-    var args = Array.prototype.slice.call(arguments);
+  this.executeQuery = function(...args) {
     var callback = (typeof args[args.length - 1] === 'function') ? args.pop() : function() {};
     console.log('executing', ...args);
-    pool.query(sql, (err, response) => {
+    pool.query(...args, (err, response) => {
       console.log({ err, response });
-      cb(response);
+      return err ? console.error(err) : callback(response);
     });
     // pg.connect(databaseUrl, function(err, client, done) {
     //   console.log(err);
