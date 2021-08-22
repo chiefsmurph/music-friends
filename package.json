@@ -8,7 +8,7 @@
     "build": "$(npm bin)/webpack",
     "watch": "$(npm bin)/webpack -w",
     "serve": "http-server",
-    "server": "DATABASE_URL=http://localhost:5432 node server/server.js",
+    "server": "DATABASE_URL=postgresql://postgres:john3927postgres@localhost:5432/musicfriends node server/server.js",
     "start": "node server/server.js",
     "electron": "electron client/electron",
     "nahpostinstall": "install-app-deps",
