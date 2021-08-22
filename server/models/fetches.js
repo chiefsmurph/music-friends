@@ -62,4 +62,7 @@ var Fetches = new TableInterface('fetches', {
   };
 });
 
+console.log('about to getall');
+Fetches.getAll(data => console.log('data', data));
+
 module.exports = Fetches;

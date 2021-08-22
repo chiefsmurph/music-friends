@@ -1,32 +1,40 @@
-var pg = require('pg');
+var { Pool } = require('pg');
 var SQL = require("./SQL.js");
 
-var databaseUrl = process.env.DATABASE_URL + "?ssl=true";
+var databaseUrl = process.env.DATABASE_URL;
+
 console.log('using ' + databaseUrl);
+const pool = new Pool({
+  connectionString: databaseUrl
+});
 
 function TableInterface(tableName, fieldObj, methods) {
 
   var sql = new SQL(tableName, fieldObj);
 
-  this.executeQuery = function() {
+  this.executeQuery = function(sql, cb) {
     var args = Array.prototype.slice.call(arguments);
     var callback = (typeof args[args.length - 1] === 'function') ? args.pop() : function() {};
-    var sql = args[0];
-    pg.connect(databaseUrl, function(err, client, done) {
-      console.log(err);
-      if (!client) {
-        return;
-      }
-      console.log('all good');
-      client.query.apply(client, args.concat([function(err, result) {
-        done();
-        if (err) {
-          return console.log(err);
-        }
-        console.log('executed query ' + args[0]);
-        return callback((result && result.rows) ? result.rows : null);
-      }]));
+    console.log('executing', ...args);
+    pool.query(sql, (err, response) => {
+      console.log({ err, response });
+      cb(response);
     });
+    // pg.connect(databaseUrl, function(err, client, done) {
+    //   console.log(err);
+    //   if (!client) {
+    //     return;
+    //   }
+    //   console.log('all good');
+    //   client.query.apply(client, args.concat([function(err, result) {
+    //     done();
+    //     if (err) {
+    //       return console.log(err);
+    //     }
+    //     console.log('executed query ' + args[0]);
+    //     return callback((result && result.rows) ? result.rows : null);
+    //   }]));
+    // });
   },
 
   this.create = function(callback) {
