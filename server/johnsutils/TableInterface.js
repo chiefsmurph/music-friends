@@ -17,7 +17,9 @@ function TableInterface(tableName, fieldObj, methods) {
     console.log('executing', ...args);
     pool.query(...args, (err, response) => {
       console.log({ err, response });
-      return err ? console.error(err) : callback(response);
+      return err 
+        ?console.error(err) 
+        : callback(response && response.rows ? response.rows : null);
     });
     // pg.connect(databaseUrl, function(err, client, done) {
     //   console.log(err);
